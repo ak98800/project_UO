@@ -46,10 +46,10 @@ dependencies:
 - dep_id: dep_gqlhr7sei7ys7
   resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme 2.0, package_name: Material_3_Theme_2_0}
   version: {version_tag: v1.2.3}
-metadata: {description: 'For information on how to use this template, see our guide here: https://anvil.works/learn/tutorials/using-saas-template'}
-name: SaaS Template
+metadata: {description: 'For information on how to use this template, see our guide here: https://anvil.works/learn/tutorials/using-saas-template', logo_img: 'asset:ChatGPT Image 21 avr. 2025, 11_23_26.png', title: UltimateOwner}
+name: UltimateOwnerApp
 native_deps: null
-package_name: SaaS_Template
+package_name: UltimateOwnerApp
 renamed: true
 runtime_options:
   client_version: '3'
