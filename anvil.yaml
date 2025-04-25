@@ -60,7 +60,7 @@ runtime_options:
 secrets:
   stripe_secret_api_key:
     type: secret
-    value: {T4O5IQ35ZG7TTCZN: wKicTXysluYtsuFwBYK31Uq1YhX3Xedua/2NOqMILkSdO+vxMTel49STEStiie3I198EXBvuY9xYDXsH1ni1QdXB96Kst9LZm0JMPiNzyPn3kEAMu6wKSLB39Mc3uP+YZt/l/vsmDWREQ+FtgXcekPdaGAZJPMa4G+5eGTfURDdpD2Ifi5ezUtEX/VrBi41ZjLIVgYjzoLQS2s7VqDdqWUaAIzXUrCN5vR9y2LNszbSWQLTzrDBmIqz6ZKeAzricQdAez22e0SPYPg==}
+    value: {SHKBS35OAOTFTL2H: DCXv0oB7lq+ke+iT1bAzYlb+il5nIGDlfRKZOrhLw/76sPevobhKlZvPvL86de0E0rqAi+1JvdY3Oe4Qz/vyJreLKkXFfCPuX/fs1YEzvS301XKB+oG/ULTtcVtrRO7d2zUAjX0j/blULDwlBmpDmcLsz7Jv/GwxBKoct1R6qTDc++gf8snKjmCgSizQp3FOtRbbix8D+B5dibovJQljYbeFJ7k1BaOkrD3Ki/iECcNNVDJExUEcss7luGdZjdazekPLdoIBrUYnWA==, T4O5IQ35ZG7TTCZN: wKicTXysluYtsuFwBYK31Uq1YhX3Xedua/2NOqMILkSdO+vxMTel49STEStiie3I198EXBvuY9xYDXsH1ni1QdXB96Kst9LZm0JMPiNzyPn3kEAMu6wKSLB39Mc3uP+YZt/l/vsmDWREQ+FtgXcekPdaGAZJPMa4G+5eGTfURDdpD2Ifi5ezUtEX/VrBi41ZjLIVgYjzoLQS2s7VqDdqWUaAIzXUrCN5vR9y2LNszbSWQLTzrDBmIqz6ZKeAzricQdAez22e0SPYPg==}
 services:
 - client_config: {}
   server_config: {}
