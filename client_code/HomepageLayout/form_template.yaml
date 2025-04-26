@@ -1,4 +1,9 @@
 components_by_slot:
+  content:
+  - layout_properties: {}
+    name: heading_1
+    properties: {text: jhgfgjgjlgjhgjlbvg}
+    type: form:dep_gqlhr7sei7ys7:_Components.Heading
   nav_drawer: []
   navigation:
   - layout_properties: {}
@@ -32,6 +37,6 @@ layout:
 layout_metadata: {title: Homepage Layout}
 slots:
   content_slot:
-    index: 0
+    index: 1
     set_layout_properties: {}
     target: {name: content, type: slot}
