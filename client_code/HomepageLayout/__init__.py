@@ -58,3 +58,11 @@ class HomepageLayout(HomepageLayoutTemplate):
     alert(StripePricing(), large=True)
     self.check_upgrade_nav_link()
 
+  def heading_1_show(self, **event_args):
+    """This method is called when the component is shown on the screen."""
+    pass
+
+  def form_show(self, **event_args):
+    """This method is called when the form is shown on the page"""
+    pass
+
