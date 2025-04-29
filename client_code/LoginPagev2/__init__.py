@@ -1,4 +1,4 @@
-from ._anvil_designer import LoginPageTemplate
+from ._anvil_designer import LoginPagev2Template
 from anvil import *
 import anvil.users
 import anvil.server
@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 
 from ..Calculator import Calculator
 
-class LoginPage(LoginPageTemplate):
+class LoginPagev2(LoginPagev2Template):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)

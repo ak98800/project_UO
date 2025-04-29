@@ -11,7 +11,7 @@ components:
       - event_bindings: {show: text_2_show}
         layout_properties: {grid_position: 'VOLJNR,JDXJPO'}
         name: text_2
-        properties: {font_size: 16, text: 'UltimateOwner identifie automatiquement les bénéficiaires effectifs et vous aide à gérer vos structures capitalistiques avec précision, simplicité et rapidité.'}
+        properties: {font_size: 18, text: 'UltimateOwner identifie automatiquement les bénéficiaires effectifs et vous aide à gérer vos structures capitalistiques avec précision, simplicité et rapidité.'}
         type: form:dep_gqlhr7sei7ys7:_Components.Text
       - layout_properties: {full_width_row: false, grid_position: 'SRQJIV,THSBDD'}
         name: spacer_1
@@ -51,60 +51,35 @@ components:
   type: ColumnPanel
 - components:
   - components:
-    - components: []
-      layout_properties: {slot: card-content-slot}
-      name: card_content_container_1
-      properties: {}
-      type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-    layout_properties: {grid_position: 'QCUJWV,LFHUPJ'}
-    name: card_1
+    - layout_properties: {grid_position: 'GNYJDZ,RVLXZJ'}
+      name: text_12
+      properties: {align: center, bold: true, font_size: 24, text: Découvrez les fonctionnalités clés}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {grid_position: 'TJHEVJ,QEHZTH'}
+      name: text_13
+      properties: {align: center, font_size: 18, text: 'Une vision complète, claire et dynamique, générée automatiquement à partir de données simples'}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    layout_properties: {grid_position: 'OINEDA,AFZGAI'}
+    name: column_panel_4
     properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Card
-  - components:
-    - components: []
-      layout_properties: {slot: card-content-slot}
-      name: card_content_container_2
-      properties: {}
-      type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-    layout_properties: {grid_position: 'QCUJWV,VDWEVG'}
-    name: card_2
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Card
-  - components:
-    - components: []
-      layout_properties: {slot: card-content-slot}
-      name: card_content_container_3
-      properties: {}
-      type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-    layout_properties: {grid_position: 'QCUJWV,MXSBZP'}
-    name: card_3
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Card
-  - components:
-    - components: []
-      layout_properties: {slot: card-content-slot}
-      name: card_content_container_4
-      properties: {}
-      type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-    layout_properties: {full_width_row: false, grid_position: 'QCUJWV,IBIAUP'}
-    name: card_4
-    properties: {align: left, appearance: elevated, orientation: column}
-    type: form:dep_gqlhr7sei7ys7:_Components.Card
-  layout_properties: {full_width_row: false, grid_position: 'EYUSQT,NCFBNF'}
-  name: column_panel_4
-  properties: {col_spacing: none, spacing_above: small}
-  type: ColumnPanel
-- components:
+    type: ColumnPanel
   - components:
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: text_4
-          properties: {bold: true, text: Organigrammes}
+          properties:
+            align: center
+            bold: true
+            spacing:
+              padding: [null, null, '10', null]
+            text: |
+              Organigrammes
           type: form:dep_gqlhr7sei7ys7:_Components.Text
         - layout_properties: {slot: card-content-container-slot}
           name: text_5
           properties:
+            align: center
             text: |-
               Générez des organigrammes d’actionnariat en un clic, à partir de vos données Excel ou saisies manuelles.
               Filtrez par société, par actionnaire.
@@ -114,19 +89,25 @@ components:
         name: card_content_container_5
         properties: {}
         type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-      layout_properties: {width: 244.52062597656248}
+      layout_properties: {expand: false, width: 200}
       name: card_5
-      properties: {}
+      properties: {align: center, appearance: elevated, orientation: row}
       type: form:dep_gqlhr7sei7ys7:_Components.Card
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: text_6
-          properties: {bold: true, text: Détection des bénéficiaires effectifs}
+          properties:
+            align: center
+            bold: true
+            spacing:
+              padding: [null, null, '10', null]
+            text: Détection des bénéficiaires effectifs
           type: form:dep_gqlhr7sei7ys7:_Components.Text
         - layout_properties: {slot: card-content-container-slot}
           name: text_7
           properties:
+            align: center
             text: |-
               Identifiez automatiquement les personnes physiques à la tête de chaque chaîne de détention.
               Affichez leur pourcentage exact d’intérêt ou de contrôle sur chaque société du groupe.
@@ -135,59 +116,105 @@ components:
         name: card_content_container_6
         properties: {}
         type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-      layout_properties: {expand: true, width: 188.958}
+      layout_properties: {expand: false, width: 200}
       name: card_6
-      properties: {}
+      properties: {orientation: row}
       type: form:dep_gqlhr7sei7ys7:_Components.Card
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: text_8
-          properties: {bold: true, text: Analyse multi-niveaux}
+          properties:
+            align: center
+            bold: true
+            spacing:
+              padding: [null, null, '10', null]
+            text: Analyse multi-niveaux
           type: form:dep_gqlhr7sei7ys7:_Components.Text
         - layout_properties: {slot: card-content-container-slot}
           name: text_9
           properties:
-            text: |-
+            align: center
+            text: |+
               Remontez toutes les chaînes de participation, même les plus complexes ou imbriquées.
               Obtenez une vision consolidée claire, lisible, exploitable.
+
+
+
           type: form:dep_gqlhr7sei7ys7:_Components.Text
         layout_properties: {slot: card-content-slot}
         name: card_content_container_7
         properties: {}
         type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-      layout_properties: {width: 210.22925195312496}
+      layout_properties: {expand: false, width: 200}
       name: card_7
-      properties: {}
+      properties: {orientation: row}
       type: form:dep_gqlhr7sei7ys7:_Components.Card
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: text_10
-          properties: {bold: true, text: Exports professionnels}
+          properties: {align: center, bold: true, text: Exports professionnels}
           type: form:dep_gqlhr7sei7ys7:_Components.Text
         - layout_properties: {slot: card-content-container-slot}
           name: text_11
           properties:
-            text: |-
+            align: center
+            text: |+
               Téléchargez vos organigrammes ou tableaux de détention au format PDF ou Excel.
               Des documents prêts à être intégrés dans vos rapports, vos dossiers juridiques ou vos présentations.
+
           type: form:dep_gqlhr7sei7ys7:_Components.Text
         layout_properties: {slot: card-content-slot}
         name: card_content_container_8
         properties: {}
         type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
-      layout_properties: {width: 191.541251953125}
+      data_bindings: []
+      layout_properties: {expand: false, width: 200}
       name: card_8
-      properties: {}
+      properties: {align: center, orientation: row, role: null}
       type: form:dep_gqlhr7sei7ys7:_Components.Card
-    layout_properties: {full_width_row: false, grid_position: 'BWJLZO,SVMSFC'}
+    layout_properties: {full_width_row: true, grid_position: 'BWJLZO,SVMSFC'}
     name: flow_panel_2
-    properties: {align: center, gap: none, vertical_align: middle, visible: true}
+    properties: {align: center, gap: medium, spacing_above: medium, spacing_below: medium, vertical_align: top, visible: true}
     type: FlowPanel
   layout_properties: {grid_position: 'GXVUXW,BUGNEX'}
   name: column_panel_5
   properties: {}
   type: ColumnPanel
-container: {type: ColumnPanel}
+- components:
+  - components:
+    - layout_properties: {grid_position: 'ESVWSV,QXWEDG'}
+      name: text_14
+      properties: {align: center, bold: true, font_size: 24, style: label, text: 'Prêt à découvrir qui détient quoi dans votre groupe ?'}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'EPRUWC,WGWROC'}
+        name: text_15
+        properties: {align: center, bold: false, font_size: 16, style: label, text: Essayez UltimateOwner gratuitement et gagnez du temps dans vos analyses capitalistiques.}
+        type: form:dep_gqlhr7sei7ys7:_Components.Text
+      - components:
+        - layout_properties: {grid_position: 'AEKFJL,HXRHXN'}
+          name: button_2
+          properties: {align: center, appearance: tonal, text: Créer mon compte gratuitement}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        layout_properties: {grid_position: 'HEGJVV,GSOGQH'}
+        name: column_panel_9
+        properties: {}
+        type: ColumnPanel
+      layout_properties: {grid_position: 'XLTLUX,ONEGSD'}
+      name: column_panel_8
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {grid_position: 'RYEVDJ,ABBNFJ'}
+    name: column_panel_6
+    properties: {background: 'theme:Primary', foreground: 'theme:On Primary', wrap_on: mobile}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'SDFEOC,MIFZQL'}
+  name: column_panel_7
+  properties: {background: 'theme:Primary'}
+  type: ColumnPanel
+container:
+  properties: {col_spacing: large, spacing_above: large, spacing_below: none}
+  type: ColumnPanel
 is_package: true
