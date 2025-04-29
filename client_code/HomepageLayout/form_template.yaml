@@ -43,6 +43,11 @@ components_by_slot:
     name: logout_navigation_link
     properties: {icon: 'mi:logout', text: Log out}
     type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+  - event_bindings: {click: navigation_link_1_click}
+    layout_properties: {}
+    name: navigation_link_1
+    properties: {text: Main}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
   slot_2: []
 is_package: true
 layout:

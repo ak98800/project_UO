@@ -1,0 +1,64 @@
+components:
+- components:
+  - components:
+    - layout_properties: {width: 72.8610259765625}
+      name: image_1
+      properties: {height: 81.11109924316406, source: _/theme/ChatGPT_Image_21_avr._2025__11_23_26-removebg-preview.png}
+      type: Image
+    - layout_properties: {}
+      name: heading_1
+      properties: {text: UltimateOwner}
+      type: form:dep_gqlhr7sei7ys7:_Components.Heading
+    layout_properties: {full_width_row: true, grid_position: 'ROPADT,EVCJGN'}
+    name: flow_panel_1
+    properties: {vertical_align: middle}
+    type: FlowPanel
+  - components:
+    - event_bindings: {click: se_connecter_click}
+      layout_properties: {}
+      name: se_connecter
+      properties: {appearance: text, bold: true, icon: 'mi:login', text: se connecter}
+      type: form:dep_gqlhr7sei7ys7:_Components.Button
+    - data_bindings: []
+      event_bindings: {click: inscription_click}
+      name: inscription
+      properties: {appearance: text, icon: 'mi:person_add', text: s'inscrire}
+      type: form:dep_gqlhr7sei7ys7:_Components.Button
+    - event_bindings: {click: dashboard_click}
+      layout_properties: {}
+      name: dashboard
+      properties: {appearance: text, bold: true, icon: 'mi:dashboard', text: dashboard}
+      type: form:dep_gqlhr7sei7ys7:_Components.Button
+    - event_bindings: {click: deconnexion_click}
+      layout_properties: {}
+      name: deconnexion
+      properties: {appearance: text, icon: 'mi:logout', text: déconnexion}
+      type: form:dep_gqlhr7sei7ys7:_Components.Button
+    layout_properties: {full_width_row: true, grid_position: 'ROPADT,AMGMWP WPFUWV,FDVTNT'}
+    name: flow_panel_2
+    properties:
+      align: right
+      gap: small
+      spacing:
+        padding: [null, 0, null, null]
+      vertical_align: middle
+    type: FlowPanel
+  - layout_properties: {full_width_row: true, grid_position: 'BRQFVU,AHUDKG'}
+    name: content_panel
+    properties: {}
+    type: ColumnPanel
+  - components:
+    - layout_properties: {grid_position: 'OQSNPY,RCRUOJ'}
+      name: text_1
+      properties: {align: center, text: © 2025 UltimateOwner  - Tous droits réservés}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    layout_properties: {full_width_row: true, grid_position: 'HBMVTT,NWMLCE'}
+    name: Footer_panel
+    properties: {}
+    type: ColumnPanel
+  layout_properties: {full_width_row: true, grid_position: 'FPJFWR,JXXCBQ'}
+  name: column_panel_1
+  properties: {col_spacing: medium, visible: true}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true
