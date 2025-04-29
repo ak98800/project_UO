@@ -1,4 +1,4 @@
-from ._anvil_designer import CalculatorTemplate
+from ._anvil_designer import DashboardTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 
 from ..user_permissions import catch_permission_errors
 
-class Calculator(CalculatorTemplate):
+class Dashboard(DashboardTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
