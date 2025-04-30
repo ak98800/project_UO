@@ -7,7 +7,6 @@ class LoginPage(LoginPageTemplate):
   def __init__(self, confirmed=False, **properties):
     self.init_components(**properties)
 
-    # Si redirigé depuis le lien de confirmation
     if confirmed:
       Notification(
         "Votre adresse email a bien été confirmée. Vous pouvez maintenant vous connecter.",
@@ -32,10 +31,3 @@ class LoginPage(LoginPageTemplate):
 
     except anvil.users.AuthenticationFailed:
       Notification("Email ou mot de passe incorrect.", style="danger").show()
-
-  def resend_email_button_click(self, **event_args):
-    try:
-      anvil.users.send_confirmation_email()
-      Notification("Email de confirmation renvoyé avec succès.", style="success").show()
-    except Exception as e:
-      Notification(f"Erreur : {e}", style="danger").show()
