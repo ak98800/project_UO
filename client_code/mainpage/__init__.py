@@ -13,6 +13,7 @@ class mainpage(mainpageTemplate):
     self.show_initial_page(confirmed)
 
   def setup_navigation(self):
+    """Afficher ou masquer les boutons selon l’état de connexion"""
     user = anvil.users.get_user()
 
     self.se_connecter.visible = False
@@ -28,6 +29,7 @@ class mainpage(mainpageTemplate):
       self.inscription.visible = True
 
   def show_initial_page(self, confirmed):
+    """Logique de démarrage"""
     self.content_panel.clear()
     user = anvil.users.get_user()
 
@@ -50,22 +52,27 @@ class mainpage(mainpageTemplate):
       self.content_panel.add_component(LandingPage())
 
   def load_page(self, page_instance):
+    """Charger une page manuellement"""
     self.content_panel.clear()
     self.content_panel.add_component(page_instance)
 
   def se_connecter_click(self, **event_args):
+    """Clic sur Se connecter"""
     from ..LoginPage import LoginPage
     self.load_page(LoginPage())
 
   def inscription_click(self, **event_args):
+    """Clic sur Inscription"""
     from ..SignUpPage import SignUpPage
     self.load_page(SignUpPage())
 
   def dashboard_click(self, **event_args):
+    """Clic sur Dashboard"""
     from ..Dashboard import Dashboard
     self.load_page(Dashboard())
 
   def deconnexion_click(self, **event_args):
+    """Clic sur Déconnexion"""
     anvil.users.logout()
     self.setup_navigation()
     from ..LandingPage import LandingPage

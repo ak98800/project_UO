@@ -14,17 +14,22 @@ class LoginPage(LoginPageTemplate):
       ).show()
 
   def login_button_click(self, **event_args):
+    """Quand on clique sur 'Se connecter'"""
     email = self.email_textbox.text
     password = self.password_textbox.text
 
     try:
       anvil.users.login_with_email(email=email, password=password)
-
       user = anvil.users.get_user()
+
       if user and user["enabled"]:
         Notification("Connexion réussie !", style="success").show()
+        from ..HomepageLayout import HomepageLayout
         from ..Dashboard import Dashboard
-        get_open_form().load_page(Dashboard())
+        layout = HomepageLayout()
+        layout.load_page(Dashboard())
+        open_form(layout)
+
       else:
         Notification("Merci de confirmer votre adresse email avant de continuer.", style="warning").show()
         anvil.users.logout()
