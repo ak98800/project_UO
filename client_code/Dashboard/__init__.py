@@ -9,12 +9,13 @@ class Dashboard(DashboardTemplate):
     self.user = anvil.users.get_user()
 
     if self.user:
-      self.label_welcome.text = f"Bienvenue, {self.user['email']} !"
+      email = self.user["email"]
+      self.label_welcome.text = f"Bienvenue, {email} !"
     else:
       self.label_welcome.text = "Bienvenue !"
 
   def calculate_button_click(self, **event_args):
-    """Exemple de bouton pour une action côté serveur"""
+    """Exemple d'action possible sur le dashboard"""
     try:
       number1 = float(self.number_1_textbox.text)
       number2 = float(self.number_2_textbox.text)
@@ -29,4 +30,6 @@ class Dashboard(DashboardTemplate):
 
     except Exception as e:
       Notification(f"Erreur : {str(e)}", style="danger").show()
+
+
 

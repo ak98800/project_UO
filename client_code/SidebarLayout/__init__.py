@@ -1,4 +1,4 @@
-from ._anvil_designer import mainpageTemplate
+from ._anvil_designer import SidebarLayoutTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -6,7 +6,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-class mainpage(mainpageTemplate):
+
+class SidebarLayout(SidebarLayoutTemplate):
   def __init__(self, confirmed=False, **properties):
     self.init_components(**properties)
     self.setup_navigation()
@@ -38,19 +39,25 @@ class mainpage(mainpageTemplate):
     if user and user["enabled"]:
       if confirmed:
         from ..LoginPage import LoginPage
+
         self.content_panel.add_component(LoginPage(confirmed=True))
       else:
         from ..Dashboard import Dashboard
+
         self.content_panel.add_component(Dashboard())
 
     elif user and not user["enabled"]:
-      Notification("Merci de confirmer votre adresse email avant de continuer.", style="warning").show()
+      Notification(
+        "Merci de confirmer votre adresse email avant de continuer.", style="warning"
+      ).show()
       anvil.users.logout()
       from ..LoginPage import LoginPage
+
       self.content_panel.add_component(LoginPage())
 
     else:
       from ..LandingPage import LandingPage
+
       self.content_panel.add_component(LandingPage())
 
   def load_page(self, page_instance):
@@ -61,16 +68,19 @@ class mainpage(mainpageTemplate):
   def se_connecter_click(self, **event_args):
     """Clic sur Se connecter"""
     from ..LoginPage import LoginPage
+
     self.load_page(LoginPage())
 
   def inscription_click(self, **event_args):
     """Clic sur Inscription"""
     from ..SignUpPage import SignUpPage
+
     self.load_page(SignUpPage())
 
   def dashboard_click(self, **event_args):
     """Clic sur Dashboard"""
     from ..Dashboard import Dashboard
+
     self.load_page(Dashboard())
 
   def deconnexion_click(self, **event_args):
@@ -78,9 +88,10 @@ class mainpage(mainpageTemplate):
     anvil.users.logout()
     self.setup_navigation()
     from ..LandingPage import LandingPage
+
     self.load_page(LandingPage())
 
   def profil_click(self, **event_args):
-      from ..ProfilPage import ProfilPage
-      self.load_page(ProfilPage())
+    from ..ProfilPage import ProfilPage
 
+    self.load_page(ProfilPage())
