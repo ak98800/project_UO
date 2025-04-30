@@ -30,7 +30,7 @@ components:
         type: form:dep_gqlhr7sei7ys7:_Components.Text
       - layout_properties: {grid_position: 'FLQITO,LSODRG'}
         name: password_textbox
-        properties: {appearance: outlined, label: Password}
+        properties: {appearance: outlined, hide_text: true, label: Password}
         type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
       - layout_properties: {grid_position: 'GUPYNM,SAEXRM'}
         name: text_4
@@ -40,9 +40,9 @@ components:
         name: column_panel_3
         properties: {}
         type: ColumnPanel
-      - event_bindings: {click: button_1_click}
+      - event_bindings: {click: login_button_click}
         layout_properties: {grid_position: 'FDMWYT,OVMLTM'}
-        name: button_1
+        name: login_button
         properties: {appearance: filled, text: Connexion}
         type: form:dep_gqlhr7sei7ys7:_Components.Button
       - layout_properties: {grid_position: 'JFZDFF,OUYPYC'}

@@ -58,10 +58,11 @@ components:
         name: text_8
         properties: {text: Mot de passe}
         type: form:dep_gqlhr7sei7ys7:_Components.Text
-      - event_bindings: {pressed_enter: password_textbox_pressed_enter}
+      - data_bindings: []
+        event_bindings: {pressed_enter: password_textbox_pressed_enter}
         layout_properties: {grid_position: 'QPYWQP,VULAFQ'}
         name: password_textbox
-        properties: {appearance: outlined, label: Mot de passe}
+        properties: {appearance: outlined, hide_text: true, label: Mot de passe}
         type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
       - components:
         - layout_properties: {grid_position: 'OACBZF,KJLZKQ'}
@@ -70,7 +71,7 @@ components:
           type: form:dep_gqlhr7sei7ys7:_Components.Text
         - layout_properties: {grid_position: 'SZCFHP,LHHWGZ'}
           name: confirm_password_textbox
-          properties: {appearance: outlined, label: Confirmation du mot de passe}
+          properties: {appearance: outlined, hide_text: true, label: Confirmation du mot de passe}
           type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
         layout_properties: {grid_position: 'JADBXA,DYLZWQ'}
         name: column_panel_3

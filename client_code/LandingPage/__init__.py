@@ -32,3 +32,7 @@ class LandingPage(LandingPageTemplate):
   def creer_compte_button_hide(self, **event_args):
     """This method is called when the component is removed from the screen."""
     pass
+
+  def text_1_show(self, **event_args):
+    """This method is called when the component is shown on the screen."""
+    pass

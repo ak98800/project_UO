@@ -1,44 +1,62 @@
 allow_embedding: false
 correct_dependency_ids: {dep_gqlhr7sei7ys7: 4UK6WHQ6UX7AKELK}
 db_schema:
+  profiles:
+    client: none
+    columns:
+    - admin_ui: {width: 200}
+      name: user
+      target: users
+      type: link_single
+    - admin_ui: {width: 200}
+      name: name
+      type: string
+    - admin_ui: {width: 200}
+      name: organisation
+      type: string
+    - admin_ui: {width: 200}
+      name: fonction
+      type: string
+    server: full
+    title: profiles
   users:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {width: 200}
       name: email
       type: string
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {width: 200}
       name: enabled
       type: bool
-    - admin_ui: {order: 2, width: 200}
+    - admin_ui: {width: 200}
       name: last_login
       type: datetime
-    - admin_ui: {order: 3, width: 200}
+    - admin_ui: {width: 200}
       name: password_hash
       type: string
-    - admin_ui: {order: 4, width: 200}
+    - admin_ui: {width: 200}
       name: n_password_failures
       type: number
-    - admin_ui: {order: 5, width: 200}
+    - admin_ui: {width: 200}
       name: confirmed_email
       type: bool
-    - admin_ui: {order: 6, width: 200}
+    - admin_ui: {width: 200}
       name: signed_up
       type: datetime
-    - admin_ui: {order: 7, width: 200}
+    - admin_ui: {width: 200}
       name: subscription
       type: string
-    - admin_ui: {order: 8, width: 200}
+    - admin_ui: {width: 200}
       name: cancel_subscription_at_period_end
       type: bool
-    - admin_ui: {order: 9, width: 200}
+    - admin_ui: {width: 200}
       name: stripe_id
       type: string
-    - admin_ui: {order: 10, width: 200}
+    - admin_ui: {width: 200}
       name: remembered_logins
       type: simpleObject
-    - admin_ui: {order: -1, width: 200}
-      name: name
+    - admin_ui: {width: 200}
+      name: email_confirmation_key
       type: string
     server: full
     title: Users
@@ -65,8 +83,11 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/tables.yml
-- client_config: {allow_remember_me: true, allow_signup: true, confirm_email: false, enable_automatically: true, remember_me_days: 30, use_email: true}
-  server_config: {user_table: users}
+- client_config: {allow_remember_me: true, allow_signup: true, confirm_email: true, enable_automatically: true, remember_me_days: 30, require_secure_passwords: true, use_email: true}
+  server_config:
+    email_content:
+      confirm_address: {html: '<p>Bonjour,</p><p><br></p><p>Merci de vous être inscrit sur UltimateOwner.&nbsp;&nbsp;</p><p>Pour activer votre compte, cliquez sur le lien ci-dessous :</p><p><br></p><p>{{confirm_link}}</p><p><br></p><p>Si vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer ce message.</p><p><br></p><p>Merci et à bientôt,&nbsp;&nbsp;</p><p>L’équipe UltimateOwner</p>', subject: 'Confirmez votre adresse Email '}
+    user_table: users
   source: /runtime/services/anvil/users.yml
 - client_config: {}
   server_config: {}

@@ -8,7 +8,7 @@ components:
         name: text_1
         properties: {align: left, bold: true, font_size: 45, scale: large, style: label, text: Visualisez l’actionnariat de votre groupe en un clin d'œil., underline: false}
         type: form:dep_gqlhr7sei7ys7:_Components.Text
-      - event_bindings: {show: text_2_show}
+      - event_bindings: {}
         layout_properties: {grid_position: 'VOLJNR,JDXJPO'}
         name: text_2
         properties: {font_size: 18, text: 'UltimateOwner identifie automatiquement les bénéficiaires effectifs et vous aide à gérer vos structures capitalistiques avec précision, simplicité et rapidité.'}
@@ -195,7 +195,7 @@ components:
         properties: {align: center, bold: false, font_size: 16, style: label, text: Essayez UltimateOwner gratuitement et gagnez du temps dans vos analyses capitalistiques.}
         type: form:dep_gqlhr7sei7ys7:_Components.Text
       - components:
-        - event_bindings: {click: creer_compte_button_click, hide: creer_compte_button_hide, show: creer_compte_button_show}
+        - event_bindings: {click: creer_compte_button_click}
           layout_properties: {grid_position: 'AEKFJL,HXRHXN'}
           name: creer_compte_button
           properties: {align: center, appearance: tonal, text: Créer mon compte gratuitement}
