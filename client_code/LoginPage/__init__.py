@@ -8,7 +8,10 @@ class LoginPage(LoginPageTemplate):
     self.init_components(**properties)
 
     if confirmed:
-      Notification("Votre adresse email a bien été confirmée.", style="success").show()
+      Notification(
+        "Votre adresse email a bien été confirmée. Vous pouvez maintenant vous connecter.",
+        style="success"
+      ).show()
 
   def login_button_click(self, **event_args):
     email = self.email_textbox.text
@@ -20,12 +23,13 @@ class LoginPage(LoginPageTemplate):
 
       if user and user["enabled"]:
         Notification("Connexion réussie !", style="success").show()
-        from ..HomepageLayout import HomepageLayout
-        open_form(HomepageLayout())  # ✅ Ouvre tout le layout
-
+        from ..mainpage import mainpage
+        get_open_form().content_panel.clear()
+        get_open_form().content_panel.add_component(mainpage())
       else:
-        Notification("Merci de confirmer votre adresse email.", style="warning").show()
+        Notification("Merci de confirmer votre adresse email avant de continuer.", style="warning").show()
         anvil.users.logout()
 
     except anvil.users.AuthenticationFailed:
       Notification("Email ou mot de passe incorrect.", style="danger").show()
+

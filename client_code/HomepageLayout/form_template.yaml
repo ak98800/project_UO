@@ -1,9 +1,5 @@
 components_by_slot:
-  content:
-  - layout_properties: {}
-    name: content_panel
-    properties: {}
-    type: ColumnPanel
+  content: []
   nav_drawer: []
   navigation:
   - components:
@@ -55,8 +51,12 @@ components_by_slot:
   slot_2: []
 is_package: true
 layout:
-  form_event_bindings: {show: form_show}
+  form_event_bindings: {}
   properties: {show_sidesheet: false}
   type: form:dep_gqlhr7sei7ys7:Layouts.NavigationDrawerLayout
 layout_metadata: {title: Homepage Layout}
-slots: {}
+slots:
+  content_slot:
+    index: 0
+    set_layout_properties: {}
+    target: {name: content, type: slot}

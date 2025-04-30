@@ -2,30 +2,31 @@ from ._anvil_designer import DashboardTemplate
 from anvil import *
 import anvil.server
 import anvil.users
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
-
-from ..user_permissions import catch_permission_errors
 
 class Dashboard(DashboardTemplate):
   def __init__(self, **properties):
-    # Set Form properties and Data Bindings.
     self.init_components(**properties)
+    self.user = anvil.users.get_user()
 
-    # Any code you write here will run before the form opens.
-    # TODO explain that we aren't doing anything in the init for this example - do this for every form in template with empty init
-  
-  # Catch_permission_errors catches exceptions that are thrown by a user not being subscribed and gives them a notification to upgrade
-  @catch_permission_errors
-  # This function is a simple example function to show you functionality that is gated behind a paywall
-  def calculate_button_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    if self.number_1_textbox.text and self.number_2_textbox.text:
-      percentage = anvil.server.call('calculate_percentage_of', self.number_1_textbox.text, self.number_2_textbox.text)
-      self.answer_text.text = f"{self.number_1_textbox.text} is {percentage}% of {self.number_2_textbox.text}"
-      self.answer_text.visible = True
-      # TEMPLATE EXPLANATION ONLY - DELETE THIS WHEN YOU'RE READY
-      Notification("Now you can use the calculator. Click the account button in the navbar to open the account settings.", title="Template Explanation", timeout=None, style="warning").show()
+    if self.user:
+      self.label_welcome.text = f"Bienvenue, {self.user['email']} !"
     else:
-      Notification("Please enter two numbers.", timeout=3).show()
+      self.label_welcome.text = "Bienvenue !"
+
+  def calculate_button_click(self, **event_args):
+    """Exemple de bouton pour une action côté serveur"""
+    try:
+      number1 = float(self.number_1_textbox.text)
+      number2 = float(self.number_2_textbox.text)
+
+      if number2 == 0:
+        Notification("Le dénominateur ne peut pas être zéro.", style="danger").show()
+        return
+
+      result = anvil.server.call("calculate_percentage_of", number1, number2)
+      self.answer_text.text = f"{number1} est {result}% de {number2}"
+      self.answer_text.visible = True
+
+    except Exception as e:
+      Notification(f"Erreur : {str(e)}", style="danger").show()
+
