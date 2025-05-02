@@ -1,8 +1,12 @@
 components:
 - components: []
-  layout_properties: {full_width_row: true, grid_position: 'FPJFWR,JXXCBQ'}
-  name: column_panel_1
-  properties: {col_spacing: medium, visible: true}
+  layout_properties: {full_width_row: false, grid_position: 'FPJFWR,JXXCBQ'}
+  name: sidebar_panel
+  properties: {background: 'theme:Secondary Container', col_spacing: small, visible: true}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'FPJFWR,YAGQWZ'}
+  name: content_panel
+  properties: {}
   type: ColumnPanel
 - components:
   - layout_properties: {grid_position: 'OQSNPY,RCRUOJ'}
@@ -11,10 +15,6 @@ components:
     type: form:dep_gqlhr7sei7ys7:_Components.Text
   layout_properties: {grid_position: 'KDBSNY,BDIYGU'}
   name: Footer_panel
-  properties: {}
-  type: ColumnPanel
-- layout_properties: {grid_position: 'ZZGFCU,HUJSOL'}
-  name: content_panel
   properties: {}
   type: ColumnPanel
 container: {type: ColumnPanel}
