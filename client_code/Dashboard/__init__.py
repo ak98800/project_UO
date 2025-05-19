@@ -8,6 +8,10 @@ class Dashboard(DashboardTemplate):
     self.init_components(**properties)
     self.user = anvil.users.get_user()
 
+    # Appliquer le rôle CSS à la sidebar
+    self.sidebar_panel.role = "sidebar"
+
+    # Message de bienvenue
     if self.user:
       email = self.user["email"]
       self.label_welcome.text = f"Bienvenue, {email} !"
@@ -30,6 +34,7 @@ class Dashboard(DashboardTemplate):
 
     except Exception as e:
       Notification(f"Erreur : {str(e)}", style="danger").show()
+
 
 
 
