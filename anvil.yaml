@@ -1,7 +1,7 @@
 allow_embedding: false
 correct_dependency_ids: {dep_gqlhr7sei7ys7: 4UK6WHQ6UX7AKELK}
 db_schema:
-  organisations_:
+  organisations:
     client: none
     columns:
     - admin_ui: {order: 0, width: 200}
@@ -15,7 +15,7 @@ db_schema:
       name: created_at
       type: datetime
     server: full
-    title: 'organisations '
+    title: organisations
   profiles:
     client: none
     columns:
@@ -31,7 +31,7 @@ db_schema:
       type: string
     - admin_ui: {order: 4, width: 200}
       name: organisation
-      target: organisations_
+      target: organisations
       type: link_single
     - admin_ui: {order: 5, width: 200}
       name: is_admin
