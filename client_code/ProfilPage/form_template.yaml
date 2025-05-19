@@ -37,9 +37,10 @@ components:
       name: spacer_1
       properties: {}
       type: Spacer
-    - layout_properties: {col_xs: 6, row: QLWNRO, width_xs: 4}
-      name: save_button
-      properties: {text: Enregistrer}
+    - event_bindings: {click: modifier_button_click}
+      layout_properties: {col_xs: 6, row: QLWNRO, width_xs: 4}
+      name: modifier_button_click
+      properties: {text: modifier}
       type: form:dep_gqlhr7sei7ys7:_Components.Button
     layout_properties: {grid_position: 'BRPEEN,AHKRCK'}
     name: grid_panel_1

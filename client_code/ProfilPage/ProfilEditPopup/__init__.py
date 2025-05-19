@@ -1,53 +1,34 @@
 from ._anvil_designer import ProfilEditPopupTemplate
 from anvil import *
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
 import anvil.users
 import anvil.server
-import anvil.tables as tables
-from anvil.tables import app_tables
 
 class ProfilEditPopup(ProfilEditPopupTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
-  def signup_button_click(self, **event_args):
-    name = self.name_textbox.text
-    organisation = self.organisation_textbox.text
-    fonction = self.fonction_textbox.text
-    email = self.email_textbox.text
-    password = self.password_textbox.text
-    confirm_password = self.confirm_password_textbox.text
+    self.user = anvil.users.get_user()
+    self.profil = anvil.server.call("get_profil", self.user)
 
-    if not (name and organisation and fonction and email and password and confirm_password):
-      Notification("Merci de remplir tous les champs obligatoires.", style="warning").show()
-      return
+    if self.profil:
+      self.name_box.text = self.profil["name"]
+      self.fonction_box.text = self.profil["fonction"]
+      self.organisation_box.text = self.profil["organisation"]["name"] if self.profil["organisation"] else ""
 
-    if password != confirm_password:
-      Notification("Les mots de passe ne correspondent pas.", style="danger").show()
-      return
+      # Organisation modifiable uniquement si admin
+      self.organisation_box.enabled = self.profil["is_admin"]
 
+  def save_button_click(self, **event_args):
     try:
-      user = anvil.users.signup_with_email(email, password)
+      # Mise à jour des champs de profil
+      anvil.server.call("update_profil", self.user, self.name_box.text, self.fonction_box.text)
 
-      if user:
-        # 1. Enregistrer les infos dans la table 'profiles' via le serveur
-        anvil.server.call("enregistrer_profil", user, name, organisation, fonction)
+      # Si admin, mise à jour de l'organisation
+      if self.profil["is_admin"]:
+        anvil.server.call("update_organisation_name", self.profil["organisation"], self.organisation_box.text)
 
-
-
-        Notification(
-          "Votre compte a été créé. Un email de confirmation a été envoyé. Veuillez le valider avant de vous connecter.",
-          style="info"
-        ).show()
-
-                # 3. Déconnecter l’utilisateur immédiatement (il ne peut rien faire avant confirmation)
-        anvil.users.logout()
-
-        # Redirection simple vers la page de connexion
-        from ..LoginPage import LoginPage
-        get_open_form().load_page(LoginPage())
+      Notification("Profil mis à jour avec succès.", style="success").show()
+      self.raise_event("x-close-alert")
 
     except Exception as e:
-      Notification(f"Erreur lors de la création du compte : {e}", style="danger").show()
+      Notification(f"Erreur : {e}", style="danger").show()

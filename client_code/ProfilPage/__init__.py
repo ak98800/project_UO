@@ -34,16 +34,11 @@ class ProfilPage(ProfilPageTemplate):
     else:
       Notification("Utilisateur non connecté.", style="danger").show()
 
-  def save_button_click(self, **event_args):
-    """Enregistrer les modifications de nom, fonction et organisation si admin"""
-    try:
-      # Nom et fonction
-      anvil.server.call("update_profil", self.user, self.name_box.text, self.fonction_box.text)
+  def modifier_button_click(self, **event_args):
+    """This method is called when the component is clicked."""
+    from ..P.ProfilEditPopup import ProfilEditPopup
+    alert(ProfilEditPopup(), large=True, title="Modifier mon profil")
 
-      # Organisation si admin
-      if self.profil and self.profil["is_admin"]:
-        anvil.server.call("update_organisation_name", self.profil["organisation"], self.organisation_box.text)
+      
 
-      Notification("Profil mis à jour avec succès.", style="success").show()
-    except Exception as e:
-      Notification(f"Erreur : {e}", style="danger").show()
+
