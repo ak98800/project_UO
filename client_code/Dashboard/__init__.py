@@ -2,6 +2,10 @@ from ._anvil_designer import DashboardTemplate
 from anvil import *
 import anvil.server
 import anvil.users
+# Assure-toi d’importer tes autres pages :
+# from ..DossiersPage import DossiersPage
+# from ..FichiersPage import FichiersPage
+# etc.
 
 class Dashboard(DashboardTemplate):
   def __init__(self, **properties):
@@ -35,6 +39,34 @@ class Dashboard(DashboardTemplate):
     except Exception as e:
       Notification(f"Erreur : {str(e)}", style="danger").show()
 
+  # 👇 Ces méthodes doivent être à l'intérieur de la classe
+  def link_dossiers_click(self, **event_args):
+    self.content_panel.clear()
+    self.content_panel.add_component(DossiersPage())
 
+  def link_fichiers_click(self, **event_args):
+    self.content_panel.clear()
+    self.content_panel.add_component(FichiersPage())
 
+  def link_visualisation_click(self, **event_args):
+    self.content_panel.clear()
+    self.content_panel.add_component(VisualisationPage())
 
+  def link_ajouter_click(self, **event_args):
+    self.content_panel.clear()
+    self.content_panel.add_component(NouvelleAnalysePage())
+
+  def link_utilisateurs_click(self, **event_args):
+    self.content_panel.clear()
+    self.content_panel.add_component(GestionUtilisateursPage())
+
+  def link_profil_click(self, **event_args):
+    self.content_panel.clear()
+    self.content_panel.add_component(MonProfilPage())
+
+  def link_logout_click(self, **event_args):
+    anvil.users.logout()
+    open_form("MainPage")
+
+  def icon_button_menu_1_click(self, **event_args):
+    pass
