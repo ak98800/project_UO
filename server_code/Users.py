@@ -62,5 +62,15 @@ def delete_user():
       print("An unexpected error occurred:", e)
   else:
     user.delete()
+@anvil.server.callable
+def get_profil(user):
+  return app_tables.profiles.get(user=user)
 
+@anvil.server.callable
+def update_profil(user, name, organisation, fonction):
+  profil = app_tables.profiles.get(user=user)
+  if profil:
+    profil["name"] = name
+    profil["organisation"] = organisation
+    profil["fonction"] = fonction
 
