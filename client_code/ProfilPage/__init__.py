@@ -36,7 +36,7 @@ class ProfilPage(ProfilPageTemplate):
 
   def modifier_button_click(self, **event_args):
     """This method is called when the component is clicked."""
-    from ..P.ProfilEditPopup import ProfilEditPopup
+    from ..ProfilEditPopup import ProfilEditPopup
     alert(ProfilEditPopup(), large=True, title="Modifier mon profil")
 
       
