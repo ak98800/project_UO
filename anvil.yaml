@@ -1,6 +1,21 @@
 allow_embedding: false
 correct_dependency_ids: {dep_gqlhr7sei7ys7: 4UK6WHQ6UX7AKELK}
 db_schema:
+  organisations_:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: name
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: created_by
+      target: users
+      type: link_single
+    - admin_ui: {order: 2, width: 200}
+      name: created_at
+      type: datetime
+    server: full
+    title: 'organisations '
   profiles:
     client: none
     columns:
@@ -12,11 +27,15 @@ db_schema:
       name: name
       type: string
     - admin_ui: {width: 200}
-      name: organisation
-      type: string
-    - admin_ui: {width: 200}
       name: fonction
       type: string
+    - admin_ui: {order: 4, width: 200}
+      name: organisation
+      target: organisations_
+      type: link_single
+    - admin_ui: {order: 5, width: 200}
+      name: is_admin
+      type: bool
     server: full
     title: profiles
   users:
