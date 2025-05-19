@@ -3,11 +3,15 @@ from anvil import *
 import anvil.users
 from ..Dashboard import Dashboard
 
+
 class HomePageLayout(HomePageLayoutTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.user = anvil.users.get_user()
 
+    # Appliquer le rôle au footer
+    self.footer_label.role = "footer"
+
     # Charger Dashboard par défaut
     self.content_panel.clear()
-    self.content_panel.add_component(Dashboard(user=self.user))
+    self.content_panel.add_component(Dashboard(user=self.user))²
