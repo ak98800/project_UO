@@ -4,3 +4,26 @@
   padding: 15px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
+
+/* Appliquer flex à la structure interne du slot */
+.anvil-form-HomePageLayout > .slot-container > .column-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Content_panel prend tout lespace restant */
+#content_panel {
+  flex-grow: 1;
+}
+
+/* Footer collé en bas */
+.anvil-role-footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 13px;
+  color: #666;
+  background-color: #f1f1f1;
+  border-top: 1px solid #ddd;
+}
+

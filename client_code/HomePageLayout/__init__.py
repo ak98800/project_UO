@@ -14,4 +14,4 @@ class HomePageLayout(HomePageLayoutTemplate):
 
     # Charger Dashboard par défaut
     self.content_panel.clear()
-    self.content_panel.add_component(Dashboard(user=self.user))²
+    self.content_panel.add_component(Dashboard(user=self.user))
