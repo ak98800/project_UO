@@ -12,53 +12,10 @@ components:
         padding: [null, null, null, 0]
       vertical_align: middle
     type: FlowPanel
-  - event_bindings: {click: icon_button_menu_1_click}
-    layout_properties: {grid_position: 'VXZONL,OZROFH'}
-    name: icon_button_menu_1
-    properties: {icon: 'mi:menu', visible: true}
-    type: form:dep_gqlhr7sei7ys7:_Components.IconButtonMenu
   layout_properties: {full_width_row: true, grid_position: 'QRHNSH,BIJYNV'}
   name: column_panel_1
   properties: {}
   type: ColumnPanel
-- components:
-  - components:
-    - layout_properties: {grid_position: 'YESTIZ,DSXSVM'}
-      name: link_dossiers
-      properties: {text: Dossiers}
-      type: form:dep_gqlhr7sei7ys7:_Components.Link
-    - layout_properties: {grid_position: 'IQXGTC,XLUCIF'}
-      name: link_fichiers
-      properties: {text: Fichiers}
-      type: form:dep_gqlhr7sei7ys7:_Components.Link
-    - layout_properties: {grid_position: 'ODJXPQ,VJMTPE'}
-      name: link_visualisation
-      properties: {text: Visualisation}
-      type: form:dep_gqlhr7sei7ys7:_Components.Link
-    - layout_properties: {grid_position: 'EQWFEV,WLQTFM'}
-      name: link_ajouter
-      properties: {text: ' Créer une analyse'}
-      type: form:dep_gqlhr7sei7ys7:_Components.Link
-    - layout_properties: {grid_position: 'CSVKPE,FOSHAU'}
-      name: link_utilisateurs
-      properties: {text: Utilisateurs (admin)}
-      type: form:dep_gqlhr7sei7ys7:_Components.Link
-    - layout_properties: {grid_position: 'GGGAIQ,FZWDSQ'}
-      name: link_profil
-      properties: {text: ' Mon profil'}
-      type: form:dep_gqlhr7sei7ys7:_Components.Link
-    - layout_properties: {grid_position: 'KCLULE,DWDXCE'}
-      name: link_logout
-      properties: {text: Déconnexion}
-      type: form:dep_gqlhr7sei7ys7:_Components.Link
-    layout_properties: {width: 200}
-    name: sidebar_panel
-    properties: {}
-    type: ColumnPanel
-  layout_properties: {grid_position: 'PBMNQB,CIPPPK'}
-  name: flow_panel_2
-  properties: {}
-  type: FlowPanel
 container:
   properties: {col_spacing: large, spacing_above: large, spacing_below: none}
   type: ColumnPanel
