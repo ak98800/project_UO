@@ -11,15 +11,9 @@ class ProfilPage(ProfilPageTemplate):
 
     if self.user:
       self.email_label.text = self.user["email"]
-      # ❌ Ne plus appeler form_show automatiquement
-      # self.set_event_handler("show", self.form_show)
       self.recharger_profil()
     else:
       Notification("Utilisateur non connecté.", style="danger").show()
-
-  # ❌ Supprimer cette méthode si plus utilisée
-  # def form_show(self, **event_args):
-  #   self.recharger_profil()
 
   def recharger_profil(self):
     self.profil = anvil.server.call("get_profil", self.user)
@@ -42,3 +36,4 @@ class ProfilPage(ProfilPageTemplate):
     result = alert(ProfilEditPopup(), title="Modifier mon profil", large=True, buttons=None)
     if result is True:
       self.recharger_profil()
+

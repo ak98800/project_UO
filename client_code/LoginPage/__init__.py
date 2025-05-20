@@ -21,7 +21,7 @@ class LoginPage(LoginPageTemplate):
       if user and user["enabled"]:
         Notification("Connexion réussie !", style="success").show()
         from ..HomePageLayout import HomePageLayout
-        open_form(HomePageLayout())
+        open_form(HomePageLayout(content="dashboard"))
       else:
         Notification("Merci de confirmer votre adresse email.", style="warning").show()
         anvil.users.logout()
