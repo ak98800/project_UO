@@ -3,6 +3,10 @@ from anvil import *
 import anvil.users
 import anvil.server
 
+# ✅ Remplace ce chemin par un import direct
+from ..HomePageLayout import HomePageLayout
+
+
 class LoginPage(LoginPageTemplate):
   def __init__(self, confirmed=False, **properties):
     self.init_components(**properties)
@@ -20,8 +24,8 @@ class LoginPage(LoginPageTemplate):
 
       if user and user["enabled"]:
         Notification("Connexion réussie !", style="success").show()
-        from ..HomePageLayout import HomePageLayout
-        open_form(HomePageLayout(content="dashboard"))
+
+        open_form(HomePageLayout())  # ✅ Charge HomePageLayout avec le slot
       else:
         Notification("Merci de confirmer votre adresse email.", style="warning").show()
         anvil.users.logout()
