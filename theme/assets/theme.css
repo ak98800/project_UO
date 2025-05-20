@@ -27,3 +27,9 @@
   border-top: 1px solid #ddd;
 }
 
+.anvil-role-profil-popup {
+  width: 500px;
+  max-width: 90vw;
+  padding: 20px;
+  box-sizing: border-box;
+}

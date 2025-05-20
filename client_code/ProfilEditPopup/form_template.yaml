@@ -2,17 +2,7 @@ components:
 - components:
   - components:
     - components:
-      - data_bindings: []
-        event_bindings: {show: text_1_show}
-        layout_properties: {full_width_row: false, grid_position: 'WNADYF,ELOPQK'}
-        name: text_1
-        properties: {align: left, bold: true, font_size: 45, scale: large, style: label, text: Inscription, underline: false}
-        type: form:dep_gqlhr7sei7ys7:_Components.Text
-      - components:
-        - layout_properties: {grid_position: 'JMRURH,BVUNZJ'}
-          name: text_6
-          properties: {text: Créez votre compte gratuitement pour accéder à la plateforme}
-          type: form:dep_gqlhr7sei7ys7:_Components.Text
+      - components: []
         layout_properties: {grid_position: 'XVGGIP,NXBXEW'}
         name: column_panel_4
         properties: {}
@@ -54,18 +44,23 @@ components:
         properties: {}
         type: ColumnPanel
       - event_bindings: {click: save_button_click}
-        layout_properties: {grid_position: 'FDMWYT,OVMLTM'}
+        layout_properties: {grid_position: 'BWVFJP,LEARZD'}
         name: save_button
-        properties: {appearance: filled, text: Enregistrer}
+        properties: {align: left, appearance: filled, text: Enregistrer}
+        type: form:dep_gqlhr7sei7ys7:_Components.Button
+      - event_bindings: {click: cancel_button_click}
+        layout_properties: {grid_position: ''}
+        name: cancel_button
+        properties: {align: left, text: Annuler}
+        type: form:dep_gqlhr7sei7ys7:_Components.Button
+      - layout_properties: {grid_position: 'VRNNXR,PRQQMB'}
+        name: delete_button
+        properties: {text: Supprimer mon compte}
         type: form:dep_gqlhr7sei7ys7:_Components.Button
       layout_properties: {expand: true, width: 143.33331298828125}
       name: column_panel_2
       properties: {}
       type: ColumnPanel
-    - layout_properties: {}
-      name: image_1
-      properties: {height: 472.33331298828125, source: '_/theme/ChatGPT Image 21 avr. 2025, 10_47_22.png'}
-      type: Image
     layout_properties: {full_width_row: false, grid_position: 'TTRVFQ,VHIYLC'}
     name: flow_panel_1
     properties:

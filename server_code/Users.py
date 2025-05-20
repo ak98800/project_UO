@@ -56,12 +56,31 @@ def calculate_percentage_of(number, total_number):
 @anvil.server.callable(require_user=True)
 def delete_user():
   user = anvil.users.get_user()
-  if user["stripe_id"]:
+
+  # 🔍 Supprimer le profil associé
+  profil = app_tables.profiles.get(user=user)
+  orga = profil["organisation"] if profil else None
+  is_admin = profil["is_admin"] if profil else False
+
+  if profil:
+    profil.delete()
+
+  # ✅ Supprimer l'organisation si admin et seul membre
+  if orga and is_admin:
+    membres_restants = app_tables.profiles.search(organisation=orga)
+    if len(membres_restants) == 0:
+      orga.delete()
+
+  # ✅ Supprimer le client Stripe s’il existe
+  if "stripe_id" in user and user["stripe_id"]:
     try:
       stripe.Customer.delete(user["stripe_id"])
     except Exception as e:
       print("Stripe delete error:", e)
+
+  # ✅ Supprimer le compte utilisateur
   user.delete()
+
 
 # ✅ Modifier l’email Stripe (si présent)
 @anvil.server.callable(require_user=True)
