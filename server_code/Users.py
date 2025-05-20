@@ -5,13 +5,12 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
-import uuid
 import stripe
 from datetime import datetime
 
 stripe.api_key = anvil.secrets.get_secret('stripe_secret_api_key')
 
-# ✅ Créer une organisation + profil lié à l'utilisateur
+# ✅ Créer une organisation + profil lié à l'utilisateur (admin)
 @anvil.server.callable
 def enregistrer_profil(user, name, organisation_name, fonction):
   orga = app_tables.organisations.add_row(
@@ -46,18 +45,15 @@ def update_organisation_name(orga_row, new_name):
   if orga_row:
     orga_row["name"] = new_name
 
-# ✅ Exemple simple de fonction serveur protégée
+# ✅ Exemple simple de fonction protégée
 @anvil.server.callable(require_user=True)
 def calculate_percentage_of(number, total_number):
-  percentage = (int(number) / int(total_number)) * 100
-  return percentage
+  return (int(number) / int(total_number)) * 100
 
-# ✅ Supprimer un user (et compte Stripe si nécessaire)
+# ✅ Supprimer un user (profil, orga, Stripe, compte)
 @anvil.server.callable(require_user=True)
 def delete_user():
   user = anvil.users.get_user()
-
-  # 🔍 Supprimer le profil associé
   profil = app_tables.profiles.get(user=user)
   orga = profil["organisation"] if profil else None
   is_admin = profil["is_admin"] if profil else False
@@ -65,36 +61,31 @@ def delete_user():
   if profil:
     profil.delete()
 
-  # ✅ Supprimer l'organisation si admin et seul membre
   if orga and is_admin:
-    membres_restants = app_tables.profiles.search(organisation=orga)
-    if len(membres_restants) == 0:
+    autres = app_tables.profiles.search(organisation=orga)
+    if len(autres) == 0:
       orga.delete()
 
-  # ✅ Supprimer le client Stripe s’il existe
   if "stripe_id" in user and user["stripe_id"]:
     try:
       stripe.Customer.delete(user["stripe_id"])
     except Exception as e:
       print("Stripe delete error:", e)
 
-  # ✅ Supprimer le compte utilisateur
   user.delete()
-
 
 # ✅ Modifier l’email Stripe (si présent)
 @anvil.server.callable(require_user=True)
 def change_email(email):
   user = anvil.users.get_user()
   try:
-    customer = stripe.Customer.modify(user["stripe_id"], email=email)
+    stripe.Customer.modify(user["stripe_id"], email=email)
     user["email"] = email
-    print("Stripe email updated successfully.")
   except Exception as e:
     print("Erreur Stripe :", e)
   return user
 
-
+# ✅ Inviter un utilisateur dans une organisation
 @anvil.server.callable
 def inviter_utilisateur(email, organisation):
   existing_user = app_tables.users.get(email=email)
@@ -104,7 +95,6 @@ def inviter_utilisateur(email, organisation):
     if profil:
       return "Cet utilisateur est déjà membre."
     else:
-      # Créer profil et envoyer lien de réinitialisation
       app_tables.profiles.add_row(user=existing_user, organisation=organisation, is_admin=False)
       anvil.users.send_password_reset_email(email)
       return "Utilisateur existant invité."
@@ -114,6 +104,7 @@ def inviter_utilisateur(email, organisation):
     anvil.users.send_password_reset_email(email)
     return "Nouvel utilisateur invité."
 
+# ✅ Liste des membres d'une organisation
 @anvil.server.callable
 def lister_utilisateurs_organisation(organisation):
   return app_tables.profiles.search(organisation=organisation)

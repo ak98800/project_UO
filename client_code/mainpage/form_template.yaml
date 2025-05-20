@@ -25,21 +25,6 @@ components:
       name: inscription
       properties: {appearance: elevated, icon: 'mi:person_add', text: S'inscrire}
       type: form:dep_gqlhr7sei7ys7:_Components.Button
-    - event_bindings: {click: dashboard_click}
-      layout_properties: {}
-      name: dashboard
-      properties: {appearance: outlined, bold: true, icon: 'mi:dashboard', text: Dashboard}
-      type: form:dep_gqlhr7sei7ys7:_Components.Button
-    - event_bindings: {click: profil_click}
-      layout_properties: {}
-      name: profil
-      properties: {appearance: text, bold: true, icon: 'mi:person', text: Profil}
-      type: form:dep_gqlhr7sei7ys7:_Components.Button
-    - event_bindings: {click: deconnexion_click}
-      layout_properties: {}
-      name: deconnexion
-      properties: {appearance: text, icon: 'mi:logout', text: Déconnexion}
-      type: form:dep_gqlhr7sei7ys7:_Components.Button
     layout_properties: {full_width_row: true, grid_position: 'ROPADT,AMGMWP WPFUWV,FDVTNT'}
     name: flow_panel_2
     properties:

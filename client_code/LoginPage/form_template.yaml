@@ -3,7 +3,7 @@ components:
   - components:
     - components:
       - data_bindings: []
-        event_bindings: {show: text_1_show}
+        event_bindings: {}
         layout_properties: {full_width_row: false, grid_position: 'WNADYF,ELOPQK'}
         name: text_1
         properties: {align: left, bold: true, font_size: 45, scale: large, style: label, text: Connectez vous, underline: false}
