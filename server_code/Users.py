@@ -5,7 +5,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
-
+import uuid
 import stripe
 from datetime import datetime
 
@@ -94,3 +94,26 @@ def change_email(email):
     print("Erreur Stripe :", e)
   return user
 
+
+@anvil.server.callable
+def inviter_utilisateur(email, organisation):
+  existing_user = app_tables.users.get(email=email)
+
+  if existing_user:
+    profil = app_tables.profiles.get(user=existing_user)
+    if profil:
+      return "Cet utilisateur est déjà membre."
+    else:
+      # Créer profil et envoyer lien de réinitialisation
+      app_tables.profiles.add_row(user=existing_user, organisation=organisation, is_admin=False)
+      anvil.users.send_password_reset_email(email)
+      return "Utilisateur existant invité."
+  else:
+    new_user = anvil.users.signup_with_email(email, "")
+    app_tables.profiles.add_row(user=new_user, organisation=organisation, is_admin=False)
+    anvil.users.send_password_reset_email(email)
+    return "Nouvel utilisateur invité."
+
+@anvil.server.callable
+def lister_utilisateurs_organisation(organisation):
+  return app_tables.profiles.search(organisation=organisation)

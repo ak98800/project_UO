@@ -1,0 +1,15 @@
+components:
+- layout_properties: {grid_position: 'CYZVCA,SUTKDR'}
+  name: text_1
+  properties: {text: nom}
+  type: form:dep_gqlhr7sei7ys7:_Components.Text
+- layout_properties: {grid_position: 'QVQQME,ODAMFS'}
+  name: text_2
+  properties: {text: fonction}
+  type: form:dep_gqlhr7sei7ys7:_Components.Text
+- layout_properties: {grid_position: 'TFYIAW,RGCGBP'}
+  name: text_3
+  properties: {text: email}
+  type: form:dep_gqlhr7sei7ys7:_Components.Text
+container: {type: ColumnPanel}
+is_package: true
