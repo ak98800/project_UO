@@ -1,8 +1,7 @@
 components_by_slot:
   content:
-  - components: []
-    layout_properties: {}
-    name: content_slot
+  - layout_properties: {}
+    name: column_panel_1
     properties: {}
     type: ColumnPanel
   - components:
