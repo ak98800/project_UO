@@ -7,13 +7,10 @@ class mainpage(mainpageTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
-    # Évite toute redirection si un utilisateur est déjà connecté
     user = anvil.users.get_user()
     if user:
-      # Ne rien faire, car LoginPage → HomePageLayout a déjà été chargé
-      return
+      return  # ✅ Laisse HomePageLayout gérer la suite
 
-    # Sinon, affichage LandingPage avec boutons
     self.se_connecter.visible = True
     self.inscription.visible = True
 
