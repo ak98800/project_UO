@@ -33,3 +33,22 @@
   padding: 20px;
   box-sizing: border-box;
 }
+.anvil-role-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.anvil-role-scrollable-container {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.anvil-role-scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+}
