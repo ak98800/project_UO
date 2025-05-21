@@ -41,4 +41,3 @@ is_package: false
 layout: {type: 'form:dep_gqlhr7sei7ys7:Layouts.NavigationDrawerLayout'}
 properties:
 - {default_binding_prop: true, default_value: '', important: true, name: prop, type: string}
-slots: {}
