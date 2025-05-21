@@ -14,18 +14,10 @@ components:
     properties: {vertical_align: middle}
     type: FlowPanel
   - components:
-    - event_bindings: {click: se_connecter_click}
-      layout_properties: {}
-      name: se_connecter
-      properties: {appearance: filled, bold: true, icon: 'mi:login', text: Se connecter}
-      type: form:dep_gqlhr7sei7ys7:_Components.Button
-    - data_bindings: []
-      event_bindings: {click: inscription_click}
-      layout_properties: {}
-      name: inscription
-      properties: {appearance: elevated, icon: 'mi:person_add', text: S'inscrire}
-      type: form:dep_gqlhr7sei7ys7:_Components.Button
-    layout_properties: {full_width_row: true, grid_position: 'ROPADT,AMGMWP WPFUWV,FDVTNT'}
+    - name: label_welcome
+      properties: {}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    layout_properties: {full_width_row: true, grid_position: 'ROPADT,AMGMWP'}
     name: flow_panel_2
     properties:
       align: right
@@ -34,10 +26,19 @@ components:
         padding: [null, 0, null, null]
       vertical_align: middle
     type: FlowPanel
-  - layout_properties: {full_width_row: true, grid_position: 'BRQFVU,AHUDKG'}
-    name: content_panel
+  - components:
+    - layout_properties: {width: 200}
+      name: navigation_bar_panel
+      properties: {}
+      type: ColumnPanel
+    - layout_properties: {expand: true, width: 715.3333129882812}
+      name: content_panel
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {full_width_row: true, grid_position: 'WYIWYR,AXQWQG'}
+    name: RowPanel
     properties: {}
-    type: ColumnPanel
+    type: FlowPanel
   - components:
     - layout_properties: {grid_position: 'OQSNPY,RCRUOJ'}
       name: text_1
@@ -48,7 +49,7 @@ components:
     properties: {}
     type: ColumnPanel
   layout_properties: {full_width_row: true, grid_position: 'FPJFWR,JXXCBQ'}
-  name: column_panel_1
+  name: Header_panel
   properties: {col_spacing: medium, visible: true}
   type: ColumnPanel
 container: {type: ColumnPanel}
