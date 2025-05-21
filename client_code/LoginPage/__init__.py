@@ -3,7 +3,7 @@ from anvil import *
 import anvil.users
 import anvil.server
 
-from ..HomePageLayout import HomePageLayout  # ✅ Import direct sans ".."
+from ..Dashboard import Dashboard  # ← Import de la page principale après login
 
 class LoginPage(LoginPageTemplate):
   def __init__(self, confirmed=False, **properties):
@@ -22,12 +22,16 @@ class LoginPage(LoginPageTemplate):
 
       if user and user["enabled"]:
         Notification("Connexion réussie !", style="success").show()
-        open_form(HomePageLayout())  # ✅ Ouvre la page avec content_panel2
+
+        # ✅ Ouvre directement le Dashboard avec la navigation intégrée
+        open_form(Dashboard())
+
       else:
         Notification("Merci de confirmer votre adresse email.", style="warning").show()
         anvil.users.logout()
 
     except anvil.users.AuthenticationFailed:
       Notification("Email ou mot de passe incorrect.", style="danger").show()
+
 
 

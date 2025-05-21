@@ -1,0 +1,44 @@
+components_by_slot:
+  content: []
+  navigation:
+  - layout_properties: {}
+    name: image_1
+    properties: {height: 94, source: _/theme/ChatGPT_Image_21_avr._2025__11_23_26-removebg-preview.png}
+    type: Image
+  - event_bindings: {click: navigation_link_dashboard_click}
+    layout_properties: {}
+    name: navigation_link_dashboard
+    properties: {navigate_to: Dashboard, text: Dashboard}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+  - layout_properties: {}
+    name: navigation_link_dossiers
+    properties: {text: Dossiers}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+  - layout_properties: {}
+    name: navigation_link_visualisation
+    properties: {text: Visualisation}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+  - layout_properties: {}
+    name: navigation_link_analyse
+    properties: {text: ' Créer une analyse'}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+  - event_bindings: {click: navigation_link_utilisateurs_click}
+    layout_properties: {}
+    name: navigation_link_utilisateurs
+    properties: {navigate_to: GestionUtilisateursPage, text: Utilisateurs (admin)}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+  - event_bindings: {click: navigation_link_profil_click}
+    layout_properties: {}
+    name: navigation_link_profil
+    properties: {navigate_to: ProfilPage, text: ' Mon profil'}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+  - layout_properties: {}
+    name: navigation_link_deconnextion
+    properties: {text: Déconnexion}
+    type: form:dep_gqlhr7sei7ys7:_Components.NavigationLink
+custom_component: false
+is_package: false
+layout: {type: 'form:dep_gqlhr7sei7ys7:Layouts.NavigationDrawerLayout'}
+properties:
+- {default_binding_prop: true, default_value: '', important: true, name: prop, type: string}
+slots: {}
