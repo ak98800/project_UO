@@ -1,0 +1,20 @@
+components:
+- components:
+  - layout_properties: {col_xs: 0, row: ARETCE, width_xs: 1}
+    name: image_1
+    properties: {height: 81.11109924316406, source: _/theme/ChatGPT_Image_21_avr._2025__11_23_26-removebg-preview.png}
+    type: Image
+  - layout_properties: {col_xs: 1, row: ARETCE, width_xs: 3}
+    name: heading_1
+    properties: {text: UltimateOwner}
+    type: form:dep_gqlhr7sei7ys7:_Components.Heading
+  - layout_properties: {col_xs: 9, row: ARETCE, width_xs: 2}
+    name: label_welcome
+    properties: {align: left}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  layout_properties: {full_width_row: true, grid_position: 'ZUTJSE,IEEMBP'}
+  name: header_content
+  properties: {}
+  type: GridPanel
+container: {type: ColumnPanel}
+is_package: true

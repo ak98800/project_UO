@@ -1,10 +1,6 @@
 components_by_slot:
   content: []
   navigation:
-  - layout_properties: {}
-    name: image_1
-    properties: {height: 94, source: _/theme/ChatGPT_Image_21_avr._2025__11_23_26-removebg-preview.png}
-    type: Image
   - event_bindings: {click: navigation_link_dashboard_click}
     layout_properties: {}
     name: navigation_link_dashboard
