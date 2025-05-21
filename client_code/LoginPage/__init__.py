@@ -3,6 +3,8 @@ from anvil import *
 import anvil.users
 import anvil.server
 
+from ..HomePageLayout import HomePageLayout  # ✅ Import direct sans ".."
+
 class LoginPage(LoginPageTemplate):
   def __init__(self, confirmed=False, **properties):
     self.init_components(**properties)
@@ -20,14 +22,12 @@ class LoginPage(LoginPageTemplate):
 
       if user and user["enabled"]:
         Notification("Connexion réussie !", style="success").show()
-
-        # 🟢 Passe au layout après connexion
-        open_form("HomePageLayout")
-
+        open_form(HomePageLayout())  # ✅ Ouvre la page avec content_panel2
       else:
         Notification("Merci de confirmer votre adresse email.", style="warning").show()
         anvil.users.logout()
 
     except anvil.users.AuthenticationFailed:
       Notification("Email ou mot de passe incorrect.", style="danger").show()
+
 

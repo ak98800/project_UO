@@ -13,3 +13,4 @@ class Dashboard(DashboardTemplate):
       self.label_welcome.text = "Bienvenue !"
 
 
+
