@@ -21,7 +21,7 @@ class LoginPage(LoginPageTemplate):
       if user and user["enabled"]:
         Notification("Connexion réussie !", style="success").show()
 
-        # ✅ Utilise le nom du layout déclaré comme layout
+        # 🟢 Passe au layout après connexion
         open_form("HomePageLayout")
 
       else:
