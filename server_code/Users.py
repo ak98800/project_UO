@@ -86,7 +86,6 @@ def inviter_utilisateur(email, name, organisation):
   current_user = anvil.users.get_user()
   if not current_user:
     raise Exception("Utilisateur non connecté.")
-
   if email == current_user["email"]:
     raise Exception("Vous ne pouvez pas vous inviter vous-même.")
 
@@ -103,10 +102,9 @@ def inviter_utilisateur(email, name, organisation):
         organisation=organisation,
         is_admin=False
       )
-      anvil.users.send_password_reset_email(email)
       return "Utilisateur existant invité."
   else:
-    temp_password = "AnvilTemp123"  # ✅ mot de passe temporaire valide
+    temp_password = "AnvilTemp123"
     new_user = anvil.users.signup_with_email(email, temp_password)
 
     app_tables.profiles.add_row(
@@ -115,9 +113,19 @@ def inviter_utilisateur(email, name, organisation):
       organisation=organisation,
       is_admin=False
     )
+    return "Nouvel utilisateur invité. Il doit confirmer son email."
 
-    anvil.users.send_password_reset_email(email)
-    return "Nouvel utilisateur invité."
+@anvil.server.callable(require_user=True)
+def envoyer_reset_si_invite():
+  user = anvil.users.get_user()
+  profil = app_tables.profiles.get(user=user)
+  if not profil:
+    raise Exception("Profil introuvable.")
+  if not user["email_confirmed"]:
+    raise Exception("Veuillez d'abord confirmer votre email.")
+
+  anvil.users.send_password_reset_email(user["email"])
+  return "Lien de réinitialisation envoyé."
 
 @anvil.server.callable
 def lister_utilisateurs_organisation(organisation):
@@ -134,4 +142,3 @@ def supprimer_utilisateur(profil):
     return "Utilisateur supprimé."
   else:
     raise Exception("Vous ne pouvez pas vous supprimer vous-même.")
-

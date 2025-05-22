@@ -25,7 +25,7 @@ components:
       name: inscription
       properties: {appearance: elevated, icon: 'mi:person_add', text: S'inscrire}
       type: form:dep_gqlhr7sei7ys7:_Components.Button
-    layout_properties: {full_width_row: true, grid_position: 'ROPADT,AMGMWP WPFUWV,FDVTNT'}
+    layout_properties: {full_width_row: true, grid_position: 'ROPADT,AMGMWP'}
     name: flow_panel_2
     properties:
       align: right

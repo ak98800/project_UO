@@ -1,0 +1,56 @@
+components:
+- components:
+  - components:
+    - components:
+      - data_bindings: []
+        event_bindings: {}
+        layout_properties: {full_width_row: false, grid_position: 'WNADYF,ELOPQK'}
+        name: text_1
+        properties: {align: left, bold: true, font_size: 45, scale: large, style: label, text: Bienvenue sur UltimateOwner, underline: false}
+        type: form:dep_gqlhr7sei7ys7:_Components.Text
+      - layout_properties: {full_width_row: false, grid_position: 'SRQJIV,THSBDD'}
+        name: spacer_1
+        properties: {height: '10', spacing_above: none, spacing_below: none, visible: false}
+        type: Spacer
+      - components:
+        - layout_properties: {grid_position: 'LAZZMM,BCYHEK'}
+          name: email_label
+          properties: {}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        layout_properties: {grid_position: 'WUSGPQ,LIMMKK'}
+        name: column_panel_4
+        properties: {}
+        type: ColumnPanel
+      - layout_properties: {grid_position: 'XIUZAH,PJDRVC'}
+        name: text_3
+        properties: {bold: true, font_size: 25, text: Cliquez sur le bouton ci-dessous pour définir votre mot de passe.}
+        type: form:dep_gqlhr7sei7ys7:_Components.Text
+      - event_bindings: {click: reset_button_click}
+        layout_properties: {grid_position: 'FDMWYT,OVMLTM'}
+        name: reset_button
+        properties: {appearance: filled, text: Définir mon mot de passe}
+        type: form:dep_gqlhr7sei7ys7:_Components.Button
+      layout_properties: {expand: true, width: 143.33331298828125}
+      name: column_panel_2
+      properties: {}
+      type: ColumnPanel
+    - layout_properties: {}
+      name: image_1
+      properties: {height: 472.33331298828125, source: _/theme/https___d72fe052d8ecbd9e55a0705553cc6c8a.cdn.bubble.io_f1745192339981x632129683329824600_AI-Generated-Image.jpeg}
+      type: Image
+    layout_properties: {full_width_row: false, grid_position: 'TTRVFQ,VHIYLC'}
+    name: flow_panel_1
+    properties:
+      gap: large
+      spacing:
+        padding: [null, null, null, 0]
+      vertical_align: middle
+    type: FlowPanel
+  layout_properties: {full_width_row: true, grid_position: 'QRHNSH,BIJYNV'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+container:
+  properties: {col_spacing: large, spacing_above: large, spacing_below: none}
+  type: ColumnPanel
+is_package: true
