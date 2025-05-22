@@ -11,12 +11,12 @@ class NavigationBar(NavigationBarTemplate):
     open_form(Dashboard())
 
   def navigation_link_profil_click(self, **event_args):
-    from ..ProfilPage import ProfilPage
+    from ProfilPage import ProfilPage
     open_form(ProfilPage())
 
   def navigation_link_utilisateurs_click(self, **event_args):
-    from ..GestionUtilisateursPage import GestionUtilisateursPage
-    open_form(GestionUtilisateursPage())
+    from GestionUtilisateurPage import GestionUtilisateurPage
+    open_form(GestionUtilisateurPage())
 
   def navigation_link_logout_click(self, **event_args):
     anvil.users.logout()

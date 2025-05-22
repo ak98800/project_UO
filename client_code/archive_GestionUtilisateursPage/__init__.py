@@ -1,9 +1,9 @@
-from ._anvil_designer import GestionUtilisateursPageTemplate
+from ._anvil_designer import archive_GestionUtilisateursPageTemplate
 from anvil import *
 import anvil.server
 import anvil.users
 
-class GestionUtilisateursPage(GestionUtilisateursPageTemplate):
+class archive_GestionUtilisateursPage(archive_GestionUtilisateursPageTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.user = anvil.users.get_user()

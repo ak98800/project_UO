@@ -1,32 +1,19 @@
-from ._anvil_designer import ProfilPageTemplate
+from ._anvil_designer import archive_ProfilPageTemplate
 from anvil import *
-import anvil.server
 import anvil.users
+import anvil.server
 
-from ..NavigationBar import NavigationBar
-from ..ProfilEditPopup import ProfilEditPopup
-
-class ProfilPage(ProfilPageTemplate):
+class archive_ProfilPage(archive_ProfilPageTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
-
-    # Mise en page
-    self.header_panel.role = "sticky-header"
-    self.content_panel.role = "scrollable-content"
-    self.navigation_bar_panel.clear()
-    self.navigation_bar_panel.add_component(NavigationBar())
-
-    # Chargement utilisateur
     self.user = anvil.users.get_user()
     self.profil = None
 
     if self.user:
-      self.label_welcome.text = f"Bienvenue, {self.user['email']}"
       self.email_label.text = self.user["email"]
       self.recharger_profil()
     else:
       Notification("Utilisateur non connecté.", style="danger").show()
-      self.label_welcome.text = "Bienvenue !"
 
   def recharger_profil(self):
     self.profil = anvil.server.call("get_profil", self.user)
@@ -35,9 +22,8 @@ class ProfilPage(ProfilPageTemplate):
       self.name_box.text = self.profil["name"]
       self.fonction_box.text = self.profil["fonction"]
 
-      org = self.profil["organisation"]
-      if org:
-        self.organisation_box.text = org["name"]
+      if self.profil["organisation"]:
+        self.organisation_box.text = self.profil["organisation"]["name"]
         self.organisation_box.enabled = self.profil["is_admin"]
       else:
         self.organisation_box.text = "Aucune"
@@ -46,6 +32,7 @@ class ProfilPage(ProfilPageTemplate):
       Notification("Profil introuvable.", style="danger").show()
 
   def modifier_button_click(self, **event_args):
+    from ..ProfilEditPopup import ProfilEditPopup
     result = alert(ProfilEditPopup(), title="Modifier mon profil", large=True, buttons=None)
     if result is True:
       self.recharger_profil()

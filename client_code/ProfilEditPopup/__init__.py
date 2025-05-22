@@ -8,6 +8,7 @@ class ProfilEditPopup(ProfilEditPopupTemplate):
     self.init_components(**properties)
     self.user = anvil.users.get_user()
     self.profil = None
+    
 
     # ✅ Charger les données tout de suite (remplace form_show)
     self.profil = anvil.server.call("get_profil", self.user)
@@ -44,3 +45,5 @@ class ProfilEditPopup(ProfilEditPopupTemplate):
         open_form("mainpage")
       except Exception as e:
         Notification(f"Erreur : {e}", style="danger").show()
+
+

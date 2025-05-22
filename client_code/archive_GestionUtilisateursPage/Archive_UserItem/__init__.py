@@ -1,7 +1,7 @@
-from ._anvil_designer import UserItemTemplate
+from ._anvil_designer import Archive_UserItemTemplate
 from anvil import *
 
-class UserItem(UserItemTemplate):
+class Archive_UserItem(Archive_UserItemTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     profil = self.item

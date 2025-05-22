@@ -52,3 +52,11 @@
   flex: 1;
   overflow-y: auto;
 }
+
+.anvil-role-cellule-tableau {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  background-color: white;
+  text-align: left;
+  font-size: 14px;
+}
