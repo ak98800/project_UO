@@ -7,6 +7,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 import stripe
+import random
+import string
 from datetime import datetime
 
 stripe.api_key = anvil.secrets.get_secret('stripe_secret_api_key')
@@ -86,21 +88,23 @@ def change_email(email):
     print("Erreur Stripe :", e)
   return user
 
-# ✅ Inviter un utilisateur dans une organisation
-import random
-import string
-
+# ✅ Inviter un utilisateur dans une organisation (corrigé)
 @anvil.server.callable
 def inviter_utilisateur(email, name, organisation):
+  current_user = anvil.users.get_user()
+  if not current_user:
+    raise Exception("Utilisateur non connecté.")
+
+  if email == current_user["email"]:
+    raise Exception("Vous ne pouvez pas vous inviter vous-même.")
+
   existing_user = app_tables.users.get(email=email)
 
   if existing_user:
-    # Si l'utilisateur existe déjà
     profil = app_tables.profiles.get(user=existing_user)
     if profil:
       return "Cet utilisateur est déjà membre."
     else:
-      # Ajouter un profil pour cet utilisateur existant
       app_tables.profiles.add_row(
         user=existing_user,
         name=name,
@@ -110,13 +114,9 @@ def inviter_utilisateur(email, name, organisation):
       anvil.users.send_password_reset_email(email)
       return "Utilisateur existant invité."
   else:
-    # Créer un mot de passe temporaire aléatoire
     temp_password = "".join(random.choices(string.ascii_letters + string.digits, k=12))
-
-    # Créer un compte sans demander de confirmation d'email
     new_user = anvil.users.force_signup(email, temp_password)
 
-    # Ajouter un profil lié à l'organisation
     app_tables.profiles.add_row(
       user=new_user,
       name=name,
@@ -124,23 +124,18 @@ def inviter_utilisateur(email, name, organisation):
       is_admin=False
     )
 
-    # Envoyer uniquement l'email de réinitialisation de mot de passe
     anvil.users.send_password_reset_email(email)
-
     return "Nouvel utilisateur invité."
-
 
 # ✅ Liste des membres d'une organisation
 @anvil.server.callable
 def lister_utilisateurs_organisation(organisation):
   return app_tables.profiles.search(organisation=organisation)
 
+# ✅ Supprimer un autre utilisateur de l'organisation
 @anvil.server.callable(require_user=True)
 def supprimer_utilisateur(profil):
-  # l'utilisateur connecté est automatiquement accessible comme 'user' en paramètre si tu le veux
-  from anvil import users
-  connected = users.get_user()
-
+  connected = anvil.users.get_user()
   if profil and profil["user"] != connected:
     profil.delete()
     return "Utilisateur supprimé."
