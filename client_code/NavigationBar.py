@@ -21,3 +21,6 @@ class NavigationBar(NavigationBarTemplate):
   def navigation_link_logout_click(self, **event_args):
     anvil.users.logout()
     open_form("mainpage")
+
+
+

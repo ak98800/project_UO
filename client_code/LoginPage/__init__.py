@@ -34,4 +34,17 @@ class LoginPage(LoginPageTemplate):
       Notification("Email ou mot de passe incorrect.", style="danger").show()
 
 
+  def reset_password_link_click(self, **event_args):
+    email = self.email_textbox.text.strip()
+    if not email:
+      Notification("Veuillez entrer votre adresse email pour recevoir un lien de réinitialisation.", style="warning").show()
+      return
+
+    try:
+      anvil.users.send_password_reset_email(email)
+      Notification("Un lien de réinitialisation a été envoyé à votre adresse email.", style="success").show()
+    except Exception as e:
+      Notification(f"Erreur : {e}", style="danger").show()
+
+
 

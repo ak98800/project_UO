@@ -20,7 +20,8 @@ components:
         name: text_2
         properties: {bold: true, text: Email}
         type: form:dep_gqlhr7sei7ys7:_Components.Text
-      - layout_properties: {grid_position: 'EBMAEI,WLFFNA'}
+      - event_bindings: {pressed_enter: email_textbox_pressed_enter}
+        layout_properties: {grid_position: 'EBMAEI,WLFFNA'}
         name: email_textbox
         properties: {appearance: outlined, label: Email}
         type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
@@ -32,10 +33,11 @@ components:
         name: password_textbox
         properties: {appearance: outlined, hide_text: true, label: Password}
         type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
-      - layout_properties: {grid_position: 'GUPYNM,SAEXRM'}
-        name: text_4
+      - event_bindings: {click: reset_password_link_click}
+        layout_properties: {grid_position: 'QIJCNZ,FIBUGG'}
+        name: reset_password_link
         properties: {text: 'Mot de passe oublié ?'}
-        type: form:dep_gqlhr7sei7ys7:_Components.Text
+        type: form:dep_gqlhr7sei7ys7:_Components.Link
       - layout_properties: {grid_position: 'JADBXA,DYLZWQ'}
         name: column_panel_3
         properties: {}

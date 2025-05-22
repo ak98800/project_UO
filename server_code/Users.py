@@ -1,3 +1,4 @@
+import anvil
 import anvil.email
 import anvil.secrets
 import anvil.users
@@ -133,3 +134,15 @@ def inviter_utilisateur(email, name, organisation):
 @anvil.server.callable
 def lister_utilisateurs_organisation(organisation):
   return app_tables.profiles.search(organisation=organisation)
+
+@anvil.server.callable(require_user=True)
+def supprimer_utilisateur(profil):
+  # l'utilisateur connecté est automatiquement accessible comme 'user' en paramètre si tu le veux
+  from anvil import users
+  connected = users.get_user()
+
+  if profil and profil["user"] != connected:
+    profil.delete()
+    return "Utilisateur supprimé."
+  else:
+    raise Exception("Vous ne pouvez pas vous supprimer vous-même.")

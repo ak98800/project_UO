@@ -65,3 +65,7 @@ class GestionUtilisateurPage(GestionUtilisateurPageTemplate):
     except Exception as e:
       Notification(f"Erreur : {e}", style="danger").show()
 
+
+  def users_panel_x_refresh(self, **event_args):
+    self.recharger_utilisateurs()
+
