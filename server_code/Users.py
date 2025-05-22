@@ -13,7 +13,6 @@ from datetime import datetime
 
 stripe.api_key = anvil.secrets.get_secret('stripe_secret_api_key')
 
-# ✅ Créer une organisation + profil lié à l'utilisateur (admin)
 @anvil.server.callable
 def enregistrer_profil(user, name, organisation_name, fonction):
   orga = app_tables.organisations.add_row(
@@ -29,12 +28,10 @@ def enregistrer_profil(user, name, organisation_name, fonction):
     is_admin=True
   )
 
-# ✅ Lire le profil du user
 @anvil.server.callable
 def get_profil(user):
   return app_tables.profiles.get(user=user)
 
-# ✅ Mettre à jour nom + fonction
 @anvil.server.callable
 def update_profil(user, name, fonction):
   profil = app_tables.profiles.get(user=user)
@@ -42,18 +39,15 @@ def update_profil(user, name, fonction):
     profil["name"] = name
     profil["fonction"] = fonction
 
-# ✅ Admin : mettre à jour le nom de l'organisation
 @anvil.server.callable
 def update_organisation_name(orga_row, new_name):
   if orga_row:
     orga_row["name"] = new_name
 
-# ✅ Exemple simple de fonction protégée
 @anvil.server.callable(require_user=True)
 def calculate_percentage_of(number, total_number):
   return (int(number) / int(total_number)) * 100
 
-# ✅ Supprimer un user (profil, orga, Stripe, compte)
 @anvil.server.callable(require_user=True)
 def delete_user():
   user = anvil.users.get_user()
@@ -77,7 +71,6 @@ def delete_user():
 
   user.delete()
 
-# ✅ Modifier l’email Stripe (si présent)
 @anvil.server.callable(require_user=True)
 def change_email(email):
   user = anvil.users.get_user()
@@ -88,7 +81,6 @@ def change_email(email):
     print("Erreur Stripe :", e)
   return user
 
-# ✅ Inviter un utilisateur dans une organisation (corrigé)
 @anvil.server.callable
 def inviter_utilisateur(email, name, organisation):
   current_user = anvil.users.get_user()
@@ -114,8 +106,8 @@ def inviter_utilisateur(email, name, organisation):
       anvil.users.send_password_reset_email(email)
       return "Utilisateur existant invité."
   else:
-    temp_password = "".join(random.choices(string.ascii_letters + string.digits, k=12))
-    new_user = anvil.users.force_signup(email, temp_password)
+    temp_password = "AnvilTemp123"  # ✅ mot de passe temporaire valide
+    new_user = anvil.users.signup_with_email(email, temp_password)
 
     app_tables.profiles.add_row(
       user=new_user,
@@ -127,17 +119,19 @@ def inviter_utilisateur(email, name, organisation):
     anvil.users.send_password_reset_email(email)
     return "Nouvel utilisateur invité."
 
-# ✅ Liste des membres d'une organisation
 @anvil.server.callable
 def lister_utilisateurs_organisation(organisation):
   return app_tables.profiles.search(organisation=organisation)
 
-# ✅ Supprimer un autre utilisateur de l'organisation
 @anvil.server.callable(require_user=True)
 def supprimer_utilisateur(profil):
   connected = anvil.users.get_user()
   if profil and profil["user"] != connected:
+    user_to_delete = profil["user"]
     profil.delete()
+    if user_to_delete:
+      user_to_delete.delete()
     return "Utilisateur supprimé."
   else:
     raise Exception("Vous ne pouvez pas vous supprimer vous-même.")
+
