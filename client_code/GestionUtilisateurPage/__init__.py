@@ -21,7 +21,6 @@ class GestionUtilisateurPage(GestionUtilisateurPageTemplate):
 
     if self.user:
       self.label_welcome.text = f"Bienvenue, {self.user['email']}"
-      self.email_label.text = self.user["email"]
       self.recharger_profil()
     else:
       Notification("Utilisateur non connecté.", style="danger").show()
@@ -51,14 +50,18 @@ class GestionUtilisateurPage(GestionUtilisateurPageTemplate):
 
   def inviter_button_click(self, **event_args):
     email = self.email_textbox.text.strip()
-    if not email:
-      Notification("Veuillez entrer une adresse email.", style="warning").show()
+    name = self.name_textbox.text.strip()
+  
+    if not email or not name:
+      Notification("Veuillez entrer un nom et un email.", style="warning").show()
       return
-
+  
     try:
-      msg = anvil.server.call("inviter_utilisateur", email, self.profil["organisation"])
+      msg = anvil.server.call("inviter_utilisateur", email, name, self.profil["organisation"])
       Notification(msg, style="success").show()
       self.email_textbox.text = ""
+      self.name_textbox.text = ""
       self.recharger_utilisateurs()
     except Exception as e:
       Notification(f"Erreur : {e}", style="danger").show()
+

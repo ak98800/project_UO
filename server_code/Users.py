@@ -86,23 +86,48 @@ def change_email(email):
   return user
 
 # ✅ Inviter un utilisateur dans une organisation
+import random
+import string
+
 @anvil.server.callable
-def inviter_utilisateur(email, organisation):
+def inviter_utilisateur(email, name, organisation):
   existing_user = app_tables.users.get(email=email)
 
   if existing_user:
+    # Si l'utilisateur existe déjà
     profil = app_tables.profiles.get(user=existing_user)
     if profil:
       return "Cet utilisateur est déjà membre."
     else:
-      app_tables.profiles.add_row(user=existing_user, organisation=organisation, is_admin=False)
+      # Ajouter un profil pour cet utilisateur existant
+      app_tables.profiles.add_row(
+        user=existing_user,
+        name=name,
+        organisation=organisation,
+        is_admin=False
+      )
       anvil.users.send_password_reset_email(email)
       return "Utilisateur existant invité."
   else:
-    new_user = anvil.users.signup_with_email(email, "")
-    app_tables.profiles.add_row(user=new_user, organisation=organisation, is_admin=False)
+    # Créer un mot de passe temporaire aléatoire
+    temp_password = "".join(random.choices(string.ascii_letters + string.digits, k=12))
+
+    # Créer un compte sans demander de confirmation d'email
+    new_user = anvil.users.force_signup(email, temp_password)
+
+    # Ajouter un profil lié à l'organisation
+    app_tables.profiles.add_row(
+      user=new_user,
+      name=name,
+      organisation=organisation,
+      is_admin=False
+    )
+
+    # Envoyer uniquement l'email de réinitialisation de mot de passe
     anvil.users.send_password_reset_email(email)
+
     return "Nouvel utilisateur invité."
+
 
 # ✅ Liste des membres d'une organisation
 @anvil.server.callable

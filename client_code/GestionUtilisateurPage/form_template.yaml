@@ -52,31 +52,39 @@ components:
         properties: {}
         type: Spacer
       - components:
-        - layout_properties: {grid_position: 'UJDJHW,FBPFVN'}
-          name: text_2
-          properties: {align: center, bold: true, text: Inviter un utilisateur, underline: true}
-          type: form:dep_gqlhr7sei7ys7:_Components.Text
-        - layout_properties: {grid_position: 'DMHDPN,JRJPFR'}
-          name: email_text
-          properties: {align: center, bold: true, text: Email}
-          type: form:dep_gqlhr7sei7ys7:_Components.Text
-        - layout_properties: {grid_position: 'WSVMYQ,DKIDNQ'}
-          name: email_label
-          properties: {align: right, appearance: outlined}
+        - layout_properties: {grid_position: 'SEJSIP,IDUHUF'}
+          name: heading_3
+          properties: {align: center, text: Inviter un utilisateur}
+          type: form:dep_gqlhr7sei7ys7:_Components.Heading
+        - layout_properties: {grid_position: 'QKCVUQ,INVDTI'}
+          name: name_textbox
+          properties: {appearance: outlined, placeholder: Entrer le nom du nouvel utilisateur}
           type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
+        - layout_properties: {full_width_row: false, grid_position: 'ZVMIWJ,LHJDFE'}
+          name: email_textbox
+          properties: {align: left, appearance: outlined, character_limit: 0, display_font_size: 14, enabled: true, label_font_size: 12, placeholder: Entrer l'email de l'invité, subcontent_font_size: 12, text: '', type: email}
+          type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
+        - event_bindings: {click: inviter_button_click}
+          layout_properties: {grid_position: 'BPECZV,XXRICV'}
+          name: inviter_button
+          properties: {align: center, text: Inviter}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
         layout_properties: {grid_position: 'VWRZHC,VOHOAE'}
         name: column_panel_1
         properties: {}
         type: ColumnPanel
-      - layout_properties: {grid_position: 'BBDYJA,YMAYUA'}
+      - layout_properties: {grid_position: 'QFURVD,KNZFNE'}
         name: spacer_1
-        properties: {}
+        properties: {height: 63.33331298828125}
         type: Spacer
-      - event_bindings: {click: inviter_button_click}
-        layout_properties: {grid_position: 'JZZFFE,LEXMUB'}
-        name: inviter_button
-        properties: {align: center, text: Inviter}
-        type: form:dep_gqlhr7sei7ys7:_Components.Button
+      - layout_properties: {grid_position: 'PKXWLT,CEQCNN'}
+        name: heading_4
+        properties: {align: center, text: Liste des utilisateurs}
+        type: form:dep_gqlhr7sei7ys7:_Components.Heading
+      - layout_properties: {grid_position: 'LDDCNC,WQRASU'}
+        name: divider_1
+        properties: {}
+        type: form:dep_gqlhr7sei7ys7:_Components.Divider
       - layout_properties: {grid_position: 'HBEOKZ,AYFINP'}
         name: users_panel
         properties: {item_template: GestionUtilisateurPage.UserItemRow}
