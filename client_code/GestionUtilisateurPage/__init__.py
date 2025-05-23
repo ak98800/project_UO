@@ -41,12 +41,14 @@ class GestionUtilisateurPage(GestionUtilisateurPageTemplate):
     else:
       Notification("Profil introuvable.", style="danger").show()
 
-  def recharger_utilisateurs(self):
+  def recharger_utilisateurs(self, **event_args):
     try:
       users = anvil.server.call("lister_utilisateurs_organisation", self.profil["organisation"])
       self.users_panel.items = users
     except Exception as e:
       Notification(f"Erreur lors du chargement des utilisateurs : {e}", style="danger").show()
+
+
 
   def inviter_button_click(self, **event_args):
     email = self.email_textbox.text.strip()
@@ -65,7 +67,9 @@ class GestionUtilisateurPage(GestionUtilisateurPageTemplate):
     except Exception as e:
       Notification(f"Erreur : {e}", style="danger").show()
 
+  def users_panel_show(self, **event_args):
+    """This method is called when the repeating panel is shown on the screen"""
+    pass
 
-  def users_panel_x_refresh(self, **event_args):
-    self.recharger_utilisateurs()
+
 

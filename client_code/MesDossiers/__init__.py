@@ -12,6 +12,8 @@ from DossierItemRow import DossierItemRow
 class MesDossiers(MesDossiersTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
+    self.repeating_dossiers.set_event_handler("x-reload-dossiers", self.repeating_dossiers_x_reload_dossiers)
+
 
     # Mise en page
     self.header_panel.role = "sticky-header"
@@ -64,6 +66,10 @@ class MesDossiers(MesDossiersTemplate):
 
   def repeating_dossiers_show(self, **event_args):
     pass
+
+
+  def repeating_dossiers_x_reload_dossiers(self, **event_args):
+    self.recharger_dossiers()
 
 
 

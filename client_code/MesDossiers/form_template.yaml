@@ -57,12 +57,12 @@ components:
           properties: {align: center, text: Créer un nouveau dossier}
           type: form:dep_gqlhr7sei7ys7:_Components.Heading
         - layout_properties: {full_width_row: false, grid_position: 'ZVMIWJ,LHJDFE'}
-          name: textbox_nom_dossier
+          name: nom_dossier_textbox
           properties: {align: left, appearance: outlined, character_limit: 0, display_font_size: 14, enabled: true, label_font_size: 12, placeholder: Entrer le nom du nouveau dossier, subcontent_font_size: 12, text: '', type: email}
           type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
-        - event_bindings: {click: inviter_button_click}
+        - event_bindings: {click: creer_dossier_button_click}
           layout_properties: {grid_position: 'BPECZV,XXRICV'}
-          name: button_creer_dossier
+          name: creer_dossier_button
           properties: {align: center, text: Créer}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
         layout_properties: {grid_position: 'VWRZHC,VOHOAE'}

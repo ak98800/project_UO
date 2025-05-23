@@ -19,9 +19,15 @@ class UserItemRow(UserItemRowTemplate):
       try:
         anvil.server.call("supprimer_utilisateur", self.item)
         Notification("Utilisateur supprimé", style="success").show()
-        self.raise_event("x-refresh")
+        self.parent.raise_event("x-refresh")  # ✅ fonctionne comme dans les dossiers
       except Exception as e:
         Notification(f"Erreur : {e}", style="danger").show()
+
+
+
+  def form_refreshing_data_bindings(self, **event_args):
+    """This method is called when refresh_data_bindings is called"""
+    pass
 
 
 

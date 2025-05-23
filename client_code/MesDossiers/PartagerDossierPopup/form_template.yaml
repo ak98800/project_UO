@@ -1,0 +1,56 @@
+components:
+- components:
+  - components:
+    - components:
+      - components:
+        - layout_properties: {grid_position: 'OOXGBO,QNNNST'}
+          name: nom_dossier_label
+          properties: {scale: large, text: Partager le dossier}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        layout_properties: {grid_position: 'XVGGIP,NXBXEW'}
+        name: column_panel_4
+        properties: {}
+        type: ColumnPanel
+      - layout_properties: {full_width_row: false, grid_position: 'SRQJIV,THSBDD'}
+        name: spacer_1
+        properties: {height: '10', spacing_above: none, spacing_below: none, visible: false}
+        type: Spacer
+      - components:
+        - layout_properties: {full_width_row: true, grid_position: 'OULZCM,XARIZA'}
+          name: utilisateur_dropdown
+          properties: {placeholder: Sélectionner un utilisateur}
+          type: form:dep_gqlhr7sei7ys7:_Components.DropdownMenu
+        layout_properties: {grid_position: 'JADBXA,DYLZWQ'}
+        name: column_panel_3
+        properties: {}
+        type: ColumnPanel
+      - event_bindings: {click: partager_button_click}
+        layout_properties: {grid_position: 'BWVFJP,LEARZD'}
+        name: partager_button
+        properties: {align: center, appearance: filled, text: Partager}
+        type: form:dep_gqlhr7sei7ys7:_Components.Button
+      - event_bindings: {click: fermer_button_click}
+        layout_properties: {grid_position: 'BWVFJP,FKUIOF'}
+        name: fermer_button
+        properties: {align: center, text: Fermer}
+        type: form:dep_gqlhr7sei7ys7:_Components.Button
+      layout_properties: {expand: true, width: 143.33331298828125}
+      name: column_panel_2
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {full_width_row: false, grid_position: 'TTRVFQ,VHIYLC'}
+    name: flow_panel_1
+    properties:
+      gap: large
+      spacing:
+        padding: [null, null, null, 0]
+      vertical_align: middle
+    type: FlowPanel
+  layout_properties: {full_width_row: true, grid_position: 'QRHNSH,BIJYNV'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+container:
+  properties: {col_spacing: large, spacing_above: large, spacing_below: none}
+  type: ColumnPanel
+is_package: true
