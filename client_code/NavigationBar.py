@@ -23,4 +23,7 @@ class NavigationBar(NavigationBarTemplate):
     open_form("mainpage")
 
 
+  def navigation_link_dossiers_click(self, **event_args):
+    from MesDossiers import MesDossiers
+    open_form(MesDossiers())
 

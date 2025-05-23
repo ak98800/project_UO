@@ -24,3 +24,4 @@ class UserItemRow(UserItemRowTemplate):
         Notification(f"Erreur : {e}", style="danger").show()
 
 
+

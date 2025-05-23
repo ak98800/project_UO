@@ -1,0 +1,54 @@
+components:
+- components:
+  - components:
+    - layout_properties: {}
+      name: text_1
+      properties: {align: right, text: 'Nom du dossier :'}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {}
+      name: text_2
+      properties: {align: right, text: 'Nom de l''admin :'}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {column: 'null'}
+      name: text_3
+      properties: {align: right, text: 'Nombre d''utilisateurs :'}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    layout_properties: {grid_position: 'CLKWUJ,QXLKQY'}
+    name: data_row_panel_1
+    properties: {}
+    type: DataRowPanel
+  - components:
+    - layout_properties: {}
+      name: label_nom_dossier
+      properties: {}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {}
+      name: label_nom_admin
+      properties: {}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {}
+      name: label_nb_utilisateurs
+      properties: {}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    layout_properties: {grid_position: 'CLKWUJ,FUTVQT'}
+    name: data_row_panel_2
+    properties: {}
+    type: DataRowPanel
+  layout_properties: {grid_position: 'PDBGSP,OKZYNT'}
+  name: column_panel_1
+  properties: {col_widths: '{"QXLKQY":30,"FUTVQT":30}'}
+  type: ColumnPanel
+- event_bindings: {click: button_acceder_dossier_click}
+  layout_properties: {grid_position: 'YSRQDU,EUUCQB'}
+  name: button_acceder_dossier
+  properties: {align: center, text: Accéder}
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+- layout_properties: {grid_position: 'BADDTP,ULUWRX'}
+  name: divider_1
+  properties: {color: 'theme:Primary'}
+  type: form:dep_gqlhr7sei7ys7:_Components.Divider
+container:
+  event_bindings: {refreshing_data_bindings: form_refreshing_data_bindings}
+  properties: {wrap_on: mobile}
+  type: ColumnPanel
+is_package: true
