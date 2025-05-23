@@ -89,43 +89,48 @@ def inviter_utilisateur(email, name, organisation):
   if email == current_user["email"]:
     raise Exception("Vous ne pouvez pas vous inviter vous-même.")
 
+  # ✅ Vérifie si l'utilisateur existe
   existing_user = app_tables.users.get(email=email)
 
   if existing_user:
-    profil = app_tables.profiles.get(user=existing_user)
-    if profil:
+    # ✅ Si déjà membre
+    if app_tables.profiles.get(user=existing_user):
       return "Cet utilisateur est déjà membre."
-    else:
-      app_tables.profiles.add_row(
-        user=existing_user,
-        name=name,
-        organisation=organisation,
-        is_admin=False
-      )
-      return "Utilisateur existant invité."
+
+    # ✅ Sinon : ajouter le profil et envoyer reset
+    app_tables.profiles.add_row(
+      user=existing_user,
+      name=name,
+      organisation=organisation,
+      is_admin=False
+    )
+    anvil.users.send_password_reset_email(email)
+    return "Utilisateur existant invité."
+
   else:
+    # ✅ Crée le user via signup (envoi email automatique de confirmation)
     temp_password = "AnvilTemp123"
     new_user = anvil.users.signup_with_email(email, temp_password)
 
+    # ✅ Corrige le nom exact : confirmed_email
+    new_user["confirmed_email"] = True  # ⚠️ exactement ce nom-là
+    new_user.update()
+
+    # ✅ Crée le profil
     app_tables.profiles.add_row(
       user=new_user,
       name=name,
       organisation=organisation,
       is_admin=False
     )
-    return "Nouvel utilisateur invité. Il doit confirmer son email."
 
-@anvil.server.callable(require_user=True)
-def envoyer_reset_si_invite():
-  user = anvil.users.get_user()
-  profil = app_tables.profiles.get(user=user)
-  if not profil:
-    raise Exception("Profil introuvable.")
-  if not user["email_confirmed"]:
-    raise Exception("Veuillez d'abord confirmer votre email.")
+    # ✅ Envoie uniquement l’email de reset
+    anvil.users.send_password_reset_email(email)
 
-  anvil.users.send_password_reset_email(user["email"])
-  return "Lien de réinitialisation envoyé."
+    return "Nouvel utilisateur invité."
+
+
+
 
 @anvil.server.callable
 def lister_utilisateurs_organisation(organisation):
