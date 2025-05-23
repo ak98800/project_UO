@@ -1,6 +1,44 @@
 allow_embedding: false
 correct_dependency_ids: {dep_gqlhr7sei7ys7: 4UK6WHQ6UX7AKELK}
 db_schema:
+  folder_members:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: folder
+      target: folders
+      type: link_single
+    - admin_ui: {order: 1, width: 200}
+      name: user
+      target: users
+      type: link_single
+    - admin_ui: {order: 2, width: 200}
+      name: is_admin
+      type: bool
+    - admin_ui: {order: 3, width: 200}
+      name: added_at
+      type: date
+    server: full
+    title: folder_members
+  folders:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: name
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: created_by
+      target: users
+      type: link_single
+    - admin_ui: {order: 2, width: 200}
+      name: created_at
+      type: datetime
+    - admin_ui: {order: 3, width: 200}
+      name: organisation
+      target: organisations
+      type: link_single
+    server: full
+    title: folders
   organisations:
     client: none
     columns:
@@ -16,6 +54,36 @@ db_schema:
       type: datetime
     server: full
     title: organisations
+  participations:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: folder
+      target: folders
+      type: link_single
+    - admin_ui: {order: 1, width: 200}
+      name: societe
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      name: actionnaire
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: type_actionnaire
+      type: string
+    - admin_ui: {order: 4, width: 200}
+      name: pourcentage
+      type: number
+    - admin_ui: {order: 5, width: 200}
+      name: groupe
+      type: string
+    - admin_ui: {order: 6, width: 200}
+      name: sous_groupe
+      type: string
+    - admin_ui: {order: 7, width: 200}
+      name: created_at
+      type: date
+    server: full
+    title: participations
   profiles:
     client: none
     columns:
