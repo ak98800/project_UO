@@ -1,36 +1,42 @@
 components:
-- components:
-  - layout_properties: {grid_position: 'KHVLQM,LPPQCC'}
-    name: societe_label
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
-  - layout_properties: {grid_position: 'KHVLQM,QEQAZF'}
-    name: actionnaire_label
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
-  - layout_properties: {grid_position: 'KHVLQM,EJOMGM'}
-    name: type_label
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
-  - layout_properties: {grid_position: 'KHVLQM,BQAKWS'}
-    name: pourcentage_label
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
-  - layout_properties: {grid_position: 'KHVLQM,QZAHUI'}
-    name: groupe_label
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
-  - layout_properties: {grid_position: 'KHVLQM,DAZROW'}
-    name: sous_groupe_label
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
-  - layout_properties: {grid_position: 'KHVLQM,YILUMU'}
-    name: delete_button
-    properties: {icon: 'mi:delete_forever'}
-    type: form:dep_gqlhr7sei7ys7:_Components.IconButton
+- components: []
   layout_properties: {grid_position: 'IEMSNA,TZOVUJ'}
   name: row_panel
   properties: {}
   type: ColumnPanel
+- components:
+  - layout_properties: {width: 150}
+    name: societe_label
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 150}
+    name: actionnaire_label
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 100}
+    name: type_label
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 100}
+    name: pourcentage_label
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 120}
+    name: groupe_label
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 120}
+    name: sous_groupe_label
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - name: delete_button
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.IconButton
+  layout_properties: {grid_position: 'ETACUQ,NSVUOU'}
+  name: flow_panel
+  properties:
+    spacing:
+      padding: [null, null, 16, null]
+  type: FlowPanel
 container: {type: ColumnPanel}
 is_package: true
