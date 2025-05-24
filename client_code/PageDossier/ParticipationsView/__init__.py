@@ -7,15 +7,6 @@ class ParticipationsView(ParticipationsViewTemplate):
     self.init_components(**properties)
     self.dossier = dossier
 
-    # En-têtes manuels
-    self.header_panel.clear()
-    self.header_panel.add_component(Label(text="Société", bold=True, width="150"))
-    self.header_panel.add_component(Label(text="Actionnaire", bold=True, width="150"))
-    self.header_panel.add_component(Label(text="%", bold=True, width="50"))
-    self.header_panel.add_component(Label(text="Type", bold=True, width="50"))
-    self.header_panel.add_component(Label(text="Groupe", bold=True, width="120"))
-    self.header_panel.add_component(Label(text="Sous-groupe", bold=True, width="120"))
-    self.header_panel.add_component(Label(text="🗑", bold=True, width="120"))
 
     # Données temporaires
     self.repeating_participations.items = [
@@ -36,3 +27,7 @@ class ParticipationsView(ParticipationsViewTemplate):
         "sous_groupe": "Farine"
       }
     ]
+
+  def text_2_show(self, **event_args):
+    """This method is called when the component is shown on the screen."""
+    pass
