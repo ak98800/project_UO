@@ -15,6 +15,8 @@ class ParticipationItemRow(ParticipationItemRowTemplate):
     self.groupe_label.text = data.get("groupe", "")
     self.sous_groupe_label.text = data.get("sous_groupe", "")
 
+    
+
 
 
  

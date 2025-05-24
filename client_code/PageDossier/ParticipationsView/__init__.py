@@ -6,6 +6,7 @@ class ParticipationsView(ParticipationsViewTemplate):
   def __init__(self, dossier, **properties):
     self.init_components(**properties)
     self.dossier = dossier
+    
 
 
     # Données temporaires
