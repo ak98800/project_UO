@@ -27,13 +27,17 @@ components:
       properties: {align: center, bold: true, text: Sous groupe}
       type: form:dep_gqlhr7sei7ys7:_Components.Text
     - layout_properties: {}
-      name: icon_button_1
-      properties: {align: center, icon: 'mi:delete_forever'}
-      type: form:dep_gqlhr7sei7ys7:_Components.IconButton
+      name: link_2
+      properties: {icon: 'mi:delete_forever', icon_size: 20}
+      type: form:dep_gqlhr7sei7ys7:_Components.Link
     layout_properties: {grid_position: 'MLBPIR,PVCUOB'}
     name: header_panel
     properties: {align: center, spacing_above: none, spacing_below: none}
     type: FlowPanel
+  - layout_properties: {grid_position: 'BAEFOO,ALNXDK'}
+    name: divider_1
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Divider
   - layout_properties: {full_width_row: false, grid_position: 'NFMCRA,AQLQFT'}
     name: repeating_participations
     properties: {item_template: PageDossier.ParticipationsView.ParticipationItemRow}

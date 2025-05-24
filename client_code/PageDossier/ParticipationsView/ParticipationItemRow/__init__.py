@@ -7,6 +7,7 @@ class ParticipationItemRow(ParticipationItemRowTemplate):
 
     data = self.item
 
+    # Remplissage des étiquettes
     self.societe_label.text = data.get("societe", "")
     self.actionnaire_label.text = data.get("actionnaire", "")
     self.pourcentage_label.text = f"{data.get('pourcentage', 0)} %"
@@ -14,9 +15,9 @@ class ParticipationItemRow(ParticipationItemRowTemplate):
     self.groupe_label.text = data.get("groupe", "")
     self.sous_groupe_label.text = data.get("sous_groupe", "")
 
-  def delete_button_click(self, **event_args):
-    if confirm(f"Supprimer la participation de {self.item['actionnaire']} dans {self.item['societe']} ?"):
-      Notification("Suppression non encore implémentée", style="warning").show()
+
+
+ 
 
 
 
