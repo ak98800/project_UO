@@ -99,3 +99,9 @@ def partager_dossier_avec_utilisateur(profil, folder_id):
 
   return "Accès accordé avec succès."
 
+@anvil.server.callable
+def get_nombre_utilisateurs_dossier(dossier_id):
+  folder = app_tables.folders.get_by_id(dossier_id)
+  if not folder:
+    raise Exception("Dossier introuvable")
+  return len(list(app_tables.folder_members.search(folder=folder)))

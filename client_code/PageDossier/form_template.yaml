@@ -1,0 +1,182 @@
+components:
+- components:
+  - components:
+    - components:
+      - layout_properties: {width: 72.8610259765625}
+        name: image_1
+        properties: {height: 81.11109924316406, source: _/theme/ChatGPT_Image_21_avr._2025__11_23_26-removebg-preview.png}
+        type: Image
+      - layout_properties: {}
+        name: heading_1
+        properties: {text: UltimateOwner}
+        type: form:dep_gqlhr7sei7ys7:_Components.Heading
+      layout_properties: {full_width_row: true, grid_position: 'ROPADT,EVCJGN'}
+      name: flow_panel_1
+      properties: {vertical_align: middle}
+      type: FlowPanel
+    - components:
+      - layout_properties: {}
+        name: label_welcome
+        properties:
+          align: left
+          spacing:
+            padding: [null, 70, null, null]
+        type: form:dep_gqlhr7sei7ys7:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'ROPADT,AMGMWP'}
+      name: flow_panel_2
+      properties:
+        align: right
+        gap: small
+        spacing:
+          padding: [null, 0, null, null]
+        vertical_align: middle
+      type: FlowPanel
+    data_bindings:
+    - {code: 'self.item['''']', property: role, writeback: false}
+    layout_properties: {full_width_row: true, grid_position: 'GDOWIC,JYFRHL'}
+    name: header_panel
+    properties: {col_spacing: medium, role: null, visible: true}
+    type: ColumnPanel
+  - components:
+    - layout_properties: {width: 200}
+      name: navigation_bar_panel
+      properties: {}
+      type: ColumnPanel
+    - components:
+      - event_bindings: {show: nom_dossier_label_show}
+        layout_properties: {grid_position: 'GHWYLG,UOHVGC'}
+        name: nom_dossier_label
+        properties: {align: center, bold: true, text: ''}
+        type: form:dep_gqlhr7sei7ys7:_Components.Heading
+      - components:
+        - components:
+          - components:
+            - components:
+              - layout_properties: {}
+                name: text_2
+                properties: {align: right, text: Administrateur du dossier}
+                type: form:dep_gqlhr7sei7ys7:_Components.Text
+              - layout_properties: {}
+                name: text_3
+                properties: {align: right, text: Date de création du dossier}
+                type: form:dep_gqlhr7sei7ys7:_Components.Text
+              - layout_properties: {}
+                name: text_4
+                properties: {align: right, text: Nombre d'utilisateurs}
+                type: form:dep_gqlhr7sei7ys7:_Components.Text
+              layout_properties: {grid_position: 'ZKSFOE,AVMCGA'}
+              name: data_row_panel_3
+              properties: {}
+              type: DataRowPanel
+            - components:
+              - data_bindings: []
+                layout_properties: {}
+                name: email_admin_label
+                properties: {bold: false, border: xcqsx, role: null, style: body, underline: false, visible: true}
+                type: form:dep_gqlhr7sei7ys7:_Components.Text
+              - layout_properties: {}
+                name: date_creation_label
+                properties: {}
+                type: form:dep_gqlhr7sei7ys7:_Components.Text
+              - layout_properties: {}
+                name: nb_users_label
+                properties: {}
+                type: form:dep_gqlhr7sei7ys7:_Components.Text
+              layout_properties: {grid_position: 'ZKSFOE,RZEZYL'}
+              name: data_row_panel_4
+              properties: {}
+              type: DataRowPanel
+            layout_properties: {slot: card-content-container-slot}
+            name: column_panel_1
+            properties: {}
+            type: ColumnPanel
+          - components:
+            - event_bindings: {click: button_retour_click}
+              layout_properties: {grid_position: 'VLLQMP,HYEEEJ'}
+              name: button_retour
+              properties: {align: center, text: Retour}
+              type: form:dep_gqlhr7sei7ys7:_Components.Button
+            - event_bindings: {click: button_supprimer_click}
+              layout_properties: {grid_position: 'VLLQMP,VIDMPF'}
+              name: button_supprimer
+              properties: {align: center, text: supprimer}
+              type: form:dep_gqlhr7sei7ys7:_Components.Button
+            - event_bindings: {click: button_partager_click}
+              layout_properties: {grid_position: 'TKKLDE,VYTFWW VLLQMP,OMOIEO'}
+              name: button_partager
+              properties: {align: center, text: Partager}
+              type: form:dep_gqlhr7sei7ys7:_Components.Button
+            layout_properties: {slot: card-content-container-slot}
+            name: column_panel_2
+            properties: {}
+            type: ColumnPanel
+          layout_properties: {slot: card-content-slot}
+          name: card_content_container_1
+          properties: {}
+          type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
+        layout_properties: {grid_position: 'DZDCXB,LBDSON'}
+        name: card_1
+        properties: {}
+        type: form:dep_gqlhr7sei7ys7:_Components.Card
+      - layout_properties: {grid_position: 'EHHXVV,IOIDQK'}
+        name: spacer_2
+        properties: {}
+        type: Spacer
+      - layout_properties: {grid_position: 'FDKZHV,XLQJVP'}
+        name: divider_1
+        properties: {}
+        type: form:dep_gqlhr7sei7ys7:_Components.Divider
+      - layout_properties: {grid_position: 'BBDYJA,YMAYUA'}
+        name: spacer_1
+        properties: {}
+        type: Spacer
+      - components:
+        - layout_properties: {grid_position: 'LDPXGY,YTQDXO'}
+          name: participations_button
+          properties: {align: center, text: 📄 Participations}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - layout_properties: {grid_position: 'LDPXGY,ZVKVHB'}
+          name: vue_button
+          properties: {align: center, text: 📊 Vue synthétique}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - layout_properties: {grid_position: 'LDPXGY,EAYNGX'}
+          name: membres_button
+          properties: {align: center, text: 👥 Membres}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - layout_properties: {grid_position: 'LDPXGY,DWGMDM'}
+          name: parametres_button
+          properties: {align: center, text: ⚙️ Paramètres}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        layout_properties: {grid_position: 'AJNLQY,TBVCOX'}
+        name: onglets_panel
+        properties: {}
+        type: ColumnPanel
+      - layout_properties: {grid_position: 'FCCYZZ,GOMOFC'}
+        name: zone_contenu
+        properties: {}
+        type: ColumnPanel
+      layout_properties: {expand: true, width: 715.3333129882812}
+      name: content_panel
+      properties: {}
+      type: ColumnPanel
+    event_bindings: {show: RowPanel_show}
+    layout_properties: {full_width_row: true, grid_position: 'HXBATW,FRUVBU'}
+    name: RowPanel
+    properties: {}
+    type: FlowPanel
+  - components:
+    - layout_properties: {grid_position: 'OQSNPY,RCRUOJ'}
+      name: text_1
+      properties: {align: center, text: © 2025 UltimateOwner  - Tous droits réservés}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    layout_properties: {full_width_row: true, grid_position: 'RORVBO,XYRIXE'}
+    name: Footer_panel
+    properties: {}
+    type: ColumnPanel
+  data_bindings: []
+  layout_properties: {full_width_row: true, grid_position: 'KDQQEZ,RRXOJM'}
+  name: ColumnPanel
+  properties: {}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

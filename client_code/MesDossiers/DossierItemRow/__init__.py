@@ -25,9 +25,8 @@ class DossierItemRow(DossierItemRowTemplate):
 
 
   def button_acceder_dossier_click(self, **event_args):
-    from ..PageDossier import PageDossier
-    open_form(PageDossier, dossier=self.item)
-
+    from ...PageDossier import PageDossier
+    open_form(PageDossier(dossier=self.item))
 
 
   

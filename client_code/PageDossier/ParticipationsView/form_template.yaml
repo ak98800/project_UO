@@ -1,0 +1,23 @@
+components:
+- components:
+  - components: []
+    layout_properties: {full_width_row: false, grid_position: 'TTRVFQ,VHIYLC'}
+    name: header_panel
+    properties:
+      gap: large
+      spacing:
+        padding: [null, null, null, 0]
+      vertical_align: middle
+    type: FlowPanel
+  - layout_properties: {grid_position: 'NFMCRA,AQLQFT'}
+    name: repeating_participations
+    properties: {item_template: PageDossier.ParticipationsView.ParticipationItemRow}
+    type: RepeatingPanel
+  layout_properties: {full_width_row: true, grid_position: 'QRHNSH,BIJYNV'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+container:
+  properties: {col_spacing: large, spacing_above: large, spacing_below: none}
+  type: ColumnPanel
+is_package: true
