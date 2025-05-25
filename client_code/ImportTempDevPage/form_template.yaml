@@ -1,0 +1,26 @@
+components:
+- components:
+  - layout_properties: {grid_position: 'DYFZXB,CPQRUF'}
+    name: nom_dossier_textbox
+    properties: {text: Dossier_test}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  layout_properties: {grid_position: 'EKDFZQ,PESKHN'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'UTDEVR,EITWJC'}
+  name: fichier_excel_loader
+  properties: {file_types: .xlsx}
+  type: form:dep_gqlhr7sei7ys7:_Components.FileLoader
+- event_bindings: {click: import_button_click}
+  layout_properties: {grid_position: 'TEAIMK,TXEVFX'}
+  name: import_button
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+- event_bindings: {click: nettoyer_button_click}
+  layout_properties: {grid_position: 'IQNQRS,JLZNNM'}
+  name: nettoyer_button
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+container: {type: ColumnPanel}
+is_package: true
