@@ -20,4 +20,9 @@ class SocieteSyntheseRow(SocieteSyntheseRowTemplate):
     # ⬇️ Ne pas ouvrir ici, mais propager l’événement à la vue parente
     self.raise_event("x-ouvrir-fiche", nom_societe=self.item["societe"])
 
+  def consulter_button_click(self, **event_args):
+    print("▶️ Clic sur consulter pour", self.item["societe"])
+    self.raise_event("x-ouvrir-fiche", nom_societe=self.item["societe"])
+
+
 
