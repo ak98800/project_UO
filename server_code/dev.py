@@ -31,6 +31,8 @@ def supprimer_participations_dossier(nom_dossier):
   return "Participations supprimées avec succès."
 
 import pandas as pd
+import io
+import anvil.server
 from anvil.tables import app_tables
 
 @anvil.server.callable
@@ -39,7 +41,13 @@ def import_test_participations(nom_dossier, fichier_excel):
   if not dossier:
     raise Exception(f"Dossier '{nom_dossier}' introuvable.")
 
-  df = pd.read_excel(fichier_excel.get_bytes(), header=None, skiprows=1, engine="openpyxl")
+  # Lecture du fichier Excel, en précisant le moteur openpyxl
+  df = pd.read_excel(
+    io.BytesIO(fichier_excel.get_bytes()), 
+    header=None, 
+    skiprows=1, 
+    engine="openpyxl"  # ✅ important
+  )
 
   for _, row in df.iterrows():
     app_tables.participations.add_row(
@@ -55,25 +63,3 @@ def import_test_participations(nom_dossier, fichier_excel):
     )
 
   return "Import Excel terminé avec succès."
-
-# (Fonction utilitaire si besoin en dehors du contexte @anvil.server.callable)
-def lire_excel_depuis_blob(fichier_excel):
-  df = pd.read_excel(fichier_excel.get_bytes(), header=None, skiprows=1, engine="openpyxl")
-  participations = []
-
-  for _, row in df.iterrows():
-    participation = {
-      "societe": row[0],
-      "actionnaire": row[1],
-      "type": row[2],
-      "nb_parts": row[3],
-      "total_parts_societe": row[4],
-      "pourcentage": row[5],
-      "groupe": row[6],
-      "sous_groupe": row[7]
-    }
-    participations.append(participation)
-
-  return participations
-
-
