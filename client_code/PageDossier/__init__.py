@@ -59,8 +59,8 @@ class PageDossier(PageDossierTemplate):
 
   def participations_button_click(self, **event_args):
     self.clear_zone_contenu()
-    from .ParticipationsView import ParticipationsView
-    self.zone_contenu.add_component(ParticipationsView(dossier=self.dossier))
+    from .ParticipationsViewSynthese import ParticipationsViewSynthese
+    self.zone_contenu.add_component(ParticipationsViewSynthese(dossier=self.dossier))
 
   def vue_button_click(self, **event_args):
     self.clear_zone_contenu()
@@ -74,5 +74,5 @@ class PageDossier(PageDossierTemplate):
 
   def parametres_button_click(self, **event_args):
     self.clear_zone_contenu()
-    from .ParametresView import ParametresView
-    self.zone_contenu.add_component(ParametresView(dossier=self.dossier))
+    from .ParticipationsViewSynthese import ParticipationsViewSynthese
+    self.zone_contenu.add_component(ParticipationsViewSynthese(dossier=self.dossier))
