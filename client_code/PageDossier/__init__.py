@@ -35,6 +35,9 @@ class PageDossier(PageDossierTemplate):
     # 📄 Onglet par défaut
     self.participations_button_click()
 
+    # 🎯 Interception de la fiche société
+    self.zone_contenu.set_event_handler("x-afficher-fiche-societe", self._afficher_fiche_societe)
+
   def button_retour_click(self, **event_args):
     from ..MesDossiers import MesDossiers
     open_form(MesDossiers())
@@ -60,7 +63,8 @@ class PageDossier(PageDossierTemplate):
   def participations_button_click(self, **event_args):
     self.clear_zone_contenu()
     from .ParticipationsViewSynthese import ParticipationsViewSynthese
-    self.zone_contenu.add_component(ParticipationsViewSynthese(dossier=self.dossier))
+    synthese = ParticipationsViewSynthese(dossier=self.dossier)
+    self.zone_contenu.add_component(synthese)
 
   def vue_button_click(self, **event_args):
     self.clear_zone_contenu()
@@ -76,3 +80,9 @@ class PageDossier(PageDossierTemplate):
     self.clear_zone_contenu()
     from .ParticipationsViewSynthese import ParticipationsViewSynthese
     self.zone_contenu.add_component(ParticipationsViewSynthese(dossier=self.dossier))
+
+  # ✅ Gestion de l’ouverture de la fiche société
+  def _afficher_fiche_societe(self, composant=None, **event_args):
+    self.clear_zone_contenu()
+    if composant:
+      self.zone_contenu.add_component(composant)

@@ -14,7 +14,7 @@ components:
     properties: {align: center}
     type: form:dep_gqlhr7sei7ys7:_Components.Text
   - layout_properties: {width: 100}
-    name: pct_label
+    name: pourcentage_label
     properties: {align: center}
     type: form:dep_gqlhr7sei7ys7:_Components.Text
   - layout_properties: {width: 100}
@@ -23,7 +23,7 @@ components:
     type: form:dep_gqlhr7sei7ys7:_Components.Text
   - data_bindings: []
     event_bindings: {click: voir_fiche_button_click}
-    layout_properties: {width: 79.64580000000001}
+    layout_properties: {width: 80}
     name: voir_fiche_button
     properties:
       align: center
@@ -41,7 +41,7 @@ components:
     align: center
     gap: none
     spacing:
-      padding: [null, null, 16, null]
+      padding: [null, null, '0', null]
     spacing_above: none
     spacing_below: none
   type: FlowPanel

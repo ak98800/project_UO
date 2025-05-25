@@ -4,24 +4,19 @@ from anvil import *
 class SocieteSyntheseRow(SocieteSyntheseRowTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
-    data = self.item
 
-    # Texte principal
-    self.societe_label.text = data.get("societe", "?")
-    self.nb_label.text = str(data.get("nb_actionnaires", 0))
-    self.pct_label.text = f"{round(data.get('total_pourcentage', 0), 2)} %"
+    # Données de l'élément
+    societe = self.item.get("societe", "")
+    nb_actionnaires = self.item.get("nb_actionnaires", 0)
+    pourcentage = self.item.get("total_pourcentage", 0)
+    statut = self.item.get("statut", "")
 
-    # Couleur selon statut
-    statut = data.get("statut", "")
-    if statut == "green":
-      self.statut_label.text = "✅"
-    elif statut == "orange":
-      self.statut_label.text = "⚠️"
-    elif statut == "red":
-      self.statut_label.text = "❌"
-    else:
-      self.statut_label.text = "❓"
+    self.societe_label.text = societe
+    self.nb_label.text = str(nb_actionnaires)
+    self.pourcentage_label.text = f"{pourcentage:.1f} %"
+    self.statut_label.text = statut
 
-  def voir_fiche_button_click(self, **event_args):
+  def consulter_button_click(self, **event_args):
     from ..PageFicheParticipation import PageFicheParticipation
-    open_form(PageFicheParticipation(societe=self.item["societe"], dossier=self.item["dossier"]))
+    open_form(PageFicheParticipation(societe=self.item["societe"]))
+
