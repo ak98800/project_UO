@@ -23,7 +23,8 @@ class ParticipationsViewSynthese(ParticipationsViewSyntheseTemplate):
     if nom_societe:
       from ..PageFicheParticipation import PageFicheParticipation
       fiche = PageFicheParticipation(dossier=self.dossier, nom_societe=nom_societe)
-      self.parent.raise_event("x-afficher-fiche-societe", composant=fiche)
+      self.raise_event("x-afficher-fiche-societe", composant=fiche)
+
 
 
 
