@@ -82,6 +82,12 @@ db_schema:
     - admin_ui: {order: 7, width: 200}
       name: created_at
       type: date
+    - admin_ui: {order: 3.5, width: 200}
+      name: nb_parts
+      type: number
+    - admin_ui: {order: 3.75, width: 200}
+      name: total_parts_societe
+      type: number
     server: full
     title: participations
   profiles:
