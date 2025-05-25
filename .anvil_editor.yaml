@@ -26,6 +26,8 @@ unique_ids:
     PageDossier.ParticipationsView.ParticipationItemRow.RowTemplate1: '1748048519827246705716244.95264'
     PageDossier.ParticipationsView.RowTemplate2: '1748051958770814178949710.6289'
     PageDossier.ParticipationsView.RowTemplate3: '1748052141606312563892203.76044'
+    PageDossier.ParticipationsViewSynthese: '1748144900682998435568089.8616'
+    PageDossier.ParticipationsViewSynthese.ParticipationsitemRow: '1748145408825190219663213.06927'
     ProfilEditPopup: '1747694554446453366372942.48773'
     ProfilPage: '1747869910822525350658847.0661'
     SignUpPage: '1745896523736799579938741.4921'

@@ -1,1 +1,3 @@
 stripe
+openpyxl
+panda

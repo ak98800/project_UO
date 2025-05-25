@@ -1,0 +1,54 @@
+components:
+- components:
+  - components:
+    - layout_properties: {width: 150}
+      name: text_1
+      properties: {align: center, bold: true, text: Société}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - event_bindings: {show: text_2_show}
+      layout_properties: {width: 150}
+      name: text_2
+      properties: {align: center, bold: true, text: Nb d'actionnaires}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {width: 100}
+      name: text_3
+      properties: {align: center, bold: true, text: '% total'}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {width: 100}
+      name: text_4
+      properties: {align: center, bold: true, text: Statut}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {width: 60}
+      name: link_2
+      properties:
+        align: center
+        icon: mi:tools_wrench
+        icon_size: 20
+        spacing:
+          padding: [null, null, '0', null]
+      type: form:dep_gqlhr7sei7ys7:_Components.Link
+    layout_properties: {grid_position: 'MLBPIR,PVCUOB'}
+    name: header_panel
+    properties: {align: center, spacing_above: none, spacing_below: none}
+    type: FlowPanel
+  - layout_properties: {grid_position: 'BAEFOO,ALNXDK'}
+    name: divider_1
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Divider
+  - layout_properties: {full_width_row: false, grid_position: 'NFMCRA,AQLQFT'}
+    name: repeating_participations
+    properties: {item_template: PageDossier.ParticipationsView.ParticipationItemRow}
+    type: RepeatingPanel
+  - components: []
+    layout_properties: {grid_position: 'PTAWQQ,ZUZOQG'}
+    name: linear_panel_1
+    properties: {}
+    type: LinearPanel
+  layout_properties: {full_width_row: true, grid_position: 'QRHNSH,BIJYNV'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+container:
+  properties: {col_spacing: large, spacing_above: large, spacing_below: none}
+  type: ColumnPanel
+is_package: true
