@@ -5,6 +5,30 @@ components:
   properties: {}
   type: ColumnPanel
 - components:
+  - layout_properties: {grid_position: 'WOGUHC,AVIFSH'}
+    name: nom_societe_label
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {grid_position: 'SYOIJE,OMVIVX'}
+    name: spacer_2
+    properties: {}
+    type: Spacer
+  - layout_properties: {grid_position: 'MJWZXY,HZZBOZ'}
+    name: text_1
+    properties: {text: ' Total parts de la société (ex: 1000) cette information est optionnelle vous pouvez saisir directement les % de detention lors de l''ajout d''un actionnaire si vous le souhaitez'}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {grid_position: 'MHWITQ,IINKSB'}
+    name: total_parts_textbox
+    properties: {label: total_parts_textbox}
+    type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
+  - layout_properties: {grid_position: 'ZSUMMI,PCWIDJ'}
+    name: text_2
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {grid_position: 'ENUCTG,RDXOOR'}
+    name: groupe_textbox
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
   - layout_properties: {grid_position: 'BAEFOO,ALNXDK'}
     name: divider_1
     properties: {}
@@ -13,6 +37,63 @@ components:
   name: column_panel_1
   properties: {}
   type: ColumnPanel
+- layout_properties: {grid_position: 'IZIBNN,KCEOYX'}
+  name: text_3
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Text
+- layout_properties: {grid_position: 'OXEEHL,PUJJIS'}
+  name: sous_groupe_textbox
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
+- layout_properties: {grid_position: 'AVOMPA,QDHJGU'}
+  name: enregistrer_en_tete_button
+  properties: {text: Enregistrer les infos}
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+- layout_properties: {grid_position: 'SNKGYU,ATQINV'}
+  name: statut_label
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Text
+- layout_properties: {grid_position: 'IXMVAU,AVLVCG'}
+  name: spacer_1
+  properties: {}
+  type: Spacer
+- layout_properties: {grid_position: 'TBSTIJ,ZXOCCJ'}
+  name: divider_2
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Divider
+- layout_properties: {grid_position: 'QJTEVU,EMBKAA'}
+  name: button_1
+  properties: {text: Ajouter un actionnaire}
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+- components:
+  - layout_properties: {width: 150}
+    name: text_4
+    properties: {text: actionnaire}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 150}
+    name: text_5
+    properties: {text: type_actionnaire}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 150}
+    name: text_6
+    properties: {text: pourcentage}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 150}
+    name: text_7
+    properties: {text: nb_parts}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 80}
+    name: link_1
+    properties: {align: center, icon: 'mi:delete'}
+    type: form:dep_gqlhr7sei7ys7:_Components.Link
+  layout_properties: {grid_position: 'RFWWGD,COELTY'}
+  name: flow_panel_1
+  properties: {align: center}
+  type: FlowPanel
+- layout_properties: {grid_position: 'BBJCVA,MKTKYP'}
+  name: repeating_participations
+  properties: {item_template: PageDossier.PageFicheParticipation.ParticipationItemRow}
+  type: RepeatingPanel
 container:
   properties: {col_spacing: large, spacing_above: large, spacing_below: none}
   type: ColumnPanel

@@ -17,6 +17,7 @@ class SocieteSyntheseRow(SocieteSyntheseRowTemplate):
     self.statut_label.text = statut
 
   def consulter_button_click(self, **event_args):
-    from ..PageFicheParticipation import PageFicheParticipation
-    open_form(PageFicheParticipation(societe=self.item["societe"]))
+    # ⬇️ Ne pas ouvrir ici, mais propager l’événement à la vue parente
+    self.raise_event("x-ouvrir-fiche", nom_societe=self.item["societe"])
+
 

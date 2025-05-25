@@ -30,7 +30,8 @@ components:
     properties: {align: center, scale: medium}
     type: form:dep_gqlhr7sei7ys7:_Components.Text
   - data_bindings: []
-    layout_properties: {width: 79.64580000000001}
+    event_bindings: {click: delete_link_click}
+    layout_properties: {width: 90}
     name: delete_link
     properties:
       align: center

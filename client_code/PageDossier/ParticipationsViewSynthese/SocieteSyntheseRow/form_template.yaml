@@ -22,9 +22,9 @@ components:
     properties: {align: center}
     type: form:dep_gqlhr7sei7ys7:_Components.Text
   - data_bindings: []
-    event_bindings: {click: voir_fiche_button_click}
+    event_bindings: {click: consulter_button_click}
     layout_properties: {width: 80}
-    name: voir_fiche_button
+    name: consulter_button
     properties:
       align: center
       icon: mi:tools_wrench

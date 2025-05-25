@@ -9,6 +9,9 @@ class ParticipationsViewSynthese(ParticipationsViewSyntheseTemplate):
 
     # Chargement des données synthétiques du dossier
     self.repeating_panel.items = anvil.server.call("get_synthese_participations", self.dossier["id"])
+    # Dans __init__
+    self.repeating_panel.set_event_handler("x-ouvrir-fiche", self._rediriger_vers_fiche)
+
 
   def ajouter_societe_button_click(self, **event_args):
     from ..PopupAjouterSociete import PopupAjouterSociete
