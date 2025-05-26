@@ -18,12 +18,17 @@ class ParticipationItemRow(ParticipationItemRowTemplate):
 
   def delete_link_click(self, **event_args):
     if confirm(f"Supprimer {self.item['actionnaire']} ?"):
-      try:
-        anvil.server.call("supprimer_participation", self.item["row_id"])  # ✅ Utilisation du row_id
-        Notification("Supprimé avec succès", style="success").show()
-        self.raise_event("x-actionnaire-ajoute")  # pour rafraîchir la liste
-      except Exception as e:
-        Notification(str(e), style="danger").show()
+      anvil.server.call("supprimer_participation", self.item["id"])
+
+      # Recharge page comme un clic depuis la synthèse
+      from ...PageFicheParticipation import PageFicheParticipation
+      fiche = PageFicheParticipation(
+        dossier=self.item["dossier"],
+        nom_societe=self.item["societe"]
+      )
+
+
+
 
 
 

@@ -65,7 +65,7 @@ def get_participations_pour_societe(folder_id, nom_societe):
   resultats = []
   for ligne in lignes:
     resultats.append({
-      "row_id": ligne.get_id(),  # ✅ Ajout de l'ID
+      "id": ligne.get_id(),  # ✅ Ajout de l'ID
       "actionnaire": ligne["actionnaire"],
       "type_actionnaire": ligne["type_actionnaire"],
       "pourcentage": ligne["pourcentage"],
