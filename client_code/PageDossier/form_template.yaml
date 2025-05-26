@@ -43,7 +43,7 @@ components:
       properties: {}
       type: ColumnPanel
     - components:
-      - event_bindings: {show: nom_dossier_label_show}
+      - event_bindings: {}
         layout_properties: {grid_position: 'GHWYLG,UOHVGC'}
         name: nom_dossier_label
         properties: {align: center, bold: true, text: ''}
@@ -114,6 +114,7 @@ components:
           name: card_content_container_1
           properties: {}
           type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
+        event_bindings: {}
         layout_properties: {grid_position: 'DZDCXB,LBDSON'}
         name: card_1
         properties: {}
@@ -136,7 +137,7 @@ components:
           name: participations_button
           properties: {align: center, text: 📄 Participations}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
-        - event_bindings: {click: ficheparticipation_button_click}
+        - event_bindings: {}
           layout_properties: {grid_position: 'LDPXGY,ZVKVHB'}
           name: ficheparticipation_button
           properties: {align: center, text: 📊 Vue synthétique}
@@ -161,7 +162,7 @@ components:
       name: content_panel
       properties: {}
       type: ColumnPanel
-    event_bindings: {show: RowPanel_show}
+    event_bindings: {}
     layout_properties: {full_width_row: true, grid_position: 'HXBATW,FRUVBU'}
     name: RowPanel
     properties: {}

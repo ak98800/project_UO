@@ -82,3 +82,6 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
 
   def _rafraichir_apres_ajout(self, **event_args):
     self.recharger_lignes()
+
+
+

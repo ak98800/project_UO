@@ -1,12 +1,12 @@
 from ._anvil_designer import ParticipationItemRowTemplate
 from anvil import *
+import anvil.server
 
 class ParticipationItemRow(ParticipationItemRowTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
     data = self.item
-
     self.actionnaire_label.text = data.get("actionnaire", "")
     self.type_label.text = data.get("type_actionnaire", "")
 
@@ -16,9 +16,14 @@ class ParticipationItemRow(ParticipationItemRowTemplate):
     parts = data.get("nb_parts", None)
     self.nb_parts_label.text = str(int(parts)) if parts is not None else "-"
 
-
   def delete_link_click(self, **event_args):
     if confirm(f"Supprimer {self.item['actionnaire']} ?"):
-      # À implémenter : suppression réelle côté serveur
-      Notification("Suppression à venir.", style="warning").show()
+      try:
+        anvil.server.call("supprimer_participation", self.item["row_id"])  # ✅ Utilisation du row_id
+        Notification("Supprimé avec succès", style="success").show()
+        self.raise_event("x-actionnaire-ajoute")  # pour rafraîchir la liste
+      except Exception as e:
+        Notification(str(e), style="danger").show()
+
+
 

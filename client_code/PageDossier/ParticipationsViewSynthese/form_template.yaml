@@ -15,7 +15,7 @@ components:
       name: text_1
       properties: {align: center, bold: true, text: Société}
       type: form:dep_gqlhr7sei7ys7:_Components.Text
-    - event_bindings: {show: text_2_show}
+    - event_bindings: {}
       layout_properties: {width: 150}
       name: text_2
       properties: {align: center, bold: true, text: Nb d'actionnaires}

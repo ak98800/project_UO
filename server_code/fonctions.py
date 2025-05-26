@@ -2,6 +2,8 @@
 import anvil.server
 import pandas as pd
 from anvil.tables import app_tables
+from datetime import datetime
+
 
 @anvil.server.callable
 def get_synthese_participations(dossier_id):
@@ -53,21 +55,6 @@ def verifier_societe_unique(dossier_id, nom_societe):
 
 
 
-
-@anvil.server.callable
-def verifier_societe_unique(folder_id, nom_societe):
-  folder = app_tables.folders.get_by_id(folder_id)
-  if not folder:
-    raise Exception("Dossier introuvable.")
-
-  # Vérifie si la société existe déjà dans ce dossier
-  existe = app_tables.participations.search(folder=folder, societe=nom_societe)
-  if any(existe):
-    raise Exception(f"La société '{nom_societe}' existe déjà dans ce dossier.")
-
-  return nom_societe
-
-
 @anvil.server.callable
 def get_participations_pour_societe(folder_id, nom_societe):
   folder = app_tables.folders.get_by_id(folder_id)
@@ -78,6 +65,7 @@ def get_participations_pour_societe(folder_id, nom_societe):
   resultats = []
   for ligne in lignes:
     resultats.append({
+      "row_id": ligne.get_id(),  # ✅ Ajout de l'ID
       "actionnaire": ligne["actionnaire"],
       "type_actionnaire": ligne["type_actionnaire"],
       "pourcentage": ligne["pourcentage"],
@@ -148,3 +136,54 @@ def get_infos_societe(folder_id, nom_societe):
     "total_parts": ligne["total_parts_societe"] if "total_parts_societe" in ligne else ""
   }
 
+
+@anvil.server.callable
+def ajouter_participation_actionnaire(folder_id, societe, actionnaire, type_actionnaire, nb_parts, pourcentage, calcul_auto):
+  
+  folder = app_tables.folders.get_by_id(folder_id)
+  if not folder:
+    raise Exception("Dossier introuvable.")
+
+  # Convertir proprement
+  nb_parts = float(nb_parts) if nb_parts not in ("", None) else None
+  pourcentage = float(pourcentage) if pourcentage not in ("", None) else None
+
+  # Récupération du total_parts_societe
+  lignes = app_tables.participations.search(folder=folder, societe=societe)
+  total_parts = None
+  for ligne in lignes:
+    if ligne["total_parts_societe"]:
+      total_parts = ligne["total_parts_societe"]
+      break
+
+  # 🧠 Logique de calcul / validation
+  if calcul_auto:
+    if nb_parts is None or total_parts is None:
+      raise Exception("Impossible de calculer automatiquement le pourcentage. Vérifiez les parts et le total.")
+    pourcentage = round((nb_parts / total_parts) * 100, 2)
+  else:
+    if pourcentage is None:
+      raise Exception("Veuillez saisir un pourcentage ou activer le calcul automatique.")
+
+  # ✅ Enregistrement
+  app_tables.participations.add_row(
+    folder=folder,
+    societe=societe,
+    actionnaire=actionnaire,
+    type_actionnaire=type_actionnaire,
+    nb_parts=nb_parts,
+    total_parts_societe=total_parts,
+    pourcentage=pourcentage,
+    created_at=datetime.now()
+  )
+
+  return "OK"
+
+
+@anvil.server.callable
+def supprimer_participation(row_id):
+  ligne = app_tables.participations.get_by_id(row_id)
+  if ligne:
+    ligne.delete()
+  else:
+    raise Exception("Participation introuvable.")

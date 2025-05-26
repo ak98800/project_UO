@@ -67,12 +67,6 @@ class PageDossier(PageDossierTemplate):
     synthese.set_event_handler("x-afficher-fiche-societe", self._afficher_fiche_societe)
     self.zone_contenu.add_component(synthese)
 
-  def ficheparticipation_button_click(self, **event_args):
-    self.clear_zone_contenu()
-    from .PageFicheParticipation import PageFicheParticipation
-    participation = PageFicheParticipation(dossier=self.dossier, nom_societe="ALPHA PARTICIPATIONS")
-    self.zone_contenu.add_component(participation)
-
   def vue_button_click(self, **event_args):
     self.clear_zone_contenu()
     from .VueSyntheseView import VueSyntheseView
@@ -93,3 +87,5 @@ class PageDossier(PageDossierTemplate):
     self.clear_zone_contenu()
     if composant:
       self.zone_contenu.add_component(composant)
+
+

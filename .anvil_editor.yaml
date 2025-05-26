@@ -23,6 +23,7 @@ unique_ids:
     PageDossier: '1748038044256268400386577.60922'
     PageDossier.PageFicheParticipation: '1748160578548225021209166.62814'
     PageDossier.PageFicheParticipation.ParticipationItemRow: '1748165679766765365801589.184'
+    PageDossier.PageFicheParticipation.PopupAjouterActionnaire: '1748230067245201124407500.00714'
     PageDossier.ParticipationsViewSynthese: '1748144900682998435568089.8616'
     PageDossier.ParticipationsViewSynthese.SocieteSyntheseRow: '1748145408825190219663213.06927'
     PageDossier.PopupAjouterSociete: '1748155613387524539082971.70306'

@@ -13,6 +13,10 @@ class ParticipationsViewSynthese(ParticipationsViewSyntheseTemplate):
       s["dossier"] = self.dossier
     self.repeating_panel.items = societes
 
+  def ajouter_societe_button_click(self, **event_args):
+    """This method is called when the component is clicked."""
+    pass
+
 
 
 
