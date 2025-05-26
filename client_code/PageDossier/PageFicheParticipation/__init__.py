@@ -2,6 +2,10 @@ from ._anvil_designer import PageFicheParticipationTemplate
 from anvil import *
 import anvil.server
 
+
+
+
+
 class PageFicheParticipation(PageFicheParticipationTemplate):
   def __init__(self, dossier, nom_societe, **properties):
     self.init_components(**properties)
@@ -92,10 +96,11 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
       composant=PageFicheParticipation(dossier=self.dossier, nom_societe=self.nom_societe)
     )
   def refresh_button_click(self, **event_args):
-    from ...PageDossier import PageDossier
+    from ...PageDossier import PageDossier  # ✅ adapt if needed
   
-    # On suppose que PageDossier est déjà affichée
+    # ✅ Pas d'import de get_open_forms — on l'utilise directement
     for f in get_open_forms():
       if isinstance(f, PageDossier):
         f.ouvrir_fiche_participation(self.nom_societe)
         break
+
