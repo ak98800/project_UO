@@ -1,11 +1,11 @@
 from ._anvil_designer import SocieteSyntheseRowTemplate
 from anvil import *
+from ...PageFicheParticipation import PageFicheParticipation
 
 class SocieteSyntheseRow(SocieteSyntheseRowTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
-    # Données de l'élément
     societe = self.item.get("societe", "")
     nb_actionnaires = self.item.get("nb_actionnaires", 0)
     pourcentage = self.item.get("total_pourcentage", 0)
@@ -17,12 +17,19 @@ class SocieteSyntheseRow(SocieteSyntheseRowTemplate):
     self.statut_label.text = statut
 
   def consulter_button_click(self, **event_args):
-    # ⬇️ Ne pas ouvrir ici, mais propager l’événement à la vue parente
-    self.raise_event("x-ouvrir-fiche", nom_societe=self.item["societe"])
+    
+    fiche = PageFicheParticipation(
+      dossier=self.item["dossier"],
+      nom_societe=self.item["societe"]
+    )
 
-  def consulter_button_click(self, **event_args):
-    print("▶️ Clic sur consulter pour", self.item["societe"])
-    self.raise_event("x-ouvrir-fiche", nom_societe=self.item["societe"])
+    page = self._get_page_dossier()
+    if page:
+      page.clear_zone_contenu()
+      page.zone_contenu.add_component(fiche)
 
-
-
+  def _get_page_dossier(self):
+    parent = self.parent
+    while parent and not hasattr(parent, "zone_contenu"):
+      parent = parent.parent
+    return parent

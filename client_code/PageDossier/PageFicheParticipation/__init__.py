@@ -23,11 +23,28 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
     self.charger_infos_societe()
 
   def recharger_lignes(self):
-    self.repeating_participations.items = anvil.server.call(
+    participations = anvil.server.call(
       "get_participations_pour_societe",
       self.dossier["id"],
       self.nom_societe
     )
+    self.repeating_participations.items = participations
+  
+    # ➕ Calcule la somme des pourcentages
+    total_pct = sum(p.get("pourcentage", 0) or 0 for p in participations)
+  
+    # ➕ Ajoute l’indicateur visuel
+    self.statut_label.text = f"Total : {total_pct:.1f} %"
+    if total_pct == 100:
+      self.statut_label.foreground = "green"
+      self.statut_label.text = f"✅ Structure complète ({total_pct:.1f} %)"
+    elif total_pct < 100:
+      self.statut_label.foreground = "orange"
+      self.statut_label.text = f"⚠️ Incomplet ({total_pct:.1f} %)"
+    else:
+      self.statut_label.foreground = "red"
+      self.statut_label.text = f"❌ Excès ({total_pct:.1f} %)"
+
 
   def charger_infos_societe(self):
     infos = anvil.server.call(
@@ -36,7 +53,7 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
       self.nom_societe
     )
     if infos:
-      self.total_parts_textbox.text = str(infos.get("total_parts_societe") or "")
+      self.total_parts_textbox.text = str(infos.get("total_parts") or "")
       self.groupe_textbox.text = infos.get("groupe") or ""
       self.sous_groupe_textbox.text = infos.get("sous_groupe") or ""
 

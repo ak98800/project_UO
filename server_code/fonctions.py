@@ -128,3 +128,23 @@ def ajouter_actionnaire(folder_id, societe, actionnaire, type_actionnaire, pourc
   )
 
   return "Actionnaire ajouté"
+
+
+@anvil.server.callable
+def get_infos_societe(folder_id, nom_societe):
+  folder = app_tables.folders.get_by_id(folder_id)
+  if not folder:
+    raise Exception("Dossier introuvable.")
+
+  lignes = app_tables.participations.search(folder=folder, societe=nom_societe)
+  if not lignes:
+    return {}
+
+  # On prend la première ligne comme source des infos d'en-tête
+  ligne = lignes[0]
+  return {
+    "groupe": ligne["groupe"] if "groupe" in ligne else "",
+    "sous_groupe": ligne["sous_groupe"] if "sous_groupe" in ligne else "",
+    "total_parts": ligne["total_parts_societe"] if "total_parts_societe" in ligne else ""
+  }
+
