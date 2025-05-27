@@ -95,12 +95,7 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
       "x-afficher-fiche-societe",
       composant=PageFicheParticipation(dossier=self.dossier, nom_societe=self.nom_societe)
     )
-  def refresh_button_click(self, **event_args):
-    from ...PageDossier import PageDossier  # ✅ adapt if needed
   
-    # ✅ Pas d'import de get_open_forms — on l'utilise directement
-    for f in get_open_forms():
-      if isinstance(f, PageDossier):
-        f.ouvrir_fiche_participation(self.nom_societe)
-        break
+  def refresh_fiche_participation(self):
+    self.recharger_lignes()
 

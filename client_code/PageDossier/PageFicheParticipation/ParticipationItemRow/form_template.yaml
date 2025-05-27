@@ -26,6 +26,6 @@ components:
   properties: {align: center}
   type: FlowPanel
 container:
-  event_bindings: {show: form_show}
+  event_bindings: {}
   type: ColumnPanel
 is_package: true
