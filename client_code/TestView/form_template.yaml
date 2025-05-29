@@ -1,5 +1,7 @@
-components: []
-container:
-  properties: {html: ''}
-  type: HtmlTemplate
+components:
+- layout_properties: {grid_position: 'MLURKB,RNFBTQ'}
+  name: html_graph
+  properties: {}
+  type: form:html_graph
+container: {type: ColumnPanel}
 is_package: true
