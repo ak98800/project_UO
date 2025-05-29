@@ -91,7 +91,7 @@ def enregistrer_infos_societe(folder_id, nom_societe, total_parts, groupe, sous_
     ligne["total_parts_societe"] = int(total_parts) if total_parts else None
     ligne["groupe"] = groupe
     ligne["sous_groupe"] = sous_groupe
-    if not ligne.get("created_at"):
+    if ligne["created_at"] is None:
       ligne["created_at"] = datetime.now()
 
 @anvil.server.callable
@@ -125,16 +125,18 @@ def get_infos_societe(folder_id, nom_societe):
     raise Exception("Dossier introuvable.")
 
   lignes = app_tables.participations.search(folder=folder, societe=nom_societe)
-  if not lignes:
-    return {}
+  lignes = list(lignes)  # 🔁 Pour éviter l'erreur d'itération multiple
 
-  # On prend la première ligne comme source des infos d'en-tête
+  if not lignes:
+    return {}  # ✅ Ne rien faire si aucune participation
+
   ligne = lignes[0]
   return {
     "groupe": ligne["groupe"] if "groupe" in ligne else "",
     "sous_groupe": ligne["sous_groupe"] if "sous_groupe" in ligne else "",
     "total_parts": ligne["total_parts_societe"] if "total_parts_societe" in ligne else ""
   }
+
 
 
 @anvil.server.callable
@@ -187,3 +189,37 @@ def supprimer_participation(row_id):
     ligne.delete()
   else:
     raise Exception("Participation introuvable.")
+
+
+@anvil.server.callable
+def initialiser_societe(folder_id, nom_societe):
+  folder = app_tables.folders.get_by_id(folder_id)
+  if not folder:
+    raise Exception("Dossier introuvable.")
+
+  # Vérifie qu’aucune ligne de cette société n’existe déjà
+  existante = list(app_tables.participations.search(folder=folder, societe=nom_societe))
+  if len(existante) == 0:
+    app_tables.participations.add_row(
+      folder=folder,
+      societe=nom_societe,
+      actionnaire=None,
+      type_actionnaire=None,
+      nb_parts=None,
+      total_parts_societe=None,
+      pourcentage=None,
+      groupe=None,
+      sous_groupe=None,
+      created_at=datetime.now()
+    )
+@anvil.server.callable
+def supprimer_societe_du_dossier(folder_id, nom_societe):
+  folder = app_tables.folders.get_by_id(folder_id)
+  if not folder:
+    raise Exception("Dossier introuvable.")
+
+  lignes = app_tables.participations.search(folder=folder, societe=nom_societe)
+  for ligne in lignes:
+    ligne.delete()
+
+  return f"Société '{nom_societe}' supprimée du dossier."

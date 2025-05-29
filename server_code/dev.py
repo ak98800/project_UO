@@ -57,3 +57,46 @@ def import_test_participations(nom_dossier, fichier_excel):
   return f"Import Excel terminé avec succès. {len(df)} lignes importées."
 
 
+@anvil.server.callable
+def exporter_participations_dossier(nom_dossier):
+  import pandas as pd
+  import io
+
+  dossier = app_tables.folders.get(name=nom_dossier)
+  if not dossier:
+    raise Exception("Dossier introuvable.")
+
+  lignes = app_tables.participations.search(folder=dossier)
+  if not lignes:
+    return None
+
+  data = []
+  for l in lignes:
+    created_at = l["created_at"]
+    if created_at:
+      created_at = created_at.astimezone(None).strftime("%Y-%m-%d %H:%M")
+    else:
+      created_at = ""
+
+    data.append({
+      "Société": l["societe"],
+      "Actionnaire": l["actionnaire"],
+      "Type": l["type_actionnaire"],
+      "Parts": l["nb_parts"],
+      "Pourcentage": l["pourcentage"],
+      "Groupe": l["groupe"],
+      "Sous-groupe": l["sous_groupe"],
+      "Total parts société": l["total_parts_societe"],
+      "Créé le": created_at
+    })
+
+  df = pd.DataFrame(data)
+  buffer = io.BytesIO()
+  df.to_excel(buffer, index=False)
+  buffer.seek(0)
+
+  return anvil.BlobMedia(
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    buffer.read(),
+    name="participations.xlsx"
+  )

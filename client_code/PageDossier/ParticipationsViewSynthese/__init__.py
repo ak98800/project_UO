@@ -14,8 +14,21 @@ class ParticipationsViewSynthese(ParticipationsViewSyntheseTemplate):
     self.repeating_panel.items = societes
 
   def ajouter_societe_button_click(self, **event_args):
-    """This method is called when the component is clicked."""
-    pass
+    from .PopupAjouterSociete import PopupAjouterSociete
+    popup = PopupAjouterSociete(dossier=self.dossier)
+    popup.set_event_handler("x-societe-prete", self._ouvrir_fiche_nouvelle_societe)
+    alert(popup, large=True, buttons=[])
+  
+  def _ouvrir_fiche_nouvelle_societe(self, nom_societe=None, **event_args):
+    # 💾 Appelle le serveur pour initialiser la société
+    anvil.server.call("initialiser_societe", self.dossier["id"], nom_societe)
+  
+    # 👉 On affiche la fiche
+    from ..PageFicheParticipation import PageFicheParticipation
+    fiche = PageFicheParticipation(dossier=self.dossier, nom_societe=nom_societe)
+    self.raise_event("x-afficher-fiche-societe", composant=fiche)
+
+
 
 
 

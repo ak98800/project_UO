@@ -1,13 +1,13 @@
 components:
-- components:
-  - layout_properties: {grid_position: 'DYFZXB,CPQRUF'}
-    name: nom_dossier_textbox
-    properties: {text: Dossier_test}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
+- components: []
   layout_properties: {grid_position: 'EKDFZQ,PESKHN'}
   name: column_panel_1
   properties: {}
   type: ColumnPanel
+- layout_properties: {grid_position: 'ESMSTO,DXCNJD'}
+  name: nom_dossier_textbox
+  properties: {placeholder: Dossier_test, text: Dossier_test}
+  type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
 - layout_properties: {grid_position: 'UTDEVR,EITWJC'}
   name: fichier_excel_loader
   properties: {file_types: .xlsx}
@@ -15,12 +15,17 @@ components:
 - event_bindings: {click: import_button_click}
   layout_properties: {grid_position: 'TEAIMK,TXEVFX'}
   name: import_button
-  properties: {}
+  properties: {text: Import}
   type: form:dep_gqlhr7sei7ys7:_Components.Button
 - event_bindings: {click: nettoyer_button_click}
   layout_properties: {grid_position: 'IQNQRS,JLZNNM'}
   name: nettoyer_button
-  properties: {}
+  properties: {text: 'Supprimer '}
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+- event_bindings: {click: export_button_click}
+  layout_properties: {grid_position: 'WSQGCR,BGGWOO'}
+  name: export_button
+  properties: {text: 📥 Télécharger la base Excel}
   type: form:dep_gqlhr7sei7ys7:_Components.Button
 container: {type: ColumnPanel}
 is_package: true

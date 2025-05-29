@@ -45,7 +45,8 @@ components:
   name: sous_groupe_textbox
   properties: {}
   type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
-- layout_properties: {grid_position: 'AVOMPA,QDHJGU'}
+- event_bindings: {click: enregistrer_en_tete_button_click}
+  layout_properties: {grid_position: 'AVOMPA,QDHJGU'}
   name: enregistrer_en_tete_button
   properties: {text: Enregistrer les infos}
   type: form:dep_gqlhr7sei7ys7:_Components.Button
