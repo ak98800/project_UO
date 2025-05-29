@@ -88,4 +88,11 @@ class PageDossier(PageDossierTemplate):
     if composant:
       self.zone_contenu.add_component(composant)
 
+  def VueSynthese_button_click(self, **event_args):
+    self.clear_zone_contenu()
+    from .VueSyntheseView import VueSyntheseView
+    vue = VueSyntheseView(dossier=self.dossier)
+    self.zone_contenu.add_component(vue)
+
+
 

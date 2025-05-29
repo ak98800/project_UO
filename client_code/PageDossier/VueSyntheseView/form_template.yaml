@@ -1,0 +1,31 @@
+components:
+- layout_properties: {grid_position: 'JZOPNI,OFBFUQ'}
+  name: content_panel
+  properties: {}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'KWXSDJ,BXKXNW'}
+    name: organigramme_html
+    properties: {}
+    type: form:OrganigrammeHtml
+  layout_properties: {grid_position: 'UDWCYT,XOOIDC'}
+  name: conteneur_graphique
+  properties: {}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'BAEFOO,ALNXDK'}
+    name: divider_1
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.Divider
+  layout_properties: {full_width_row: true, grid_position: 'QRHNSH,BIJYNV'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'TBSTIJ,ZXOCCJ'}
+  name: divider_2
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Divider
+container:
+  properties: {col_spacing: large, spacing_above: large, spacing_below: none}
+  type: ColumnPanel
+is_package: true

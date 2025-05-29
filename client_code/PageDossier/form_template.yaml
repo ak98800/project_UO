@@ -137,9 +137,9 @@ components:
           name: participations_button
           properties: {align: center, text: 📄 Participations}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
-        - event_bindings: {}
+        - event_bindings: {click: VueSynthese_button_click}
           layout_properties: {grid_position: 'LDPXGY,ZVKVHB'}
-          name: ficheparticipation_button
+          name: VueSynthese_button
           properties: {align: center, text: 📊 Vue synthétique}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
         - layout_properties: {grid_position: 'LDPXGY,EAYNGX'}
