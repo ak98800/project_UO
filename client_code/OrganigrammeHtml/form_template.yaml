@@ -3,13 +3,10 @@ container:
   data_bindings: []
   properties:
     html: |+
-      <!-- Charge vis-network -->
       <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-      <!-- Zone d’affichage -->
       <div id="mynetwork" style="width: 100%; height: 600px; border: 1px solid #ccc; margin-top: 20px;"></div>
 
-      <!-- Fonction JS -->
       <script>
         function drawGraph(data) {
           const nodes = new vis.DataSet(data.nodes);
@@ -32,8 +29,7 @@ container:
         }
       </script>
 
-      <!-- Slot Anvil facultatif -->
-      <div anvil-slot="default" style="margin-top:40px;"></div>
+      <div anvil-slot="default"></div>
 
   type: HtmlTemplate
 custom_component: true

@@ -1,9 +1,13 @@
-from ._anvil_designer import VueSyntheseViewTemplate
+from ._anvil_designer import VueSyntheseView_copyTemplate
 from anvil import *
+import anvil.users
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 import anvil.server
 from ...OrganigrammeHtml import OrganigrammeHtml
 
-class VueSyntheseView(VueSyntheseViewTemplate):
+class VueSyntheseView_copy(VueSyntheseView_copyTemplate):
   def __init__(self, dossier, **properties):
     self.init_components(**properties)
     self.dossier = dossier
@@ -25,9 +29,3 @@ class VueSyntheseView(VueSyntheseViewTemplate):
 
   def form_show(self, **event_args):
     self.organigramme.call_js("drawGraph", self.graph_data)
-
-
-
-
-
-
