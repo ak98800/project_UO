@@ -33,7 +33,7 @@ unique_ids:
     ProfilPage: '1747869910822525350658847.0661'
     SignUpPage: '1745896523736799579938741.4921'
     StripePricing: '1721834618690651542658275.706'
-    VueSyntheseView_copy: '1748499011363631377198938.808'
+    TestView: '1748499598152559093062146.9685'
     WelcomeResetPage: '1747952470182288935246083.2315'
     archive_GestionUtilisateursPage: '1747710068011258866836148.44775'
     archive_GestionUtilisateursPage.Archive_UserItem: '1747710248102454468907797.4682'
@@ -44,6 +44,7 @@ unique_ids:
     archive_ProfilPage.ParticipationsView.RowTemplate2: '1748051958770814178949710.6289'
     archive_ProfilPage.ParticipationsView.RowTemplate3: '1748052141606312563892203.76044'
     mainpage: '1745878454702355474866267.2478'
+    testviewold: '1748499011363631377198938.808'
   modules:
     user_permissions: '1721839019330205569959987.51782'
   scripts: {}

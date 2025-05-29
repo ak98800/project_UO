@@ -1,0 +1,37 @@
+components: []
+container:
+  properties:
+    html: |
+      <!-- Charge la librairie vis.js -->
+      <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+      <!-- Conteneur du graphe -->
+      <div id="mynetwork" style="width: 100%; height: 600px; border: 1px solid #ccc; margin-top: 20px;"></div>
+
+      <!-- Script JS -->
+      <script>
+        function drawGraph(data) {
+          const nodes = new vis.DataSet(data.nodes);
+          const edges = new vis.DataSet(data.edges);
+          const container = document.getElementById("mynetwork");
+
+          const options = {
+            layout: {
+              hierarchical: {
+                enabled: true,
+                direction: "UD",
+                sortMethod: "directed"
+              }
+            },
+            physics: false,
+            edges: { arrows: "to" }
+          };
+
+          new vis.Network(container, { nodes, edges }, options);
+        }
+      </script>
+
+      <!-- Slot Anvil (nécessaire pour Design) -->
+      <div anvil-slot="default"></div>
+  type: HtmlTemplate
+is_package: true
