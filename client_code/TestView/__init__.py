@@ -1,19 +1,18 @@
-from ._anvil_designer import TestViewTemplate
 from anvil import *
-from ..OrganigrammeHtml import OrganigrammeHtml  # ✅ Assure-toi que le nom est correct
-
-from anvil.js.window import drawGraph
+import anvil.js
+import anvil.js.window
 
 class TestView(TestViewTemplate):
+
   def __init__(self, **properties):
     self.init_components(**properties)
 
-    # Exemple de données simples
+    # Données du graphe
     data = {
       "nodes": [
-        {"id": 1, "label": "Node 1"},
-        {"id": 2, "label": "Node 2"},
-        {"id": 3, "label": "Node 3"}
+        {"id": 1, "label": "Départ"},
+        {"id": 2, "label": "Étape 1"},
+        {"id": 3, "label": "Étape 2"}
       ],
       "edges": [
         {"from": 1, "to": 2},
@@ -21,8 +20,9 @@ class TestView(TestViewTemplate):
       ]
     }
 
-    # Appel de la fonction JS
-    drawGraph(data)
+    # Appel de la fonction JS après un court délai (important)
+    anvil.js.call_later(0.1, lambda: anvil.js.window.drawGraph(data))
+
 
 
 
