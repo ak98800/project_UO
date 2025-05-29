@@ -1,20 +1,30 @@
-# ✅ ServerModule.py
 import anvil.server
-import pandas as pd
 from anvil.tables import app_tables
-from datetime import datetime
+
+@anvil.server.callable
+def get_dossiers_disponibles():
+  # Extraire les noms des dossiers à partir du lien 'folder'
+  rows = app_tables.participations.search()
+  dossiers = set()
+  for row in rows:
+    dossier = row['folder']
+    if dossier:
+      dossiers.add(dossier['name'])  # ou dossier['name'] selon ta table folders
+  return sorted(dossiers)
 
 
 @anvil.server.callable
-def get_graph_data_for_dossier(dossier_id):
-  return {
-    "nodes": [
-      {"id": "A", "label": "Holding"},
-      {"id": "B", "label": "Filiale 1"},
-      {"id": "C", "label": "Filiale 2"}
-    ],
-    "edges": [
-      {"from": "A", "to": "B"},
-      {"from": "A", "to": "C"}
-    ]
-  }
+def get_relations_dossier(nom_dossier):
+  # Filtrer les participations liées au dossier sélectionné
+  rows = app_tables.participations.search()
+  relations = []
+  for row in rows:
+    dossier = row['folder']
+    if dossier and dossier['name'] == nom_dossier:
+      actionnaire = row['actionnaire']
+      societe = row['societe']
+      pourcentage = row['pourcentage'] or 0
+      if actionnaire and societe:
+        relations.append((actionnaire, societe, pourcentage))
+  return relations
+

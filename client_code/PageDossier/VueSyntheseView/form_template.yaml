@@ -1,26 +1,13 @@
 components:
-- layout_properties: {grid_position: 'JZOPNI,OFBFUQ'}
-  name: content_panel
+- event_bindings: {click: btn_afficher_graph_click}
+  layout_properties: {grid_position: 'CEADCD,ZXHRXO'}
+  name: btn_afficher_graph
   properties: {}
-  type: ColumnPanel
-- components:
-  - layout_properties: {grid_position: 'KWXSDJ,BXKXNW'}
-    name: organigramme_html
-    properties: {}
-    type: form:OrganigrammeHtml
-  layout_properties: {grid_position: 'UDWCYT,XOOIDC'}
-  name: conteneur_graphique
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+- layout_properties: {grid_position: 'OXYOZC,TBTAYY'}
+  name: dropdown_dossier
   properties: {}
-  type: ColumnPanel
-- components:
-  - layout_properties: {grid_position: 'BAEFOO,ALNXDK'}
-    name: divider_1
-    properties: {}
-    type: form:dep_gqlhr7sei7ys7:_Components.Divider
-  layout_properties: {full_width_row: true, grid_position: 'QRHNSH,BIJYNV'}
-  name: column_panel_1
-  properties: {}
-  type: ColumnPanel
+  type: form:dep_gqlhr7sei7ys7:_Components.DropdownMenu
 - layout_properties: {grid_position: 'TBSTIJ,ZXOCCJ'}
   name: divider_2
   properties: {}

@@ -1,0 +1,51 @@
+components: []
+container:
+  properties:
+    html: |
+      <!-- Charger vis.js -->
+      <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+      <!-- Conteneur du graphe -->
+      <div id="mynetwork" style="width: 100%; height: 600px; border: 1px solid #ccc; margin-top: 20px;"></div>
+
+      <!-- Script de génération du graphe -->
+      <script>
+        console.log("📦 Script lancé");
+
+        const nodes = new vis.DataSet([
+          { id: 1, label: "Départ" },
+          { id: 2, label: "Étape 1" },
+          { id: 3, label: "Étape 2" }
+        ]);
+
+        console.log("🟢 Nodes créés");
+
+        const edges = new vis.DataSet([
+          { from: 1, to: 2 },
+          { from: 2, to: 3 }
+        ]);
+
+        console.log("🟢 Edges créés");
+
+        const container = document.getElementById("mynetwork");
+        if (!container) {
+          console.error("❌ Container introuvable !");
+        } else {
+          const options = {
+            layout: {
+              hierarchical: {
+                enabled: true,
+                direction: "UD"
+              }
+            },
+            physics: false,
+            edges: { arrows: "to" }
+          };
+
+          console.log("🚀 Initialisation du graphe vis.js");
+          new vis.Network(container, { nodes, edges }, options);
+          console.log("✅ Graphe vis.js affiché !");
+        }
+      </script>
+  type: HtmlTemplate
+is_package: true
