@@ -1,18 +1,16 @@
 components: []
 container:
-  data_bindings: []
   properties:
-    html: |+
-      <!-- vis.js -->
+    html: |
+      <!-- Inclure vis.js -->
       <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-      <!-- Conteneur du graphique -->
-      <div id="mynetwork" style="width: 100%; height: 600px; border: 1px solid #ccc;"></div>
+      <!-- Conteneur pour le graphe -->
+      <div id="mynetwork" style="width:100%; height:500px; border:1px solid #ccc;"></div>
 
       <!-- Fonction JS appelée depuis Python -->
       <script>
         function drawGraph(data) {
-          console.log("✅ drawGraph called", data);
           const nodes = new vis.DataSet(data.nodes);
           const edges = new vis.DataSet(data.edges);
           const container = document.getElementById("mynetwork");
@@ -21,29 +19,17 @@ container:
             layout: {
               hierarchical: {
                 enabled: true,
-                direction: "UD",
-                sortMethod: "directed"
+                direction: "UD"
               }
             },
             physics: false,
             edges: { arrows: "to" }
           };
 
-          new vis.Network(container, { nodes, edges }, options);
+          new vis.Network(container, { nodes: nodes, edges: edges }, options);
         }
       </script>
-
-      <div anvil-slot="default"></div>
-
-
   type: HtmlTemplate
 custom_component: true
 custom_component_container: true
-events: []
 is_package: true
-properties: []
-slots:
-  slot:
-    index: 0
-    set_layout_properties: {slot: default}
-    target: {name: '', type: container}
