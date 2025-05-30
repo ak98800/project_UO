@@ -37,13 +37,31 @@ class DossierItemRow(DossierItemRowTemplate):
 
   
   def button_supprimer_click(self, **event_args):
-    if confirm("Voulez-vous vraiment supprimer ce dossier ? Cette action est irréversible."):
+    bouton_annuler = Button(text="Annuler", role="danger-button")
+    bouton_confirmer = Button(text="Confirmer", role="primary-color")
+  
+    confirmation = confirm(
+      Label(
+        text="Voulez-vous vraiment supprimer ce dossier ?\n\nCette action est irréversible.",
+        align="center",
+        role="confirmation-text"
+      ),
+      buttons=[
+        ("❌ Annuler", False),
+        ("✅ Confirmer", True)
+      ],
+      large=True
+    )
+
+  
+    if confirmation:
       try:
         anvil.server.call("supprimer_dossier", self.item["id"])
         Notification("Dossier supprimé avec succès.", style="success").show()
         self.parent.raise_event("x-reload-dossiers")
       except Exception as e:
         Notification(f"Erreur lors de la suppression : {e}", style="danger").show()
+
 
 
   def button_partager_click(self, **event_args):

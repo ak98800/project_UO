@@ -9,7 +9,7 @@ class PartagerDossierPopup(PartagerDossierPopupTemplate):
 
 
 
-    self.nom_dossier_label.text = f"Dossier : {dossier['nom']}"
+    self.nom_dossier_label.text = f"Dossier : {dossier['name']}"
     self.utilisateur_dropdown.include_placeholder = True
     self.charger_utilisateurs_organisation()
 

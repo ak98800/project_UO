@@ -22,7 +22,7 @@ class PageDossier(PageDossierTemplate):
     self.profil = anvil.server.call("get_profil", self.user)
 
     # 🧾 Infos dossier
-    self.nom_dossier_label.text = f"Dossier : {dossier['nom']}"
+    self.nom_dossier_label.text = f"Dossier : {dossier['name']}"
     self.email_admin_label.text = dossier["created_by"]["email"]
     self.date_creation_label.text = dossier["created_at"].strftime("%d/%m/%Y")
     self.nb_users_label.text = str(anvil.server.call("get_nombre_utilisateurs_dossier", dossier["id"]))
