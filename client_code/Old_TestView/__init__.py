@@ -1,10 +1,9 @@
-from ._anvil_designer import TestViewTemplate
+from ._anvil_designer import Old_TestViewTemplate
 from anvil import *
 import anvil.js
 import anvil.js.window
 
-class TestView(TestViewTemplate):
-
+class Old_TestView(Old_TestViewTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.inject_visjs_script()

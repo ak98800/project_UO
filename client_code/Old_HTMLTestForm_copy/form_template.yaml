@@ -6,7 +6,7 @@ components:
 container:
   properties:
     html: |
-      <!-- Charger vis.js -->
+      Old_<!-- Charger vis.js -->
       <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
       <!-- Conteneur du graphe -->

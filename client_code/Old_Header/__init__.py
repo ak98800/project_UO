@@ -1,8 +1,8 @@
-from ._anvil_designer import HeaderTemplate
+from ._anvil_designer import Old_HeaderTemplate
 from anvil import *
 import anvil.users
 
-class Header(HeaderTemplate):
+class Old_Header(Old_HeaderTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 

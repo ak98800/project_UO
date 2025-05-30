@@ -1,4 +1,4 @@
-from ._anvil_designer import HomePageLayoutTemplate
+from ._anvil_designer import Old_HomePageLayoutTemplate
 from anvil import *
 import anvil.users
 
@@ -7,7 +7,7 @@ from Dashboard import Dashboard
 from ProfilPage import ProfilPage
 from GestionUtilisateursPage import GestionUtilisateursPage
 
-class HomePageLayout(HomePageLayoutTemplate):
+class Old_HomePageLayout(Old_HomePageLayoutTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.user = anvil.users.get_user()

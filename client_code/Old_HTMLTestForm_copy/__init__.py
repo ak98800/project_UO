@@ -1,4 +1,4 @@
-from ._anvil_designer import HTMLTestForm_copyTemplate
+from ._anvil_designer import Old_HTMLTestForm_copyTemplate
 from anvil import *
 import anvil.server
 import anvil.users
@@ -6,7 +6,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-class HTMLTestForm_copy(HTMLTestForm_copyTemplate):
+class Old_HTMLTestForm_copy(Old_HTMLTestForm_copyTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 

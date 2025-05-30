@@ -1,9 +1,9 @@
-from ._anvil_designer import archive_ProfilPageTemplate
+from ._anvil_designer import Old_ProfilPageTemplate
 from anvil import *
 import anvil.users
 import anvil.server
 
-class archive_ProfilPage(archive_ProfilPageTemplate):
+class Old_ProfilPage(Old_ProfilPageTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.user = anvil.users.get_user()

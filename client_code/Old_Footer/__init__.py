@@ -1,7 +1,7 @@
-from ._anvil_designer import FooterTemplate
+from ._anvil_designer import Old_FooterTemplate
 from anvil import *
 
-class Footer(FooterTemplate):
+class Old_Footer(Old_FooterTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
