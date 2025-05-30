@@ -44,8 +44,10 @@ class mainpage(mainpageTemplate):
 
   def se_connecter_click(self, **event_args):
     from ..LoginPage import LoginPage
-    open_form(LoginPage())
-
+    self.content_panel.clear()
+    self.content_panel.add_component(LoginPage())
+    
   def inscription_click(self, **event_args):
     from ..SignUpPage import SignUpPage
-    open_form(SignUpPage())
+    self.content_panel.clear()
+    self.content_panel.add_component(SignUpPage())

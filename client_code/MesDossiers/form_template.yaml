@@ -47,22 +47,17 @@ components:
         name: heading_2
         properties: {align: center, bold: true, text: Mes dossiers}
         type: form:dep_gqlhr7sei7ys7:_Components.Heading
-      - layout_properties: {grid_position: 'EHHXVV,IOIDQK'}
-        name: spacer_2
-        properties: {}
-        type: Spacer
       - components:
-        - components:
-          - layout_properties: {width: 451}
-            name: nom_dossier_textbox
-            properties: {align: left, appearance: outlined, character_limit: null, display_bold: false, display_font_size: 15, enabled: true, label_bold: false, label_font_size: 12, placeholder: Entrer le nom du nouveau dossier, subcontent_font_size: 12, text: '', type: text, visible: true}
-            type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
-          layout_properties: {grid_position: 'DFGKQB,XUREIZ'}
-          name: flow_panel_3
-          properties: {align: center, gap: none}
-          type: FlowPanel
+        - layout_properties: {col_xs: 1, row: VPISVB, width_xs: 3}
+          name: text_2
+          properties: {text: Créer un dossier}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        - layout_properties: {col_xs: 1, row: QHCIXT, width_xs: 5}
+          name: nom_dossier_textbox
+          properties: {align: left, appearance: outlined, character_limit: null, display_bold: false, display_font_size: 15, enabled: true, label_bold: false, label_font_size: 12, placeholder: Entrer le nom du nouveau dossier, subcontent_font_size: 12, text: '', type: text, visible: true}
+          type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
         - event_bindings: {click: creer_dossier_button_click}
-          layout_properties: {grid_position: 'DFGKQB,ZNNALV'}
+          layout_properties: {col_xs: 6, row: QHCIXT, width_xs: 4}
           name: creer_dossier_button
           properties:
             align: center
@@ -71,36 +66,23 @@ components:
               padding: [null, '50', null, '50']
             text: Créer
           type: form:dep_gqlhr7sei7ys7:_Components.Button
-        layout_properties: {grid_position: 'TKLMCA,ZQTHPR'}
-        name: column_panel_1
-        properties:
-          col_spacing: medium
-          col_widths: '{"XUREIZ":35,"ZNNALV":25}'
-          spacing:
-            margin: [null, null, null, null]
-            padding: [null, '50', null, '50']
-        type: ColumnPanel
-      - layout_properties: {grid_position: 'ZGUJPS,TZGEJZ'}
-        name: divider_2
-        properties: {}
-        type: form:dep_gqlhr7sei7ys7:_Components.Divider
-      - components:
-        - event_bindings: {change: search_box_change}
-          layout_properties: {grid_position: 'GMJJYI,LJNPGT'}
-          name: search_box
-          properties: {appearance: outlined, placeholder: Rechercher un dossier}
-          type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
-        - layout_properties: {grid_position: 'GMJJYI,HDDJMZ'}
-          name: column_panel_3
+        - layout_properties: {col_xs: 0, row: LFOIZM, width_xs: 12}
+          name: divider_2
           properties: {}
-          type: ColumnPanel
-        layout_properties: {grid_position: 'ARQUVP,GKIIIL'}
-        name: column_panel_2
-        properties:
-          col_widths: '{"LJNPGT":35,"HDDJMZ":30}'
-          spacing:
-            padding: [null, '50', null, '50']
-        type: ColumnPanel
+          type: form:dep_gqlhr7sei7ys7:_Components.Divider
+        - layout_properties: {col_xs: 1, row: UYQFXN, width_xs: 3}
+          name: text_3
+          properties: {text: Rechercher un dossier}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        - event_bindings: {change: search_box_change}
+          layout_properties: {col_xs: 1, row: TNYYCZ, width_xs: 5}
+          name: search_box
+          properties: {appearance: outlined, display_font_size: 15, placeholder: Rechercher un dossier}
+          type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
+        layout_properties: {grid_position: 'MBVBIG,TTDTNN'}
+        name: grid_panel_1
+        properties: {}
+        type: GridPanel
       - layout_properties: {grid_position: 'LDDCNC,WQRASU'}
         name: divider_1
         properties: {}
