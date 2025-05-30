@@ -1,6 +1,6 @@
 from ._anvil_designer import VueSyntheseViewTemplate
 from anvil import *
-from ...HTMLTestForm import HTMLTestForm  # importer ton test HTML
+from ...HTMLTestForm import HTMLTestForm
 from anvil.tables import app_tables
 import anvil.server
 
@@ -8,73 +8,113 @@ class VueSyntheseView(VueSyntheseViewTemplate):
   def __init__(self, nom_dossier=None, **properties):
     self.init_components(**properties)
 
-    # Charger les dossiers disponibles depuis la table
+    # Récupérer les dossiers
     self.dossiers_disponibles = anvil.server.call('get_dossiers_disponibles')
     self.dropdown_dossier.items = self.dossiers_disponibles
 
+    # Ajouter le HTMLTestForm au layout
+    self.form_test = HTMLTestForm()
+    self.panel.add_component(self.form_test)
 
-    # Affichage du contenu de HTMLTestForm dans cette vue
-    form_test = HTMLTestForm()
-    self.add_component(form_test)
+    self.dropdown_direction.items = [
+      ("Verticale (haut → bas)", "UD"),
+      ("Horizontale (gauche → droite)", "LR")
+    ]
+    self.dropdown_direction.selected_value = "UD"  # Par défaut
+
 
   def btn_afficher_graph_click(self, **event_args):
     nom_dossier = self.dropdown_dossier.selected_value
-
+    direction = self.dropdown_direction.selected_value or "UD"
+  
     if not nom_dossier:
       alert("Veuillez sélectionner un dossier.")
       return
-
-    relations = anvil.server.call('get_relations_dossier', nom_dossier)
-
+  
+    relations = anvil.server.call('get_relations_dossier_typed', nom_dossier)
+  
     noms_uniques = set()
     edges = []
-
-    for actionnaire, societe, pourcentage in relations:
+    types_actionnaires = {}
+    from collections import defaultdict
+    degree_map = defaultdict(int)
+  
+    for actionnaire, societe, pourcentage, type_act in relations:
       noms_uniques.add(actionnaire)
       noms_uniques.add(societe)
+      types_actionnaires[actionnaire] = type_act or "PM"
+      degree_map[actionnaire] += 1
+  
       edges.append({
         "from": actionnaire,
         "to": societe,
         "label": f"{pourcentage}%",
-        "font": { "align": "middle" }
+        "title": f"{actionnaire} → {societe} : {pourcentage}%",
+        "font": {"align": "middle", "size": 12}
       })
-
-    nodes = [{"id": name, "label": name} for name in noms_uniques]
-
-    html_code = f"""
-    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <div id="mynetwork" style="width:100%; height:600px; border:1px solid #ccc; margin-top:20px;"></div>
-    <script>
-      const nodes = new vis.DataSet({nodes});
-      const edges = new vis.DataSet({edges});
-      const container = document.getElementById("mynetwork");
-
-      const options = {{
-        layout: {{
-          hierarchical: {{
-            enabled: true,
-            direction: "UD"
-          }}
-        }},
-        physics: false,
-        edges: {{
-          arrows: "to",
-          font: {{ align: "horizontal" }}
-        }}
-      }};
-
-      new vis.Network(container, {{ nodes: nodes, edges: edges }}, options);
-    </script>
-    """
-
-    # ✅ Injection propre dans HTMLTestForm déjà affiché
-    self.form_test.inject_html(html_code)
+  
+    nodes = []
+    for name in noms_uniques:
+      color = "#FFD700" if types_actionnaires.get(name) == "PP" else "#D2E5FF"
+      value = degree_map.get(name, 1)
+      nodes.append({
+        "id": name,
+        "label": name,
+        "title": f"{name} (détient {value} société(s))",
+        "color": color,
+        "value": value
+      })
+  
+    # Appel JavaScript avec la direction choisie
+    self.form_test.call_js("drawGraph", nodes, edges, direction)
 
 
-
-
-
-
-
-
-
+  def btn_export_html_click(self, **event_args):
+    """Génère et télécharge l'organigramme en fichier HTML interactif"""
+  
+    nom_dossier = self.dropdown_dossier.selected_value
+    if not nom_dossier:
+      alert("Veuillez sélectionner un dossier.")
+      return
+  
+      # Appel serveur pour récupérer nodes et edges
+    relations = anvil.server.call('get_relations_dossier_typed', nom_dossier)
+  
+    noms_uniques = set()
+    edges = []
+    types_actionnaires = {}
+    from collections import defaultdict
+    degree_map = defaultdict(int)
+  
+    for actionnaire, societe, pourcentage, type_act in relations:
+      noms_uniques.add(actionnaire)
+      noms_uniques.add(societe)
+      types_actionnaires[actionnaire] = type_act or "PM"
+      degree_map[actionnaire] += 1
+  
+      edges.append({
+        "from": actionnaire,
+        "to": societe,
+        "label": f"{pourcentage}%",
+        "title": f"{actionnaire} → {societe} : {pourcentage}%",
+        "font": {"align": "middle", "size": 12}
+      })
+  
+    nodes = []
+    for name in noms_uniques:
+      color = "#FFD700" if types_actionnaires.get(name) == "PP" else "#D2E5FF"
+      value = degree_map.get(name, 1)
+      nodes.append({
+        "id": name,
+        "label": name,
+        "title": f"{name} (détient {value} société(s))",
+        "color": color,
+        "value": value
+      })
+  
+      # Appel du serveur pour générer le HTML
+    html_code = anvil.server.call('generer_export_html', nodes, edges)
+  
+    # Conversion en média et téléchargement
+    media = anvil.BlobMedia("text/html", html_code.encode("utf-8"), name="organigramme_interactif.html")
+    anvil.media.download(media)

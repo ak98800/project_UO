@@ -1,51 +1,181 @@
-components: []
+components:
+- layout_properties: {slot: default}
+  name: html_container
+  properties: {format: restricted_html}
+  type: RichText
 container:
   properties:
     html: |
       <!-- Charger vis.js -->
       <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
+      <!-- Barre de boutons -->
+      <div style="margin-bottom: 10px;">
+        <button onclick="switchToFree()">Vue libre</button>
+        <button onclick="switchToVertical()">Vue verticale</button>
+        <button onclick="switchToHorizontal()">Vue horizontale</button>
+        <button onclick="downloadPng()">Exporter en PNG</button>
+      </div>
+
       <!-- Conteneur du graphe -->
-      <div id="mynetwork" style="width: 100%; height: 600px; border: 1px solid #ccc; margin-top: 20px;"></div>
+      <div id="mynetwork" style="width: 100%; height: 1000px; border: 1px solid #ccc;"></div>
 
-      <!-- Script de génération du graphe -->
+      <!-- Script principal -->
       <script>
-        console.log("📦 Script lancé");
+        let network;
+        let nodesStore = null;
+        let edgesStore = null;
 
-        const nodes = new vis.DataSet([
-          { id: 1, label: "Départ" },
-          { id: 2, label: "Étape 1" },
-          { id: 3, label: "Étape 2" }
-        ]);
+        window.drawGraph = function(nodesData, edgesData) {
+          console.log("🔄 drawGraph called");
 
-        console.log("🟢 Nodes créés");
+          const container = document.getElementById("mynetwork");
+          if (!container) {
+            console.error("❌ Container introuvable !");
+            return;
+          }
 
-        const edges = new vis.DataSet([
-          { from: 1, to: 2 },
-          { from: 2, to: 3 }
-        ]);
+          nodesStore = new vis.DataSet(nodesData);
+          edgesStore = new vis.DataSet(edgesData);
 
-        console.log("🟢 Edges créés");
+          const data = { nodes: nodesStore, edges: edgesStore };
 
-        const container = document.getElementById("mynetwork");
-        if (!container) {
-          console.error("❌ Container introuvable !");
-        } else {
           const options = {
+            layout: {
+              randomSeed: 2  // ➤ Fixe la disposition initiale pour éviter la boule
+            },
+            physics: {
+              enabled: false
+            },
+            interaction: {
+              dragNodes: true,
+              dragView: true,
+              zoomView: true,
+              navigationButtons: true,
+              keyboard: {
+                enabled: true,
+                speed: { x: 10, y: 10, zoom: 0.02 },
+                bindToWindow: true
+              }
+            },
+            nodes: {
+              shape: "ellipse",
+              scaling: { min: 10, max: 30 },
+              font: { size: 12 }
+            },
+            edges: {
+              arrows: "to",
+              smooth: false,
+              color: { color: "#999999" },
+              font: { align: "middle", size: 12 }
+            }
+          };
+
+          network = new vis.Network(container, data, options);
+          setTimeout(() => network.fit({ animation: true }), 300);  // ➤ Auto centrage
+          console.log("✅ Graphe libre affiché avec aération !");
+        };
+
+        function switchToVertical() {
+          if (!network || !nodesStore || !edgesStore) return;
+          network.setOptions({
             layout: {
               hierarchical: {
                 enabled: true,
-                direction: "UD"
+                direction: "UD",
+                sortMethod: "hubsize",
+                levelSeparation: 150,
+                nodeSpacing: 150,
+                treeSpacing: 300
               }
             },
+            physics: false
+          });
+          console.log("🔁 Vue verticale activée");
+        }
+
+        function switchToHorizontal() {
+          if (!network || !nodesStore || !edgesStore) return;
+          network.setOptions({
+            layout: {
+              hierarchical: {
+                enabled: true,
+                direction: "LR",
+                sortMethod: "hubsize",
+                levelSeparation: 150,
+                nodeSpacing: 150,
+                treeSpacing: 300
+              }
+            },
+            physics: false
+          });
+          console.log("🔁 Vue horizontale activée");
+        }
+
+        function switchToFree() {
+          if (!nodesStore || !edgesStore) return;
+
+          const container = document.getElementById("mynetwork");
+          const data = { nodes: nodesStore, edges: edgesStore };
+
+          const options = {
+            layout: {
+              hierarchical: false,
+              randomSeed: 2
+            },
             physics: false,
-            edges: { arrows: "to" }
+            interaction: {
+              dragNodes: true,
+              dragView: true,
+              zoomView: true,
+              navigationButtons: true,
+              keyboard: {
+                enabled: true,
+                speed: { x: 10, y: 10, zoom: 0.02 },
+                bindToWindow: true
+              }
+            },
+            nodes: {
+              shape: "ellipse",
+              scaling: { min: 10, max: 30 },
+              font: { size: 12 }
+            },
+            edges: {
+              arrows: "to",
+              smooth: false,
+              color: { color: "#999999" },
+              font: { align: "middle", size: 12 }
+            }
           };
 
-          console.log("🚀 Initialisation du graphe vis.js");
-          new vis.Network(container, { nodes, edges }, options);
-          console.log("✅ Graphe vis.js affiché !");
+          network = new vis.Network(container, data, options);
+          setTimeout(() => network.fit({ animation: true }), 300);
+          console.log("✅ Vue libre améliorée activée !");
         }
+
+        window.downloadPng = function() {
+          if (!network) {
+            console.error("❌ Réseau non initialisé");
+            return;
+          }
+
+          const canvas = document.querySelector("#mynetwork canvas");
+          if (!canvas) {
+            console.error("❌ Canvas introuvable !");
+            return;
+          }
+
+          const pngData = canvas.toDataURL("image/png");
+
+          const a = document.createElement("a");
+          a.href = pngData;
+          a.download = "organigramme.png";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+
+          console.log("✅ PNG téléchargé !");
+        };
       </script>
   type: HtmlTemplate
 is_package: true

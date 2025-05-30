@@ -1,4 +1,4 @@
-from ._anvil_designer import HTMLTestFormTemplate
+from ._anvil_designer import Form2Template
 from anvil import *
 import anvil.server
 import anvil.users
@@ -6,12 +6,9 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-class HTMLTestForm(HTMLTestFormTemplate):
+class Form2(Form2Template):
   def __init__(self, **properties):
+    # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-  def inject_html(self, html_code):
-    print("🔁 HTML injecté dans HTMLTestForm")
-    self.html_container.content = html_code
-
-
+    # Any code you write here will run before the form opens.
