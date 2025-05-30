@@ -5,22 +5,28 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+from datetime import datetime
 
 class DossierItemRow(DossierItemRowTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
-
-
   def form_refreshing_data_bindings(self, **event_args):
     dossier = self.item
-    self.nom_label.text = dossier['nom']
+    self.nom_label.text = dossier['name']
     self.admin_label.text = dossier['created_by']['email'] if dossier['created_by'] else "?"
     self.nb_users_label.text = str(dossier['nb_users']) if 'nb_users' in dossier else "0"
   
+    if 'created_at' in dossier and dossier['created_at']:
+      date_obj = dossier['created_at']
+      self.date_label.text = f"Créé le {date_obj.strftime('%d/%m/%Y')}"
+    else:
+      self.date_label.text = "Date inconnue"
+  
     user = anvil.users.get_user()
     self.button_supprimer.visible = (dossier['created_by'] == user)
-    self.button_partager.visible = (dossier['created_by'] == user)  # ✅ Ajout ici
+    self.button_partager.visible = (dossier['created_by'] == user)
+
 
 
 

@@ -46,7 +46,7 @@ def get_dossiers(organisation):
       nb_users = len(app_tables.folder_members.search(folder=folder))
       dossiers.append({
         "id": folder.get_id(),
-        "nom": folder["name"],
+        "name": folder["name"],
         "created_by": folder["created_by"],
         "organisation": folder["organisation"],  # ✅ ajoute ceci
         "created_at": folder["created_at"],

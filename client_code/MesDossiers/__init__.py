@@ -21,6 +21,9 @@ class MesDossiers(MesDossiersTemplate):
     self.navigation_bar_panel.clear()
     self.navigation_bar_panel.add_component(NavigationBar())
 
+
+
+
     # Authentification
     self.user = anvil.users.get_user()
     self.profil = None
@@ -73,3 +76,12 @@ class MesDossiers(MesDossiersTemplate):
 
 
 
+  def search_box_change(self, **event_args):
+    recherche = self.search_box.text.strip()
+    if recherche == "":
+      self.recharger_dossiers()
+      return
+
+  
+    resultats = anvil.server.call('rechercher_dossiers', recherche)
+    self.repeating_dossiers.items = resultats

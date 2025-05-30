@@ -1,58 +1,89 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'CLKWUJ,QXLKQY TXYADQ,DOBLUK'}
-    name: text_1
-    properties: {align: right, text: 'Nom du dossier :'}
-    type: form:dep_gqlhr7sei7ys7:_Components.Text
   - components:
-    - layout_properties: {}
-      name: text_2
-      properties: {align: right, text: 'Nom de l''admin :'}
-      type: form:dep_gqlhr7sei7ys7:_Components.Text
-    - layout_properties: {column: 'null'}
-      name: text_3
-      properties: {align: right, text: 'Nombre d''utilisateurs :'}
-      type: form:dep_gqlhr7sei7ys7:_Components.Text
-    layout_properties: {grid_position: 'CLKWUJ,QXLKQY CNXMAC,ADLWQV'}
-    name: data_row_panel_1
-    properties: {}
-    type: DataRowPanel
-  - components:
-    - layout_properties: {}
-      name: nom_label
+    - components:
+      - components:
+        - layout_properties: {}
+          name: nom_label
+          properties: {bold: true, font_size: 20, icon: 'mi:folder', icon_color: 'theme:Primary', icon_size: 30, style: label}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        layout_properties: {grid_position: 'RWUAUL,NSRMHR ADTRIP,ZLXKYP'}
+        name: flow_panel_1
+        properties: {}
+        type: FlowPanel
+      - layout_properties: {grid_position: 'RWUAUL,NSRMHR BHVSOX,YSCIOB'}
+        name: date_label
+        properties: {}
+        type: form:dep_gqlhr7sei7ys7:_Components.Text
+      - components:
+        - event_bindings: {click: button_acceder_dossier_click}
+          layout_properties: {grid_position: 'RPHGKN,ONVJNN'}
+          name: button_acceder_dossier
+          properties: {align: right, appearance: elevated, text: Accéder}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - event_bindings: {click: button_partager_click}
+          layout_properties: {grid_position: 'RPHGKN,GXARMP'}
+          name: button_partager
+          properties: {align: right, appearance: filled, icon: '', text: Partager}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - event_bindings: {click: button_supprimer_click}
+          layout_properties: {grid_position: 'RPHGKN,EZMNOO'}
+          name: button_supprimer
+          properties: {align: left, icon: 'mi:delete_forever', icon_color: 'theme:Primary'}
+          type: form:dep_gqlhr7sei7ys7:_Components.IconButton
+        layout_properties: {grid_position: 'RWUAUL,GZHITZ'}
+        name: column_panel_3
+        properties: {}
+        type: ColumnPanel
+      layout_properties: {slot: card-content-container-slot}
+      name: column_panel_2
       properties: {}
-      type: form:dep_gqlhr7sei7ys7:_Components.Text
-    - layout_properties: {}
-      name: admin_label
-      properties: {}
-      type: form:dep_gqlhr7sei7ys7:_Components.Text
-    - layout_properties: {}
-      name: nb_users_label
-      properties: {}
-      type: form:dep_gqlhr7sei7ys7:_Components.Text
-    layout_properties: {grid_position: 'CLKWUJ,FUTVQT'}
-    name: data_row_panel_2
-    properties: {}
-    type: DataRowPanel
-  layout_properties: {grid_position: 'PDBGSP,OKZYNT'}
-  name: column_panel_1
-  properties: {col_widths: '{"QXLKQY":30,"FUTVQT":30}'}
-  type: ColumnPanel
-- event_bindings: {click: button_acceder_dossier_click}
-  layout_properties: {grid_position: 'PDBGSP,OXRSVB IJWXMK,JHZVTG'}
-  name: button_acceder_dossier
-  properties: {align: center, text: Accéder}
-  type: form:dep_gqlhr7sei7ys7:_Components.Button
-- event_bindings: {click: button_partager_click}
-  layout_properties: {grid_position: 'PDBGSP,OXRSVB BNTYQI,VCVJPA'}
-  name: button_partager
-  properties: {align: center, icon: '', text: Partager}
-  type: form:dep_gqlhr7sei7ys7:_Components.Button
-- event_bindings: {click: button_supprimer_click}
-  layout_properties: {grid_position: 'PDBGSP,OXRSVB YROPOV,XTOKVO'}
-  name: button_supprimer
-  properties: {align: center, text: Supprimer}
-  type: form:dep_gqlhr7sei7ys7:_Components.Button
+      type: ColumnPanel
+    - layout_properties: {slot: card-content-container-slot}
+      name: divider_2
+      properties:
+        margin: ['0', null, '0', null]
+      type: form:dep_gqlhr7sei7ys7:_Components.Divider
+    - components:
+      - components:
+        - layout_properties: {}
+          name: text_2
+          properties: {align: left, text: 'Nom de l''admin :'}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        - layout_properties: {column: 'null'}
+          name: text_3
+          properties: {align: left, text: 'Nombre d''utilisateurs :'}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        layout_properties: {grid_position: 'CLKWUJ,QXLKQY'}
+        name: data_row_panel_1
+        properties: {}
+        type: DataRowPanel
+      - components:
+        - layout_properties: {}
+          name: admin_label
+          properties: {}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        - layout_properties: {}
+          name: nb_users_label
+          properties: {}
+          type: form:dep_gqlhr7sei7ys7:_Components.Text
+        layout_properties: {grid_position: 'CLKWUJ,FUTVQT'}
+        name: data_row_panel_2
+        properties: {}
+        type: DataRowPanel
+      layout_properties: {slot: card-content-container-slot}
+      name: column_panel_1
+      properties: {col_widths: '{"QXLKQY":15,"FUTVQT":45}'}
+      type: ColumnPanel
+    layout_properties: {slot: card-content-slot}
+    name: card_content_container_1
+    properties:
+      margin: ['5', '50', '5', '70']
+    type: form:dep_gqlhr7sei7ys7:_Components.Card.CardContentContainer
+  layout_properties: {grid_position: 'XWUOGD,YERUFB'}
+  name: card_1
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Card
 - layout_properties: {grid_position: 'BADDTP,ULUWRX'}
   name: divider_1
   properties: {color: 'theme:Primary'}
