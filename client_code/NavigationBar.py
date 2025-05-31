@@ -27,3 +27,7 @@ class NavigationBar(NavigationBarTemplate):
     from MesDossiers import MesDossiers
     open_form(MesDossiers())
 
+  def navigation_link_analyse_click(self, **event_args):
+    from PageAnalyserDossier import PageAnalyserDossier
+    open_form(PageAnalyserDossier())
+

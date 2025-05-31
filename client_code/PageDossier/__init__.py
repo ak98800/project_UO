@@ -5,17 +5,26 @@ from anvil.tables import app_tables
 import anvil.server
 import anvil.users
 
+from ..NavigationBar import NavigationBar  # Assure-toi que ce fichier existe
+
 class PageDossier(PageDossierTemplate):
   def __init__(self, dossier, **properties):
     self.init_components(**properties)
     self.dossier = dossier
 
-    # ✅ Import dynamique
-    from ..NavigationBar import NavigationBar
+    # ✅ Appliquer le rôle sticky au header
     self.header_panel.role = "sticky-header"
+
+    # ✅ Appliquer le rôle scrollable au contenu
     self.content_panel.role = "scrollable-content"
+
+    # ✅ Ajouter la barre de navigation à gauche
     self.navigation_bar_panel.clear()
     self.navigation_bar_panel.add_component(NavigationBar())
+
+    # ✅ Message de bienvenue
+    user = anvil.users.get_user()
+    self.label_welcome.text = f"Bienvenue, {user['email']}" if user else "Bienvenue !"
 
     # 🔐 Authentification
     self.user = anvil.users.get_user()
@@ -35,31 +44,27 @@ class PageDossier(PageDossierTemplate):
     # 📄 Onglet par défaut
     self.participations_button_click()
 
-    # 🎯 Interception de la fiche société
-    self.zone_contenu.set_event_handler("x-afficher-fiche-societe", self._afficher_fiche_societe)
+
 
   def button_retour_click(self, **event_args):
     from ..MesDossiers import MesDossiers
     open_form(MesDossiers())
 
   def button_partager_click(self, **event_args):
-    from ..MesDossiers.PartagerDossierPopup import PartagerDossierPopup
-    alert(PartagerDossierPopup(dossier=self.dossier), large=True, buttons=[])
+    from ..GestionPartagePage import GestionPartagePage
+    open_form(GestionPartagePage(dossier=self.dossier))
 
   def button_supprimer_click(self, **event_args):
     if confirm("Supprimer ce dossier ? Action irréversible."):
       try:
         anvil.server.call("supprimer_dossier", self.dossier["id"])
         Notification("Dossier supprimé", style="success").show()
-        from MesDossiers import MesDossiers
+        from ..MesDossiers import MesDossiers
         open_form(MesDossiers())
       except Exception as e:
         Notification(f"Erreur : {e}", style="danger").show()
 
-  # 🔁 Méthodes d'onglets
-  def clear_zone_contenu(self):
-    self.zone_contenu.clear()
-
+  # 🔁 Chargement de la vue Participations
   def participations_button_click(self, **event_args):
     self.clear_zone_contenu()
     from .ParticipationsViewSynthese import ParticipationsViewSynthese
@@ -67,32 +72,22 @@ class PageDossier(PageDossierTemplate):
     synthese.set_event_handler("x-afficher-fiche-societe", self._afficher_fiche_societe)
     self.zone_contenu.add_component(synthese)
 
-  def vue_button_click(self, **event_args):
-    self.clear_zone_contenu()
-    from .VueSyntheseView import VueSyntheseView
-    self.zone_contenu.add_component(VueSyntheseView(dossier=self.dossier))
+  def clear_zone_contenu(self):
+    self.zone_contenu.clear()
 
-  def membres_button_click(self, **event_args):
-    self.clear_zone_contenu()
-    from .MembresView import MembresView
-    self.zone_contenu.add_component(MembresView(dossier=self.dossier))
-
-  def parametres_button_click(self, **event_args):
-    self.clear_zone_contenu()
-    from .ParticipationsViewSynthese import ParticipationsViewSynthese
-    self.zone_contenu.add_component(ParticipationsViewSynthese(dossier=self.dossier))
-
-  # ✅ Gestion de l’ouverture de la fiche société
   def _afficher_fiche_societe(self, composant=None, **event_args):
     self.clear_zone_contenu()
     if composant:
       self.zone_contenu.add_component(composant)
 
-  def VueSynthese_button_click(self, **event_args):
-    self.clear_zone_contenu()
-    from .VueSyntheseView import VueSyntheseView
-    vue = VueSyntheseView(dossier=self.dossier)
-    self.zone_contenu.add_component(vue)
+  # ✅ Nouveau : bouton ➕ Ajouter une société
+  def ajouter_societe_button_click(self, **event_args):
+    Notification("Ajouter une société : à implémenter", style="info").show()
 
+  # ✅ Nouveau : bouton 📊 Analyser le dossier
+
+  def analyser_button_click(self, **event_args):
+    from ..PageAnalyserDossier import PageAnalyserDossier
+    open_form(PageAnalyserDossier(dossier=self.dossier))
 
 

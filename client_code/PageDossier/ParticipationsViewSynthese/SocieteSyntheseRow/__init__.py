@@ -18,16 +18,13 @@ class SocieteSyntheseRow(SocieteSyntheseRowTemplate):
     self.statut_label.text = statut
 
   def consulter_button_click(self, **event_args):
-    
-    fiche = PageFicheParticipation(
-      dossier=self.item["dossier"],
-      nom_societe=self.item["societe"]
+    open_form(
+      PageFicheParticipation(
+        dossier=self.item["dossier"],
+        nom_societe=self.item["societe"]
+      )
     )
 
-    page = self._get_page_dossier()
-    if page:
-      page.clear_zone_contenu()
-      page.zone_contenu.add_component(fiche)
 
   def _get_page_dossier(self):
     parent = self.parent

@@ -1,7 +1,10 @@
 from ._anvil_designer import PageFicheParticipationTemplate
 from anvil import *
+import anvil.tables as tables
+from anvil.tables import app_tables
 import anvil.server
-
+import anvil.users
+from .. import PageDossier
 
 
 
@@ -11,7 +14,18 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
     self.init_components(**properties)
     self.dossier = dossier
     self.nom_societe = nom_societe
-    self.repeating_participations.set_event_handler("x-refresh-fiche", self._reafficher_page)
+
+
+    # ✅ Import dynamique
+    from ...NavigationBar import NavigationBar
+    self.header_panel.role = "sticky-header"
+    self.content_panel.role = "scrollable-content"
+    self.navigation_bar_panel.clear()
+    self.navigation_bar_panel.add_component(NavigationBar())
+
+    # 🔐 Authentification
+    self.user = anvil.users.get_user()
+    self.profil = anvil.server.call("get_profil", self.user)
 
     # En-tête de la fiche
     self.nom_societe_label.text = f"Société : {self.nom_societe}"
@@ -33,19 +47,16 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
       self.dossier["id"],
       self.nom_societe
     )
-  
-    # Injecte les infos pour la suppression/rafraîchissement
+
     for p in participations:
       p["dossier"] = self.dossier
       p["societe"] = self.nom_societe
-      p["id"] = p.get("id")  # Assure que 'id' est transmis
-  
+      p["id"] = p.get("id")
+
     self.repeating_participations.items = participations
-  
-    # ➕ Calcule la somme des pourcentages
+
     total_pct = sum(p.get("pourcentage", 0) or 0 for p in participations)
-  
-    # ➕ Ajoute l’indicateur visuel
+
     if total_pct == 100:
       self.statut_label.text = f"✅ Structure complète ({total_pct:.1f} %)"
       self.statut_label.foreground = "green"
@@ -89,13 +100,10 @@ class PageFicheParticipation(PageFicheParticipationTemplate):
   def _rafraichir_apres_ajout(self, **event_args):
     self.recharger_lignes()
 
-  def _reafficher_page(self, **event_args):  # ✅ méthode bien placée dans la classe
-    from .PageFicheParticipation import PageFicheParticipation
-    self.parent.raise_event(
-      "x-afficher-fiche-societe",
-      composant=PageFicheParticipation(dossier=self.dossier, nom_societe=self.nom_societe)
-    )
-  
+  def retour_button_click(self, **event_args):
+    open_form(PageDossier(dossier=self.dossier))
+
+
+
   def refresh_fiche_participation(self):
     self.recharger_lignes()
-

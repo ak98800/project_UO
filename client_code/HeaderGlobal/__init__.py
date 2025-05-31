@@ -1,8 +1,8 @@
-from ._anvil_designer import HeaderTemplate
+from ._anvil_designer import HeaderGlobalTemplate
 from anvil import *
 import anvil.users
 
-class Header(HeaderTemplate):
+class HeaderGlobal(HeaderGlobalTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 

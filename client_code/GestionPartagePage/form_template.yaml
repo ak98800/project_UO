@@ -44,8 +44,8 @@ components:
       type: ColumnPanel
     - components:
       - layout_properties: {grid_position: 'GHWYLG,UOHVGC'}
-        name: heading_2
-        properties: {align: center, bold: true, text: Gestion des utilisateurs}
+        name: nom_dossier_label
+        properties: {align: center, bold: true, text: ''}
         type: form:dep_gqlhr7sei7ys7:_Components.Heading
       - components:
         - layout_properties: {grid_position: 'SEJSIP,IDUHUF'}
@@ -54,31 +54,27 @@ components:
           type: form:dep_gqlhr7sei7ys7:_Components.Heading
         - components:
           - layout_properties: {width: 400}
-            name: name_textbox
-            properties: {align: center, appearance: outlined, placeholder: Entrer le nom du nouvel utilisateur}
-            type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
-          layout_properties: {grid_position: 'EFTBOE,DALYCF'}
-          name: flow_panel_3
-          properties: {align: center}
-          type: FlowPanel
-        - components:
-          - layout_properties: {width: 400}
-            name: email_textbox
-            properties: {align: center, appearance: outlined, character_limit: 0, display_font_size: 14, enabled: true, label_font_size: 12, placeholder: Entrer l'email de l'invité, subcontent_font_size: 12, text: '', type: email}
-            type: form:dep_gqlhr7sei7ys7:_Components.TextInput.TextBox
+            name: utilisateur_dropdown
+            properties: {appearance: outlined, placeholder: Partager ce dossier}
+            type: form:dep_gqlhr7sei7ys7:_Components.DropdownMenu
           layout_properties: {grid_position: 'HVVQUW,LWNPYE'}
           name: flow_panel_4
           properties: {align: center}
           type: FlowPanel
-        - event_bindings: {click: inviter_button_click}
+        - event_bindings: {click: ajouter_button_click}
           layout_properties: {grid_position: 'BPECZV,XXRICV'}
-          name: inviter_button
-          properties: {align: center, appearance: elevated, text: Inviter}
+          name: ajouter_button
+          properties: {align: center, appearance: elevated, text: Partager le dosser}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
         layout_properties: {grid_position: 'VWRZHC,VOHOAE'}
         name: column_panel_1
         properties: {}
         type: ColumnPanel
+      - event_bindings: {click: retour_button_click}
+        layout_properties: {grid_position: 'FKMXYP,GPBNNH'}
+        name: retour_button
+        properties: {align: center, text: Retour}
+        type: form:dep_gqlhr7sei7ys7:_Components.Button
       - layout_properties: {grid_position: 'QFURVD,KNZFNE'}
         name: spacer_1
         properties: {height: 63.33331298828125}
@@ -91,10 +87,10 @@ components:
         name: divider_1
         properties: {}
         type: form:dep_gqlhr7sei7ys7:_Components.Divider
-      - event_bindings: {show: users_panel_show}
+      - event_bindings: {show: utilisateurs_panel_show}
         layout_properties: {grid_position: 'HBEOKZ,AYFINP'}
-        name: users_panel
-        properties: {item_template: GestionUtilisateurPage.UserItemRow}
+        name: utilisateurs_panel
+        properties: {item_template: GestionPartagePage.UserRow}
         type: RepeatingPanel
       layout_properties: {expand: true, width: 715.3333129882812}
       name: content_panel

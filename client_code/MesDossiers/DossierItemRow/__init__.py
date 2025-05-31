@@ -65,11 +65,8 @@ class DossierItemRow(DossierItemRowTemplate):
 
 
   def button_partager_click(self, **event_args):
-    from ..PartagerDossierPopup import PartagerDossierPopup
-    alert(PartagerDossierPopup(dossier=self.item), large=True, buttons=[])
-    # ✅ Rafraîchir la liste après fermeture de la popup
-    self.parent.raise_event("x-reload-dossiers")
-
+    from ...GestionPartagePage import GestionPartagePage
+    open_form(GestionPartagePage(dossier=self.item))  # ✅ self.item au lieu de self.dossier
 
 
 

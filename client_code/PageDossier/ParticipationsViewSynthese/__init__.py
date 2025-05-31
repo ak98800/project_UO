@@ -18,15 +18,15 @@ class ParticipationsViewSynthese(ParticipationsViewSyntheseTemplate):
     popup = PopupAjouterSociete(dossier=self.dossier)
     popup.set_event_handler("x-societe-prete", self._ouvrir_fiche_nouvelle_societe)
     alert(popup, large=True, buttons=[])
-  
+
   def _ouvrir_fiche_nouvelle_societe(self, nom_societe=None, **event_args):
     # 💾 Appelle le serveur pour initialiser la société
     anvil.server.call("initialiser_societe", self.dossier["id"], nom_societe)
-  
-    # 👉 On affiche la fiche
+
+    # 👉 Ouvre la fiche société en tant que page dédiée (et non plus dans zone_contenu)
     from ..PageFicheParticipation import PageFicheParticipation
-    fiche = PageFicheParticipation(dossier=self.dossier, nom_societe=nom_societe)
-    self.raise_event("x-afficher-fiche-societe", composant=fiche)
+    open_form(PageFicheParticipation(dossier=self.dossier, nom_societe=nom_societe))
+
 
 
 

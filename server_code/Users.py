@@ -30,7 +30,22 @@ def enregistrer_profil(user, name, organisation_name, fonction):
 
 @anvil.server.callable
 def get_profil(user):
-  return app_tables.profiles.get(user=user)
+  profil = app_tables.profiles.get(user=user)
+  if not profil:
+    return None
+
+  organisation = profil["organisation"]
+  return {
+    "profil_id": profil.get_id(),  # ✅ plus clair et sûr
+    "name": profil["name"],
+    "fonction": profil["fonction"],
+    "organisation": organisation,
+    "organisation_id": organisation.get_id() if organisation else None,
+    "is_admin": profil["is_admin"],
+    "user": user
+  }
+
+
 
 @anvil.server.callable
 def update_profil(user, name, fonction):
@@ -147,3 +162,103 @@ def supprimer_utilisateur(profil):
     return "Utilisateur supprimé."
   else:
     raise Exception("Vous ne pouvez pas vous supprimer vous-même.")
+
+
+@anvil.server.callable
+def get_membres_dossier(folder_id):
+  print(f"✅ Fonction appelée avec folder_id = {folder_id}")
+
+  folder = app_tables.folders.get_by_id(folder_id)
+  if not folder:
+    raise Exception(f"Dossier introuvable pour ID : {folder_id}")
+
+  membres = app_tables.folder_members.search(folder=folder)
+  result = []
+
+  for m in membres:
+    user = m["user"]
+    if not user:
+      continue
+
+    email = user["email"]
+    user_id = user.get_id()
+
+    # 🔍 Recherche du profil via ID du user
+    profil = None
+    for p in app_tables.profiles.search():
+      if p["user"] and p["user"].get_id() == user_id:
+        profil = p
+        break
+
+        # 💬 Debug clair
+    if profil:
+      print(f"✅ Profil trouvé pour {email} → profil_id = {profil.get_id()}, name = {profil['name']}")
+    else:
+      print(f"❌ Aucun profil trouvé pour {email} (user_id = {user_id})")
+
+    name = profil["name"] if profil and profil["name"] else "(nom inconnu)"
+
+
+    result.append({
+      "id": m.get_id(),
+      "user_id": user_id,
+      "email": email,
+      "name": name,
+      "is_admin": m["is_admin"],
+      "folder_id": folder.get_id()
+    })
+
+  print("📤 Membres retournés :", result)
+  return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@anvil.server.callable
+def partager_dossier_par_email(email, folder_id):
+  user = app_tables.users.get(email=email)
+  if not user:
+    raise Exception("Utilisateur non trouvé")
+
+  folder = app_tables.folders.get_by_id(folder_id)
+  if not app_tables.folder_members.get(folder=folder, user=user):
+    app_tables.folder_members.add_row(folder=folder, user=user, is_admin=False)
+    return "Utilisateur ajouté avec succès"
+  else:
+    return "Cet utilisateur a déjà accès à ce dossier."
+
+@anvil.server.callable
+def retirer_utilisateur_dossier(folder_id, user_id):
+  folder = app_tables.folders.get_by_id(folder_id)
+  user = app_tables.users.get_by_id(user_id)
+
+  if not folder or not user:
+    raise Exception("Dossier ou utilisateur introuvable.")
+
+  membre = app_tables.folder_members.get(folder=folder, user=user)
+
+  if not membre:
+    raise Exception("Le membre n'existe pas dans ce dossier.")
+
+  if membre["is_admin"]:
+    raise Exception("Impossible de supprimer un administrateur du dossier.")
+
+  membre.delete()
+
+
