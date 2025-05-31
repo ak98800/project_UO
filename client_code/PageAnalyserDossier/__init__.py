@@ -54,3 +54,10 @@ class PageAnalyserDossier(PageAnalyserDossierTemplate):
   def _afficher_organigramme(self):
     self.zone_contenu.clear()
     self.zone_contenu.add_component(OrganigrammeView(dossier=self.dossier))
+
+  def btn_analyse_societe_click(self, **event_args):
+    if self.dossier:
+      from ..AnalyseSocietePage import AnalyseSocietePage
+      self.zone_contenu.clear()
+      self.zone_contenu.add_component(AnalyseSocietePage(dossier=self.dossier))
+
