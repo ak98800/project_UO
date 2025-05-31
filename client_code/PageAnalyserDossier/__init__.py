@@ -1,13 +1,12 @@
 from ._anvil_designer import PageAnalyserDossierTemplate
 from anvil import *
-import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 import anvil.users
 
 from ..NavigationBar import NavigationBar
-
+from ..OrganigrammeView import OrganigrammeView
 
 class PageAnalyserDossier(PageAnalyserDossierTemplate):
   def __init__(self, dossier=None, **properties):
@@ -16,7 +15,7 @@ class PageAnalyserDossier(PageAnalyserDossierTemplate):
     self.user = anvil.users.get_user()
     self.profil = anvil.server.call("get_profil", self.user)
 
-    # Appliquer les rôles UI
+    # ✅ UI setup
     self.header_panel.role = "sticky-header"
     self.content_panel.role = "scrollable-content"
     self.navigation_bar_panel.clear()
@@ -24,54 +23,34 @@ class PageAnalyserDossier(PageAnalyserDossierTemplate):
 
     self.label_welcome.text = f"Bienvenue, {self.user['email']}" if self.user else "Bienvenue !"
 
-    # 🔁 Chargement des dossiers
+    # ✅ Charger les dossiers
     self.dossiers = anvil.server.call("get_dossiers", self.profil["organisation"])
     self.dropdown_dossiers.items = [(d["name"], d) for d in self.dossiers]
 
-    # ✅ Sélectionner automatiquement le dossier si passé en paramètre
+    # ✅ Pré-sélection si dossier passé en paramètre
     if dossier:
       self.dossier = dossier
       self.dropdown_dossiers.selected_value = dossier
       self._afficher_organigramme()
     else:
       self.dossier = None
-
-  def charger_dossiers_utilisateur(self):
-    try:
-      user = anvil.users.get_user()
-      if not user:
-        raise Exception("Utilisateur non connecté.")
-
-      # 🔐 Récupérer le profil et l'organisation
-      profil = anvil.server.call("get_profil", user)
-      organisation = profil["organisation"]
-
-      # 📦 Charger les dossiers accessibles
-      dossiers = anvil.server.call("get_dossiers", organisation)
-      self.dropdown_dossiers.items = [(d["name"], d) for d in dossiers]
-
-      # Si un dossier était déjà passé, le sélectionner automatiquement
-      if self.dossier:
-        for label, d in self.dropdown_dossiers.items:
-          if d["id"] == self.dossier["id"]:
-            self.dropdown_dossiers.selected_value = d
-            break
-
-    except Exception as e:
-      Notification(f"Erreur chargement des dossiers : {e}", style="danger").show()
+      self.zone_contenu.clear()
+      self.zone_contenu.add_component(Label(text="Veuillez sélectionner un dossier pour commencer l’analyse.", italic=True))
 
   def dropdown_dossiers_change(self, **event_args):
-    dossier = self.dropdown_dossiers.selected_value
-    if dossier:
-      self.dossier = dossier
-      Notification(f"Dossier sélectionné : {dossier['name']}", style="info").show()
-      # Tu peux ici appeler une fonction pour afficher le contenu par défaut (organigramme général)
+    # ⚡ Mise à jour immédiate dès la sélection
+    self.dossier = self.dropdown_dossiers.selected_value
+    if self.dossier:
+      self._afficher_organigramme()
 
+  def analyser_button_click(self, **event_args):
+    # 🛡️ Double sécurité au cas où
+    self.dossier = self.dropdown_dossiers.selected_value
+    if self.dossier:
+      self._afficher_organigramme()
+    else:
+      alert("Veuillez sélectionner un dossier avant d’analyser.")
 
   def _afficher_organigramme(self):
-    self.clear_zone_contenu()
-    # TODO : ajouter ici le composant OrganigrammeView ou équivalent
-    self.zone_contenu.add_component(Label(text="Organigramme à venir..."))
-
-  def clear_zone_contenu(self):
     self.zone_contenu.clear()
+    self.zone_contenu.add_component(OrganigrammeView(dossier=self.dossier))

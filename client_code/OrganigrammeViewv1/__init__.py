@@ -5,6 +5,7 @@ import anvil.server
 from ..HTMLTestForm import HTMLTestForm
 from collections import defaultdict
 
+
 class OrganigrammeViewv1(OrganigrammeViewv1Template):
   def __init__(self, dossier, **properties):
     self.init_components(**properties)
@@ -18,8 +19,9 @@ class OrganigrammeViewv1(OrganigrammeViewv1Template):
     self.content_panel.role = "scrollable-content"
     self.label_welcome.text = f"Bienvenue, {anvil.users.get_user()['email']}"
 
-    # Supprime la sélection manuelle de dossier
+    # Supprimer la sélection manuelle de dossier
     self.dropdown_dossier.visible = False
+    self.btn_afficher_graph.visible = False  # 🔒 bouton masqué
 
     # Composant HTML avec vis.js
     self.form_test = HTMLTestForm()
@@ -32,16 +34,22 @@ class OrganigrammeViewv1(OrganigrammeViewv1Template):
     ]
     self.dropdown_direction.selected_value = "UD"
 
-    # Prépare les données du graphe (stocke uniquement)
+    # Connecter l'événement "form_show" au chargement visuel
+    self.set_event_handler("show", self.form_show)
+
+    # Charger les données du graphe
     self._afficher_organigramme()
 
   def form_show(self, **event_args):
     """Appelé lorsque le formulaire est visible → on peut maintenant appeler JS"""
-    self.call_js_later()
+    if self._nodes and self._edges:
+      direction = self.dropdown_direction.selected_value or "UD"
+      self.form_test.call_js("drawGraph", self._nodes, self._edges, direction)
 
   def _afficher_organigramme(self):
     """Charge les données de relations et stocke nodes/edges"""
     dossier_name = self.dossier['name']
+    direction = self.dropdown_direction.selected_value or "UD"
     relations = anvil.server.call('get_relations_dossier_typed', dossier_name)
 
     noms_uniques, edges, types_actionnaires, degree_map = set(), [], {}, defaultdict(int)
@@ -66,20 +74,20 @@ class OrganigrammeViewv1(OrganigrammeViewv1Template):
       "value": degree_map.get(name, 1)
     } for name in noms_uniques]
 
-    # On stocke pour affichage lors du form_show
+    # On stocke pour affichage lors du show()
     self._nodes = nodes
     self._edges = edges
 
-  def call_js_later(self):
-    """Affiche le graphe après chargement complet du DOM"""
-    if self._nodes and self._edges:
-      direction = self.dropdown_direction.selected_value or "UD"
-      call_later(0.1, lambda: self.form_test.call_js("drawGraph", self._nodes, self._edges, direction))
-
   def btn_afficher_graph_click(self, **event_args):
-    """Forcer l'affichage d'un graphe avec la direction sélectionnée"""
+    """(Plus utilisé) Forcer l'affichage manuellement si besoin"""
     self._afficher_organigramme()
     self.call_js_later()
+
+  def call_js_later(self):
+    """Utilisé après clic bouton pour forcer l'affichage du graphe JS"""
+    if self._nodes and self._edges:
+      direction = self.dropdown_direction.selected_value or "UD"
+      self.form_test.call_js("drawGraph", self._nodes, self._edges, direction)
 
   def btn_export_html_click(self, **event_args):
     """Génère et télécharge un fichier HTML interactif"""
