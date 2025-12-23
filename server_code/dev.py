@@ -47,10 +47,10 @@ def import_test_participations(nom_dossier, fichier_excel):
       actionnaire=clean(row[1]),
       type_actionnaire=clean(row[2]),
       nb_parts=clean(row[3]),
-      total_parts_societe=clean(row[4]),
-      pourcentage=clean(row[5]),
-      groupe=clean(row[6]),
-      sous_groupe=clean(row[7]),
+      pourcentage=clean(row[4]),
+      groupe=clean(row[5]),
+      sous_groupe=clean(row[6]),
+      total_parts_societe=clean(row[7]),
       created_at=datetime.now()  # ✅ ajout de la date actuelle
     )
 
