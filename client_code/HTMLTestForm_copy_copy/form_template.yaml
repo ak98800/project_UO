@@ -5,7 +5,7 @@ components:
   type: RichText
 container:
   properties:
-    html: |+
+    html: |
       <!-- Charger vis.js -->
       <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
@@ -22,13 +22,9 @@ container:
 
       <!-- Script principal -->
       <script>
-        // ✅ PAS de "let network" global : Anvil ré-injecte ce script
-        // On garde l'état sur window pour éviter "already been declared"
-        window.__org = window.__org || {
-          network: null,
-          nodesStore: null,
-          edgesStore: null
-        };
+        let network;
+        let nodesStore = null;
+        let edgesStore = null;
 
         window.drawGraph = function(nodesData, edgesData) {
           console.log("🔄 drawGraph called");
@@ -39,38 +35,18 @@ container:
             return;
           }
 
-          // ✅ Cas "descendant vide" : pas d'erreur, message propre
-          if (!nodesData || nodesData.length === 0 || !edgesData || edgesData.length === 0) {
-            console.warn("ℹ️ Aucune relation descendante à afficher");
+          nodesStore = new vis.DataSet(nodesData);
+          edgesStore = new vis.DataSet(edgesData);
 
-            if (window.__org.network) {
-              try { window.__org.network.destroy(); } catch (e) {}
-            }
-            window.__org.network = null;
-            window.__org.nodesStore = null;
-            window.__org.edgesStore = null;
-
-            container.innerHTML = "<p style='padding:20px;color:#666;'>Aucune relation descendante trouvée pour cette société.</p>";
-            return;
-          }
-
-          // Reset container si un message texte avait été injecté
-          container.innerHTML = "";
-
-          // Détruire l'ancien graph si présent
-          if (window.__org.network) {
-            try { window.__org.network.destroy(); } catch (e) {}
-            window.__org.network = null;
-          }
-
-          window.__org.nodesStore = new vis.DataSet(nodesData);
-          window.__org.edgesStore = new vis.DataSet(edgesData);
-
-          const data = { nodes: window.__org.nodesStore, edges: window.__org.edgesStore };
+          const data = { nodes: nodesStore, edges: edgesStore };
 
           const options = {
-            layout: { randomSeed: 2 },
-            physics: { enabled: false },
+            layout: {
+              randomSeed: 2  // ➤ Fixe la disposition initiale pour éviter la boule
+            },
+            physics: {
+              enabled: false
+            },
             interaction: {
               dragNodes: true,
               dragView: true,
@@ -95,14 +71,14 @@ container:
             }
           };
 
-          window.__org.network = new vis.Network(container, data, options);
-          setTimeout(() => window.__org.network && window.__org.network.fit({ animation: true }), 300);
+          network = new vis.Network(container, data, options);
+          setTimeout(() => network.fit({ animation: true }), 300);  // ➤ Auto centrage
           console.log("✅ Graphe libre affiché avec aération !");
         };
 
         function switchToVertical() {
-          if (!window.__org.network || !window.__org.nodesStore || !window.__org.edgesStore) return;
-          window.__org.network.setOptions({
+          if (!network || !nodesStore || !edgesStore) return;
+          network.setOptions({
             layout: {
               hierarchical: {
                 enabled: true,
@@ -119,8 +95,8 @@ container:
         }
 
         function switchToHorizontal() {
-          if (!window.__org.network || !window.__org.nodesStore || !window.__org.edgesStore) return;
-          window.__org.network.setOptions({
+          if (!network || !nodesStore || !edgesStore) return;
+          network.setOptions({
             layout: {
               hierarchical: {
                 enabled: true,
@@ -137,15 +113,16 @@ container:
         }
 
         function switchToFree() {
-          if (!window.__org.nodesStore || !window.__org.edgesStore) return;
+          if (!nodesStore || !edgesStore) return;
 
           const container = document.getElementById("mynetwork");
-          if (!container) return;
-
-          const data = { nodes: window.__org.nodesStore, edges: window.__org.edgesStore };
+          const data = { nodes: nodesStore, edges: edgesStore };
 
           const options = {
-            layout: { hierarchical: false, randomSeed: 2 },
+            layout: {
+              hierarchical: false,
+              randomSeed: 2
+            },
             physics: false,
             interaction: {
               dragNodes: true,
@@ -171,18 +148,13 @@ container:
             }
           };
 
-          if (window.__org.network) {
-            try { window.__org.network.destroy(); } catch (e) {}
-            window.__org.network = null;
-          }
-
-          window.__org.network = new vis.Network(container, data, options);
-          setTimeout(() => window.__org.network && window.__org.network.fit({ animation: true }), 300);
+          network = new vis.Network(container, data, options);
+          setTimeout(() => network.fit({ animation: true }), 300);
           console.log("✅ Vue libre améliorée activée !");
         }
 
         window.downloadPng = function() {
-          if (!window.__org.network) {
+          if (!network) {
             console.error("❌ Réseau non initialisé");
             return;
           }
@@ -205,7 +177,5 @@ container:
           console.log("✅ PNG téléchargé !");
         };
       </script>
-
-
   type: HtmlTemplate
 is_package: true
