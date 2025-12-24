@@ -6,6 +6,15 @@ from ..HTMLTestForm import HTMLTestForm
 from collections import defaultdict
 
 class OrganigrammeView(OrganigrammeViewTemplate):
+
+  def _fmt_pct(self, p):
+    try:
+      p = float(p or 0)
+    except:
+      p = 0.0
+    return f"{p:.2f}".replace(".", ",") + "%"
+
+  
   def __init__(self, dossier, **properties):
     self.init_components(**properties)
     self.dossier = dossier
@@ -71,21 +80,24 @@ class OrganigrammeView(OrganigrammeViewTemplate):
   def btn_export_html_click(self, **event_args):
     dossier_name = self.dossier['name']
     relations = anvil.server.call('get_relations_dossier_typed', dossier_name)
-
+  
     noms_uniques, edges, types_actionnaires, degree_map = set(), [], {}, defaultdict(int)
-
+  
     for actionnaire, societe, pourcentage, type_act in relations:
       noms_uniques.update([actionnaire, societe])
       types_actionnaires[actionnaire] = type_act or "PM"
       degree_map[actionnaire] += 1
+  
+      pct_txt = self._fmt_pct(pourcentage)
+  
       edges.append({
         "from": actionnaire,
         "to": societe,
-        "label": f"{pourcentage}%",
-        "title": f"{actionnaire} → {societe} : {pourcentage}%",
+        "label": pct_txt,
+        "title": f"{actionnaire} → {societe} : {pct_txt}",
         "font": {"align": "middle", "size": 12}
       })
-
+  
     nodes = [{
       "id": name,
       "label": name,
@@ -93,10 +105,11 @@ class OrganigrammeView(OrganigrammeViewTemplate):
       "color": "#FFD700" if types_actionnaires.get(name) == "PP" else "#D2E5FF",
       "value": degree_map.get(name, 1)
     } for name in noms_uniques]
-
+  
     html_code = anvil.server.call('generer_export_html', nodes, edges)
     media = anvil.BlobMedia("text/html", html_code.encode("utf-8"), name="organigramme_interactif.html")
     anvil.media.download(media)
+
 
 
 
@@ -110,11 +123,14 @@ class OrganigrammeView(OrganigrammeViewTemplate):
       noms_uniques.update([actionnaire, societe])
       types_actionnaires[actionnaire] = type_act or "PM"
       degree_map[actionnaire] += 1
+  
+      pct_txt = self._fmt_pct(pourcentage)
+  
       edges.append({
         "from": actionnaire,
         "to": societe,
-        "label": f"{pourcentage}%",
-        "title": f"{actionnaire} → {societe} : {pourcentage}%",
+        "label": pct_txt,
+        "title": f"{actionnaire} → {societe} : {pct_txt}",
         "font": {"align": "middle", "size": 12}
       })
   
@@ -128,7 +144,6 @@ class OrganigrammeView(OrganigrammeViewTemplate):
   
     html_code = anvil.server.call('generer_export_html', nodes, edges)
   
-    # Envoie le HTML à la page pour affichage
     js_script = f"""
       var htmlContent = `{html_code}`;
       var blob = new Blob([htmlContent], {{ type: "text/html" }});
@@ -136,4 +151,5 @@ class OrganigrammeView(OrganigrammeViewTemplate):
       window.open(url, "_blank");
     """
     anvil.js.call("eval", js_script)
+
 

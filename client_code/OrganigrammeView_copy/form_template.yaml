@@ -1,0 +1,100 @@
+components:
+- components:
+  - components:
+    - components:
+      - layout_properties: {width: 72.8610259765625}
+        name: image_1
+        properties: {height: 81.11109924316406, source: _/theme/ChatGPT_Image_21_avr._2025__11_23_26-removebg-preview.png}
+        type: Image
+      - layout_properties: {}
+        name: heading_1
+        properties: {text: UltimateOwner}
+        type: form:dep_gqlhr7sei7ys7:_Components.Heading
+      layout_properties: {full_width_row: true, grid_position: 'JSBDSX,DVFXIG'}
+      name: flow_panel_1_copy
+      properties: {vertical_align: middle}
+      type: FlowPanel
+    - components:
+      - layout_properties: {}
+        name: label_welcome
+        properties:
+          align: left
+          spacing:
+            padding: [null, 70, null, null]
+        type: form:dep_gqlhr7sei7ys7:_Components.Text
+      layout_properties: {grid_position: 'JSBDSX,JUNNYV'}
+      name: flow_panel_2
+      properties:
+        align: right
+        gap: small
+        spacing:
+          padding: [null, 0, null, null]
+        vertical_align: middle
+      type: FlowPanel
+    layout_properties: {full_width_row: true, grid_position: 'KGEDMA,ZOIFWH'}
+    name: header_panel
+    properties: {visible: false}
+    type: ColumnPanel
+  - components:
+    - components:
+      - layout_properties: {grid_position: 'DVSYUD,NFJOLY'}
+        name: dropdown_dossier
+        properties: {visible: false}
+        type: form:dep_gqlhr7sei7ys7:_Components.DropdownMenu
+      - layout_properties: {grid_position: 'ICJYDF,JHRZAS'}
+        name: dropdown_direction
+        properties: {visible: false}
+        type: form:dep_gqlhr7sei7ys7:_Components.DropdownMenu
+      - components:
+        - event_bindings: {click: btn_afficher_graph_click}
+          name: btn_afficher_graph
+          properties: {align: center, appearance: elevated, text: '📊 Lancer l''organigramme '}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - event_bindings: {click: btn_afficher_html_click}
+          layout_properties: {width: 237.875}
+          name: btn_afficher_html
+          properties: {align: center, appearance: elevated, text: 🌐 Afficher en plein écran}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - event_bindings: {click: btn_export_html_click}
+          layout_properties: {width: 241.414}
+          name: btn_export_html
+          properties: {align: center, text: 📥 Télécharger le HTML}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        layout_properties: {grid_position: 'TIKKHO,HDAIZK'}
+        name: flow_panel_3
+        properties: {align: center}
+        type: FlowPanel
+      - layout_properties: {grid_position: 'AAPXEV,MZIQYW'}
+        name: spacer_1
+        properties: {}
+        type: Spacer
+      - components: []
+        layout_properties: {full_width_row: true, grid_position: 'NASROX,IGDHGV'}
+        name: panel
+        properties: {}
+        type: ColumnPanel
+      layout_properties: {expand: true}
+      name: content_panel
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {full_width_row: true, grid_position: 'DRBFTZ,JITUAC'}
+    name: flow_panel_1
+    properties: {}
+    type: FlowPanel
+  layout_properties: {full_width_row: true, grid_position: 'WHIOXK,UHPAHR'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'TBSTIJ,ZXOCCJ'}
+  name: divider_2
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Divider
+container:
+  properties:
+    col_spacing: large
+    spacing:
+      margin: ['0', null, null, null]
+    spacing_above: large
+    spacing_below: none
+  type: ColumnPanel
+is_package: true

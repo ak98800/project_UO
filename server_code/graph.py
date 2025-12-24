@@ -135,7 +135,7 @@ def get_relations_descendantes(dossier_name, point_depart):
 
 
 @anvil.server.callable
-def get_relations_montantes(dossier_name, point_depart):
+def get_relations_montantes(dossier_name, point_depart, max_edges=2000):
   print(f"\n--- get_relations_montantes ---")
   print(f"Dossier demandé : {dossier_name}")
   print(f"Société de départ : {point_depart}")
@@ -148,46 +148,51 @@ def get_relations_montantes(dossier_name, point_depart):
   print(f"Nombre de participations trouvées : {len(rows)}")
 
   # Graphe SOCIETE -> [(ACTIONNAIRE, %, type_act)]
-  graphe = {}
-
+  parents_of = {}
   for row in rows:
     actionnaire = row['actionnaire']
     societe = row['societe']
     pourcentage = row['pourcentage'] or 0
     type_act = row['type_actionnaire'] or "PM"
-
     if not actionnaire or not societe:
       continue
+    parents_of.setdefault(societe, []).append((actionnaire, pourcentage, type_act))
 
-    if societe not in graphe:
-      graphe[societe] = []
+  print(f"Nombre de nœuds (sociétés) dans le graphe : {len(parents_of)}")
+  if point_depart not in parents_of:
+    print(f"⚠️ Aucun lien montant direct trouvé pour : {point_depart}")
 
-    graphe[societe].append((actionnaire, pourcentage, type_act))
+  # visited_edges évite doublons (actionnaire->societe)
+  visited_edges = set()
 
-  print(f"Nombre de nœuds (sociétés) dans le graphe : {len(graphe)}")
-  if point_depart not in graphe:
-    print(f"⚠️ Aucun lien montant trouvé pour : {point_depart}")
+  # visited_nodes évite boucles infinies (A possède B, B possède A, etc.)
+  visited_nodes = set()
 
-  visited = set()
   result = []
 
   def dfs(current_societe):
-    if current_societe in graphe:
-      for actionnaire, pourcentage, type_act in graphe[current_societe]:
-        key = (actionnaire, current_societe)
-        if key not in visited:
-          visited.add(key)
-          # On garde le même sens visuel : actionnaire -> société
-          result.append((actionnaire, current_societe, pourcentage, type_act))
-          # On remonte encore : l'actionnaire peut être lui-même une "société" dans la table
-          dfs(actionnaire)
+    if current_societe in visited_nodes:
+      return
+    visited_nodes.add(current_societe)
+
+    for actionnaire, pourcentage, type_act in parents_of.get(current_societe, []):
+      edge_key = (actionnaire, current_societe)
+      if edge_key in visited_edges:
+        continue
+
+      visited_edges.add(edge_key)
+
+      # On garde le sens "détenteur -> détenu" (cohérent avec descendante)
+      result.append((actionnaire, current_societe, pourcentage, type_act))
+
+      if len(result) >= max_edges:
+        return
+
+      # IMPORTANT : on remonte aussi les parents de l'actionnaire
+      # (car un actionnaire peut lui-même être une société dans la table)
+      dfs(actionnaire)
 
   dfs(point_depart)
 
   print(f"Relations montantes trouvées : {len(result)}")
-  for r in result[:50]:
-    print(r)
-  if len(result) > 50:
-    print("... (tronqué)")
-
   return result
