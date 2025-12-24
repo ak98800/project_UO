@@ -79,9 +79,9 @@ class VueDescendateView(VueDescendateViewTemplate):
       relations = anvil.server.call('get_relations_descendantes', dossier_name, self.societe_point_depart)
     else:
       relations = anvil.server.call('get_relations_dossier_typed', dossier_name)
-
+  
     noms_uniques, edges, types_actionnaires, degree_map = set(), [], {}, defaultdict(int)
-
+  
     for actionnaire, societe, pourcentage, type_act in relations:
       noms_uniques.update([actionnaire, societe])
       types_actionnaires[actionnaire] = type_act or "PM"
@@ -93,7 +93,7 @@ class VueDescendateView(VueDescendateViewTemplate):
         "title": f"{actionnaire} → {societe} : {pourcentage}%",
         "font": {"align": "middle", "size": 12}
       })
-
+  
     nodes = [{
       "id": name,
       "label": name,
@@ -101,20 +101,21 @@ class VueDescendateView(VueDescendateViewTemplate):
       "color": "#FFD700" if types_actionnaires.get(name) == "PP" else "#D2E5FF",
       "value": degree_map.get(name, 1)
     } for name in noms_uniques]
-
-    html_code = anvil.server.call('generer_export_html', nodes, edges)
+  
+    html_code = anvil.server.call('generer_export_html', nodes, edges, self.societe_point_depart)
     media = anvil.BlobMedia("text/html", html_code.encode("utf-8"), name="organigramme_interactif.html")
     anvil.media.download(media)
-
+  
+  
   def btn_afficher_html_click(self, **event_args):
     dossier_name = self.dossier['name']
     if self.societe_point_depart:
       relations = anvil.server.call('get_relations_descendantes', dossier_name, self.societe_point_depart)
     else:
       relations = anvil.server.call('get_relations_dossier_typed', dossier_name)
-
+  
     noms_uniques, edges, types_actionnaires, degree_map = set(), [], {}, defaultdict(int)
-
+  
     for actionnaire, societe, pourcentage, type_act in relations:
       noms_uniques.update([actionnaire, societe])
       types_actionnaires[actionnaire] = type_act or "PM"
@@ -126,7 +127,7 @@ class VueDescendateView(VueDescendateViewTemplate):
         "title": f"{actionnaire} → {societe} : {pourcentage}%",
         "font": {"align": "middle", "size": 12}
       })
-
+  
     nodes = [{
       "id": name,
       "label": name,
@@ -134,9 +135,9 @@ class VueDescendateView(VueDescendateViewTemplate):
       "color": "#FFD700" if types_actionnaires.get(name) == "PP" else "#D2E5FF",
       "value": degree_map.get(name, 1)
     } for name in noms_uniques]
-
-    html_code = anvil.server.call('generer_export_html', nodes, edges)
-
+  
+    html_code = anvil.server.call('generer_export_html', nodes, edges, self.societe_point_depart)
+  
     js_script = f"""
       var htmlContent = `{html_code}`;
       var blob = new Blob([htmlContent], {{ type: "text/html" }});

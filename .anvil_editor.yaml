@@ -9,7 +9,10 @@ unique_ids:
   forms:
     AnalyseSocietePage: '1748665242390911398216685.9755'
     AnalyseSocietePage_copy: '1766534248679727342632823.8168'
-    BeneficiairesEffectifsView: '1748666420655297523770294.55615'
+    BeneficiairesEffectifsView: '1766545015729670696573971.5309'
+    BeneficiairesEffectifsView.ItemCheminTemplate: '1766547992058923030211332.4082'
+    BeneficiairesEffectifsView.ItemSyntheseTemplate: '1766548110123939409732145.3008'
+    BeneficiairesEffectifsView_copy: '1766546654012141516157708.96942'
     Dashboard: '174780207069825048253378.537556'
     GestionPartagePage: '1748630248022512666752993.6493'
     GestionPartagePage.UserRow: '1748630656366266480825024.27505'
@@ -66,6 +69,7 @@ unique_ids:
     user_permissions: '1721839019330205569959987.51782'
   scripts: {}
   server_modules:
+    BE: '1766546503206618570014696.6211'
     Folders: '1748021533717304159431033.90906'
     ServerModule1: '1748577911941309078289749.1193'
     StripeFunctions: '1721839056586406793254106.41296'

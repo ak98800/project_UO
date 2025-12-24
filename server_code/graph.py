@@ -196,3 +196,80 @@ def get_relations_montantes(dossier_name, point_depart, max_edges=2000):
 
   print(f"Relations montantes trouvées : {len(result)}")
   return result
+
+
+
+@anvil.server.callable
+def get_ultimes_interets(dossier_name, societe_cible, max_paths=50000):
+  """
+  Retourne une liste de tuples:
+    (ultime, societe_cible, pct_total, type_ultime)
+  où pct_total est la somme des % d'intérêt de l'ultime dans la cible.
+  """
+
+  dossier_row = app_tables.folders.get(name=dossier_name)
+  if not dossier_row:
+    raise Exception(f"Dossier '{dossier_name}' introuvable.")
+
+  rows = app_tables.participations.search(folder=dossier_row)
+
+  # parents_of[SOCIETE] = [(ACTIONNAIRE, pct, type_actionnaire)]
+  parents_of = {}
+  type_map = {}  # type_map[ACTIONNAIRE] = "PP" / "PM"
+  for r in rows:
+    actionnaire = r["actionnaire"]
+    societe = r["societe"]
+    pct = float(r["pourcentage"] or 0)
+    type_act = r["type_actionnaire"] or "PM"
+    if not actionnaire or not societe:
+      continue
+    parents_of.setdefault(societe, []).append((actionnaire, pct, type_act))
+    type_map[actionnaire] = type_act
+
+  # Accumulateur des intérêts ultimes
+  totals = {}  # totals[ultime] = pct_total (en %)
+  paths_count = 0
+
+  def is_ultime(name):
+    # Ultime si PP, OU si personne ne le détient dans le dossier (pas de parent enregistré)
+    if type_map.get(name) == "PP":
+      return True
+    return name not in parents_of
+
+  def dfs(current, factor, path_nodes):
+    """
+    current: entité dont on cherche les parents
+    factor: % cumulé depuis l'ultime jusqu'à la cible (exprimé en %)
+    path_nodes: set pour éviter cycles
+    """
+    nonlocal paths_count
+    if paths_count > max_paths:
+      return
+
+    # Si current est ultime -> on accumule
+    if is_ultime(current):
+      totals[current] = totals.get(current, 0.0) + factor
+      return
+
+    # Sinon on remonte ses parents
+    for parent, pct, _type_act in parents_of.get(current, []):
+      if parent in path_nodes:
+        continue  # évite boucles
+      paths_count += 1
+      # Exemple: parent détient pct% de current, et current pèse factor% de la cible
+      new_factor = factor * (pct / 100.0)
+      dfs(parent, new_factor, path_nodes | {parent})
+
+  # point de départ : la cible vaut 100%
+  dfs(societe_cible, 100.0, {societe_cible})
+
+  # Sortie sous forme edges vers la cible
+  result = []
+  for ultime, pct_total in totals.items():
+    # type ultime si connu, sinon PM
+    t = type_map.get(ultime, "PM")
+    result.append((ultime, societe_cible, pct_total, t))
+
+  # tri décroissant %
+  result.sort(key=lambda x: x[2], reverse=True)
+  return result

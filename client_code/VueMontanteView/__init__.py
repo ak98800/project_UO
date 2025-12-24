@@ -86,14 +86,14 @@ class VueMontanteView(VueMontanteViewTemplate):
 
   def btn_export_html_click(self, **event_args):
     self._afficher_organigramme()
-    html_code = anvil.server.call('generer_export_html', self._nodes, self._edges)
+    html_code = anvil.server.call('generer_export_html', self._nodes, self._edges, self.societe_point_depart)
     media = anvil.BlobMedia("text/html", html_code.encode("utf-8"), name="organigramme_montant.html")
     anvil.media.download(media)
-
+  
   def btn_afficher_html_click(self, **event_args):
     self._afficher_organigramme()
-    html_code = anvil.server.call('generer_export_html', self._nodes, self._edges)
-
+    html_code = anvil.server.call('generer_export_html', self._nodes, self._edges, self.societe_point_depart)
+  
     js_script = f"""
       var htmlContent = `{html_code}`;
       var blob = new Blob([htmlContent], {{ type: "text/html" }});
@@ -101,3 +101,4 @@ class VueMontanteView(VueMontanteViewTemplate):
       window.open(url, "_blank");
     """
     anvil.js.call("eval", js_script)
+  

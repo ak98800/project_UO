@@ -1,0 +1,34 @@
+components:
+- components:
+  - layout_properties: {width: 150}
+    name: label_ultime
+    properties: {align: center}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 150}
+    name: label_pct
+    properties: {align: center}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 100}
+    name: label_path
+    properties: {align: center}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - layout_properties: {width: 100}
+    name: label_calc
+    properties: {align: center}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  layout_properties: {grid_position: 'VQJTCL,XFAKSN'}
+  name: flow_panel
+  properties:
+    align: center
+    gap: none
+    spacing:
+      padding: [null, null, '0', null]
+    spacing_above: none
+    spacing_below: none
+  type: FlowPanel
+- layout_properties: {grid_position: 'QWWWNU,EATIQD'}
+  name: divider_1
+  properties: {}
+  type: form:dep_gqlhr7sei7ys7:_Components.Divider
+container: {type: ColumnPanel}
+is_package: true

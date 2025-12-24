@@ -68,23 +68,27 @@ class AnalyseSocietePage(AnalyseSocietePageTemplate):
     if not societe_nom:
       alert("Aucune société sélectionnée.")
       return
-  
+
     self.content_panel.clear()
     self.content_panel.add_component(
-      VueMontanteView(dossier=self.dossier, societe_point_depart=societe_nom)
+      VueMontanteView(
+        dossier=self.dossier,
+        societe_point_depart=societe_nom
+      )
     )
 
-
   def _charger_vue_beneficiaires(self, **event_args):
-    value = self.dropdown_societe.selected_value
-    societe_obj = value if isinstance(value, dict) else None
-    if not societe_obj:
-      alert("Veuillez sélectionner une société (liste) pour les bénéficiaires effectifs.")
+    societe_nom = self._get_societe_nom_ui()
+    if not societe_nom:
+      alert("Aucune société sélectionnée.")
       return
 
     self.content_panel.clear()
     self.content_panel.add_component(
-      BeneficiairesEffectifsView(societe=societe_obj)
+      BeneficiairesEffectifsView(
+        dossier=self.dossier,
+        societe_point_depart=societe_nom
+      )
     )
 
   def _charger_vue_rapport(self, **event_args):
@@ -105,6 +109,7 @@ class AnalyseSocietePage(AnalyseSocietePageTemplate):
   def btn_vue_montante_click(self, **event_args):
     self._charger_vue_montante()
 
+  @handle("btn_beneficiaires", "click")
   def btn_beneficiaires_click(self, **event_args):
     self._charger_vue_beneficiaires()
 

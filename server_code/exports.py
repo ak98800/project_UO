@@ -7,8 +7,9 @@ from anvil.tables import app_tables
 import anvil.server
 
 @anvil.server.callable
-def generer_export_html(nodes, edges):
+def generer_export_html(nodes, edges, cible=None):
   import json
+
   html_code = f"""
 <!DOCTYPE html>
 <html>
@@ -37,12 +38,34 @@ def generer_export_html(nodes, edges):
   <div id="mynetwork"></div>
 
   <script>
+    const cible = {json.dumps(cible)};
+
+    // ✅ DataSets identiques à ton code d'origine
     const nodes = new vis.DataSet({json.dumps(nodes)});
     const edges = new vis.DataSet({json.dumps(edges)});
     const container = document.getElementById("mynetwork");
     let network = null;
 
+    // ✅ PATCH MINIMAL : style cible
+    function applyCibleStyle() {{
+      if (!cible) return;
+
+      // récupère le node
+      const n = nodes.get(cible);
+      if (!n) return;
+
+      // met en évidence sans casser le reste
+      nodes.update({{
+        id: cible,
+        color: {{ background: "#FF6B00", border: "#FFFFFF" }},
+        borderWidth: 6,
+        borderWidthSelected: 10,
+        font: {{ size: 16, bold: true, color: "#000000" }}
+      }});
+    }}
+
     function renderGraph(layoutOptions) {{
+      // ✅ toujours le même data
       const data = {{ nodes, edges }};
       const options = {{
         layout: layoutOptions,
@@ -70,6 +93,7 @@ def generer_export_html(nodes, edges):
 
     function switchToFree() {{
       renderGraph({{ hierarchical: false }});
+      applyCibleStyle();
     }}
 
     function switchToVertical() {{
@@ -83,6 +107,7 @@ def generer_export_html(nodes, edges):
           treeSpacing: 300
         }}
       }});
+      applyCibleStyle();
     }}
 
     function switchToHorizontal() {{
@@ -96,15 +121,18 @@ def generer_export_html(nodes, edges):
           treeSpacing: 300
         }}
       }});
+      applyCibleStyle();
     }}
 
     // Initial rendering
+    applyCibleStyle();
     switchToFree();
   </script>
 </body>
 </html>
 """
   return html_code
+
 
 
 
