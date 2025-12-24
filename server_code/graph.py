@@ -131,3 +131,63 @@ def get_relations_descendantes(dossier_name, point_depart):
     print(r)
 
   return result
+
+
+
+@anvil.server.callable
+def get_relations_montantes(dossier_name, point_depart):
+  print(f"\n--- get_relations_montantes ---")
+  print(f"Dossier demandé : {dossier_name}")
+  print(f"Société de départ : {point_depart}")
+
+  dossier_row = app_tables.folders.get(name=dossier_name)
+  if not dossier_row:
+    raise Exception(f"Dossier '{dossier_name}' introuvable.")
+
+  rows = app_tables.participations.search(folder=dossier_row)
+  print(f"Nombre de participations trouvées : {len(rows)}")
+
+  # Graphe SOCIETE -> [(ACTIONNAIRE, %, type_act)]
+  graphe = {}
+
+  for row in rows:
+    actionnaire = row['actionnaire']
+    societe = row['societe']
+    pourcentage = row['pourcentage'] or 0
+    type_act = row['type_actionnaire'] or "PM"
+
+    if not actionnaire or not societe:
+      continue
+
+    if societe not in graphe:
+      graphe[societe] = []
+
+    graphe[societe].append((actionnaire, pourcentage, type_act))
+
+  print(f"Nombre de nœuds (sociétés) dans le graphe : {len(graphe)}")
+  if point_depart not in graphe:
+    print(f"⚠️ Aucun lien montant trouvé pour : {point_depart}")
+
+  visited = set()
+  result = []
+
+  def dfs(current_societe):
+    if current_societe in graphe:
+      for actionnaire, pourcentage, type_act in graphe[current_societe]:
+        key = (actionnaire, current_societe)
+        if key not in visited:
+          visited.add(key)
+          # On garde le même sens visuel : actionnaire -> société
+          result.append((actionnaire, current_societe, pourcentage, type_act))
+          # On remonte encore : l'actionnaire peut être lui-même une "société" dans la table
+          dfs(actionnaire)
+
+  dfs(point_depart)
+
+  print(f"Relations montantes trouvées : {len(result)}")
+  for r in result[:50]:
+    print(r)
+  if len(result) > 50:
+    print("... (tronqué)")
+
+  return result

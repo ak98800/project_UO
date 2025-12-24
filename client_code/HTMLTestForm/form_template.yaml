@@ -6,10 +6,8 @@ components:
 container:
   properties:
     html: |+
-      <!-- Charger vis.js -->
       <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
-      <!-- Barre de boutons -->
       <div style="margin-bottom: 10px;">
         <button onclick="switchToFree()">Vue libre</button>
         <button onclick="switchToVertical()">Vue verticale</button>
@@ -17,59 +15,136 @@ container:
         <button onclick="downloadPng()">Exporter en PNG</button>
       </div>
 
-      <!-- Conteneur du graphe -->
       <div id="mynetwork" style="width: 100%; height: 1000px; border: 1px solid #ccc;"></div>
 
-      <!-- Script principal -->
       <script>
-        // ✅ PAS de "let network" global : Anvil ré-injecte ce script
-        // On garde l'état sur window pour éviter "already been declared"
+        // Etat global (évite redeclare à chaque réinjection Anvil)
         window.__org = window.__org || {
           network: null,
           nodesStore: null,
-          edgesStore: null
+          edgesStore: null,
+          selectedName: null
         };
 
-        window.drawGraph = function(nodesData, edgesData) {
-          console.log("🔄 drawGraph called");
+        // Convertit listes Anvil/Skulpt -> Array JS
+        function toJsArray(x) {
+          if (!x) return [];
+          if (x.v && Array.isArray(x.v)) return x.v;  // Skulpt list
+          if (Array.isArray(x)) return x;
+          try { return Array.from(x); } catch (e) {}
+          return [];
+        }
 
-          const container = document.getElementById("mynetwork");
-          if (!container) {
-            console.error("❌ Container introuvable !");
-            return;
+        function applySelectedStyle(nodesArr, selectedName) {
+          if (!selectedName) return;
+          const n = nodesArr.find(o => o && o.id === selectedName);
+          if (!n) return;
+
+          // Couleur + halo
+          n.color = { background: "#FF6B00", border: "#FFFFFF" };
+          n.borderWidth = 6;           // halo
+          n.borderWidthSelected = 10;  // halo + fort au clic
+          n.font = { size: 16, bold: true, color: "#000000" };
+          n.value = Math.max(n.value || 1, 10);
+          n.title = (n.title || n.label || n.id) + " (société sélectionnée)";
+        }
+
+        // IMPORTANT : en hiérarchique, il faut soit 0 levels, soit un level pour TOUS
+        function computeAndApplyLevels(rootId) {
+          if (!window.__org.nodesStore || !window.__org.edgesStore) return;
+
+          const nodes = window.__org.nodesStore.get(); // [{id,...},...]
+          const edges = window.__org.edgesStore.get(); // [{from,to,...},...]
+
+          const ids = nodes.map(n => n.id);
+          if (!ids.length) return;
+
+          const root = rootId || ids[0];
+
+          // adjacency from -> [to,...]
+          const adj = new Map();
+          for (const e of edges) {
+            if (!adj.has(e.from)) adj.set(e.from, []);
+            adj.get(e.from).push(e.to);
           }
 
-          // ✅ Cas "descendant vide" : pas d'erreur, message propre
-          if (!nodesData || nodesData.length === 0 || !edgesData || edgesData.length === 0) {
-            console.warn("ℹ️ Aucune relation descendante à afficher");
+          // init levels
+          const level = new Map();
+          for (const id of ids) level.set(id, null);
 
-            if (window.__org.network) {
-              try { window.__org.network.destroy(); } catch (e) {}
+          // BFS
+          const q = [];
+          level.set(root, 0);
+          q.push(root);
+
+          while (q.length) {
+            const cur = q.shift();
+            const curL = level.get(cur);
+            const children = adj.get(cur) || [];
+            for (const ch of children) {
+              if (!level.has(ch)) continue;
+              if (level.get(ch) === null) {
+                level.set(ch, curL + 1);
+                q.push(ch);
+              }
             }
+          }
+
+          // nodes non atteints -> au bas
+          let maxL = 0;
+          for (const v of level.values()) if (v !== null) maxL = Math.max(maxL, v);
+          for (const id of ids) if (level.get(id) === null) level.set(id, maxL + 1);
+
+          // appliquer à TOUS les nodes
+          const updates = ids.map(id => ({ id, level: level.get(id) }));
+          window.__org.nodesStore.update(updates);
+        }
+
+        function clearAllLevels() {
+          if (!window.__org.nodesStore) return;
+          const nodes = window.__org.nodesStore.get();
+          if (!nodes || !nodes.length) return;
+          window.__org.nodesStore.update(nodes.map(n => ({ id: n.id, level: null })));
+        }
+
+        // drawGraph(nodes, edges, direction, selectedName)
+        window.drawGraph = function(nodesData, edgesData, direction, selectedName) {
+          const container = document.getElementById("mynetwork");
+          if (!container) return;
+
+          const nodesArr = toJsArray(nodesData);
+          const edgesArr = toJsArray(edgesData);
+
+          window.__org.selectedName = selectedName || null;
+
+          if (!nodesArr.length) {
+            // rien à afficher
+            if (window.__org.network) { try { window.__org.network.destroy(); } catch(e) {} }
             window.__org.network = null;
             window.__org.nodesStore = null;
             window.__org.edgesStore = null;
-
-            container.innerHTML = "<p style='padding:20px;color:#666;'>Aucune relation descendante trouvée pour cette société.</p>";
+            container.innerHTML = "<p style='padding:20px;color:#666;'>Aucune donnée à afficher.</p>";
             return;
           }
 
-          // Reset container si un message texte avait été injecté
           container.innerHTML = "";
 
-          // Détruire l'ancien graph si présent
           if (window.__org.network) {
-            try { window.__org.network.destroy(); } catch (e) {}
+            try { window.__org.network.destroy(); } catch(e) {}
             window.__org.network = null;
           }
 
-          window.__org.nodesStore = new vis.DataSet(nodesData);
-          window.__org.edgesStore = new vis.DataSet(edgesData);
+          // style sélectionné (halo)
+          applySelectedStyle(nodesArr, window.__org.selectedName);
+
+          window.__org.nodesStore = new vis.DataSet(nodesArr);
+          window.__org.edgesStore = new vis.DataSet(edgesArr);
 
           const data = { nodes: window.__org.nodesStore, edges: window.__org.edgesStore };
 
+          // Options de base = VUE LIBRE
           const options = {
-            layout: { randomSeed: 2 },
+            layout: { hierarchical: false, randomSeed: 2 },
             physics: { enabled: false },
             interaction: {
               dragNodes: true,
@@ -96,18 +171,28 @@ container:
           };
 
           window.__org.network = new vis.Network(container, data, options);
+
+          // appliquer la direction demandée
+          if (direction === "UD") switchToVertical();
+          else if (direction === "LR") switchToHorizontal();
+          else switchToFree();
+
           setTimeout(() => window.__org.network && window.__org.network.fit({ animation: true }), 300);
-          console.log("✅ Graphe libre affiché avec aération !");
         };
 
+        // ✅ Vue verticale (hiérarchique UD) : levels pour tous + root sélectionné en haut
         function switchToVertical() {
           if (!window.__org.network || !window.__org.nodesStore || !window.__org.edgesStore) return;
+
+          // définir level pour tous (root = selectedName -> niveau 0)
+          computeAndApplyLevels(window.__org.selectedName);
+
           window.__org.network.setOptions({
             layout: {
               hierarchical: {
                 enabled: true,
                 direction: "UD",
-                sortMethod: "hubsize",
+                sortMethod: "directed",
                 levelSeparation: 150,
                 nodeSpacing: 150,
                 treeSpacing: 300
@@ -115,17 +200,22 @@ container:
             },
             physics: false
           });
-          console.log("🔁 Vue verticale activée");
+
+          setTimeout(() => window.__org.network && window.__org.network.fit({ animation: true }), 200);
         }
 
+        // ✅ Vue horizontale (hiérarchique LR) : levels pour tous aussi
         function switchToHorizontal() {
           if (!window.__org.network || !window.__org.nodesStore || !window.__org.edgesStore) return;
+
+          computeAndApplyLevels(window.__org.selectedName);
+
           window.__org.network.setOptions({
             layout: {
               hierarchical: {
                 enabled: true,
                 direction: "LR",
-                sortMethod: "hubsize",
+                sortMethod: "directed",
                 levelSeparation: 150,
                 nodeSpacing: 150,
                 treeSpacing: 300
@@ -133,78 +223,43 @@ container:
             },
             physics: false
           });
-          console.log("🔁 Vue horizontale activée");
+
+          setTimeout(() => window.__org.network && window.__org.network.fit({ animation: true }), 200);
         }
 
+        // ✅ Vue libre : on enlève TOUS les levels puis on repasse en layout non-hierarchical
         function switchToFree() {
-          if (!window.__org.nodesStore || !window.__org.edgesStore) return;
+          if (!window.__org.network || !window.__org.nodesStore || !window.__org.edgesStore) return;
 
-          const container = document.getElementById("mynetwork");
-          if (!container) return;
+          // IMPORTANT : enlever tous les levels sinon vis considère qu’on a des levels “pré-définis”
+          clearAllLevels();
 
-          const data = { nodes: window.__org.nodesStore, edges: window.__org.edgesStore };
-
-          const options = {
+          window.__org.network.setOptions({
             layout: { hierarchical: false, randomSeed: 2 },
-            physics: false,
-            interaction: {
-              dragNodes: true,
-              dragView: true,
-              zoomView: true,
-              navigationButtons: true,
-              keyboard: {
-                enabled: true,
-                speed: { x: 10, y: 10, zoom: 0.02 },
-                bindToWindow: true
-              }
-            },
-            nodes: {
-              shape: "ellipse",
-              scaling: { min: 10, max: 30 },
-              font: { size: 12 }
-            },
-            edges: {
-              arrows: "to",
-              smooth: false,
-              color: { color: "#999999" },
-              font: { align: "middle", size: 12 }
-            }
-          };
+            physics: false
+          });
 
-          if (window.__org.network) {
-            try { window.__org.network.destroy(); } catch (e) {}
-            window.__org.network = null;
-          }
-
-          window.__org.network = new vis.Network(container, data, options);
-          setTimeout(() => window.__org.network && window.__org.network.fit({ animation: true }), 300);
-          console.log("✅ Vue libre améliorée activée !");
+          setTimeout(() => window.__org.network && window.__org.network.fit({ animation: true }), 200);
         }
 
         window.downloadPng = function() {
-          if (!window.__org.network) {
-            console.error("❌ Réseau non initialisé");
-            return;
-          }
+          if (!window.__org.network) return;
 
           const canvas = document.querySelector("#mynetwork canvas");
-          if (!canvas) {
-            console.error("❌ Canvas introuvable !");
-            return;
-          }
+          if (!canvas) return;
 
           const pngData = canvas.toDataURL("image/png");
-
           const a = document.createElement("a");
           a.href = pngData;
           a.download = "organigramme.png";
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
-
-          console.log("✅ PNG téléchargé !");
         };
       </script>
+
+
+
 
 
   type: HtmlTemplate

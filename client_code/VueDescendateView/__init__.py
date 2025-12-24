@@ -1,12 +1,10 @@
 from ._anvil_designer import VueDescendateViewTemplate
 from anvil import *
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
 import anvil.users
 import anvil.server
 from ..HTMLTestForm import HTMLTestForm
 from collections import defaultdict
+
 
 class VueDescendateView(VueDescendateViewTemplate):
   def __init__(self, dossier, societe_point_depart=None, **properties):
@@ -35,7 +33,6 @@ class VueDescendateView(VueDescendateViewTemplate):
 
   def _afficher_organigramme(self):
     dossier_name = self.dossier['name']
-    direction = self.dropdown_direction.selected_value or "UD"
 
     if self.societe_point_depart:
       relations = anvil.server.call('get_relations_descendantes', dossier_name, self.societe_point_depart)
@@ -68,9 +65,10 @@ class VueDescendateView(VueDescendateViewTemplate):
     self._edges = edges
 
   def _call_js(self):
-    if self._nodes and self._edges:
-      direction = self.dropdown_direction.selected_value or "UD"
-      self.form_test.call_js("drawGraph", self._nodes, self._edges, direction)
+    direction = self.dropdown_direction.selected_value or "UD"
+    selected = self.societe_point_depart
+    # drawGraph(nodes, edges, direction, selectedName)
+    self.form_test.call_js("drawGraph", self._nodes, self._edges, direction, selected)
 
   def form_show(self, **event_args):
     pass

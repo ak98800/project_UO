@@ -38,30 +38,36 @@ components:
   - components:
     - components:
       - layout_properties: {grid_position: 'DVSYUD,NFJOLY'}
-        name: dropdown_dossier
-        properties: {visible: false}
+        name: dropdown_societe
+        properties: {visible: true}
         type: form:dep_gqlhr7sei7ys7:_Components.DropdownMenu
       - layout_properties: {grid_position: 'ICJYDF,JHRZAS'}
         name: dropdown_direction
         properties: {visible: false}
         type: form:dep_gqlhr7sei7ys7:_Components.DropdownMenu
       - components:
-        - event_bindings: {click: btn_afficher_graph_click}
-          name: btn_afficher_graph
-          properties: {align: center, appearance: elevated, text: '📊 Lancer l''organigramme '}
+        - event_bindings: {click: btn_vue_descendante_click}
+          layout_properties: {}
+          name: btn_vue_descendante
+          properties: {align: center, appearance: elevated, text: Vue descendante}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
-        - event_bindings: {click: btn_afficher_html_click}
+        - event_bindings: {click: btn_vue_montante_click}
           layout_properties: {width: 237.875}
-          name: btn_afficher_html
-          properties: {align: center, appearance: elevated, text: 🌐 Afficher en plein écran}
+          name: btn_vue_montante
+          properties: {align: center, appearance: elevated, text: Vue montante}
+          type: form:dep_gqlhr7sei7ys7:_Components.Button
+        - event_bindings: {click: btn_vue_montante_click}
+          layout_properties: {}
+          name: btn_beneficiaires
+          properties: {align: center, appearance: elevated, text: Bénéficiaires effectifs}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
         - event_bindings: {click: btn_export_html_click}
           layout_properties: {width: 241.414}
-          name: btn_export_html
-          properties: {align: center, text: 📥 Télécharger le HTML}
+          name: btn_rapport
+          properties: {align: center, text: 📥  Rapport global}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
         layout_properties: {grid_position: 'TIKKHO,HDAIZK'}
-        name: flow_panel_3
+        name: HorizontalPanel
         properties: {align: center}
         type: FlowPanel
       - layout_properties: {grid_position: 'AAPXEV,MZIQYW'}
@@ -70,11 +76,11 @@ components:
         type: Spacer
       - components: []
         layout_properties: {full_width_row: true, grid_position: 'NASROX,IGDHGV'}
-        name: panel
+        name: content_panel
         properties: {}
         type: ColumnPanel
       layout_properties: {expand: true}
-      name: content_panel
+      name: content_panelg
       properties: {}
       type: ColumnPanel
     layout_properties: {full_width_row: true, grid_position: 'DRBFTZ,JITUAC'}
