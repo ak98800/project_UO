@@ -1,5 +1,7 @@
 # client_code/RapportSocietePage/__init__.py
 
+# client_code/RapportSocietePage/__init__.py
+
 from ._anvil_designer import RapportSocietePageTemplate
 from anvil import *
 import anvil.server
@@ -23,34 +25,35 @@ class RapportSocietePage(RapportSocietePageTemplate):
     self.societe = societe
     self._current_html = None
 
-    # --- Affichage contexte (si tu as ces labels) ---
+    # --- Contexte ---
     if hasattr(self, "label_dossier"):
       self.label_dossier.text = dossier["name"] if dossier else ""
     if hasattr(self, "label_societe"):
       self.label_societe.text = societe or ""
 
-    # --- Defaults (MVP) ---
+    # --- Defaults (MVP "pro") ---
     # Actionnariat: direct + indirect jusqu'aux sommets, org+table
     self._set_selected_value_safe("rg_action_scope", "direct_indirect")
     self._set_selected_value_safe("rg_action_display", "act_org_table")
 
-    # Descendante / Montante / BE: enabled par défaut selon ton choix
+    # Descendante: OFF par défaut
     self._set_checked_safe("cb_desc", False)
-    self._set_checked_safe("cb_mont", True)
-    self._set_checked_safe("cb_be", True)
-
-    # Display defaults (values doivent être uniques dans Anvil -> préfixées)
     self._set_selected_value_safe("rg_desc_display", "desc_org")
+
+    # Montante: ON par défaut
+    self._set_checked_safe("cb_mont", True)
     self._set_selected_value_safe("rg_mont_display", "mont_org")
+
+    # BE: ON par défaut
+    self._set_checked_safe("cb_be", True)
     self._set_selected_value_safe("rg_be_display", "be_org_table")
 
-    # BE options
-    self._set_checked_safe("cb_be_25", False)            # au départ: totalité
-    self._set_checked_safe("cb_be_paths", False)         # annexe chemins off
-    self._set_checked_safe("cb_be_calc_table", False)    # table chemin de calcul off
+    # BE options : au départ tout BE, pas d'annexe, pas de table calcul
+    self._set_checked_safe("cb_be_25", False)            # totalité
+    self._set_checked_safe("cb_be_paths", False)         # annexe chemins OFF
+    self._set_checked_safe("cb_be_calc_table", False)    # table chemin de calcul OFF
 
-    # Pas de preview dans Anvil (scripts neutralisés) -> on ouvre un onglet
-    # Donc on laisse btn_download_html actif directement (si dossier+societe OK)
+    # 1 seul bouton (download + preview nouvel onglet)
     if hasattr(self, "btn_download_html"):
       self.btn_download_html.enabled = bool(self.dossier and self.societe)
 
@@ -117,25 +120,37 @@ class RapportSocietePage(RapportSocietePageTemplate):
     return v
 
   # -----------------------
-  # UX minimal: enable/disable
+  # UX minimal: enable/disable + cohérence
   # -----------------------
   def _sync_enabled_states(self):
     desc_on = self._get_checked_safe("cb_desc", False)
     mont_on = self._get_checked_safe("cb_mont", False)
     be_on = self._get_checked_safe("cb_be", False)
 
+    # Radios display enabled only if section enabled
     self._enable_safe("rg_desc_display", desc_on)
     self._enable_safe("rg_mont_display", mont_on)
     self._enable_safe("rg_be_display", be_on)
 
+    # BE sub-options
     self._enable_safe("cb_be_25", be_on)
     self._enable_safe("cb_be_paths", be_on)
     self._enable_safe("cb_be_calc_table", be_on)
 
+    # If BE disabled => force OFF sub-options
     if not be_on:
       self._set_checked_safe("cb_be_25", False)
       self._set_checked_safe("cb_be_paths", False)
       self._set_checked_safe("cb_be_calc_table", False)
+
+    # ✅ Ajout : "table chemin de calcul" seulement utile si BE affiche un tableau (table ou org+table)
+    if be_on:
+      be_display_raw = self._get_selected_value_safe("rg_be_display", "be_org")
+      be_display = self._normalize_display(be_display_raw)
+      allow_calc_table = be_display in ("table", "org_table")
+      self._enable_safe("cb_be_calc_table", allow_calc_table)
+      if not allow_calc_table:
+        self._set_checked_safe("cb_be_calc_table", False)
 
   # -----------------------
   # Events (connecte-les dans le designer)
@@ -147,6 +162,10 @@ class RapportSocietePage(RapportSocietePageTemplate):
     self._sync_enabled_states()
 
   def cb_be_change(self, **event_args):
+    self._sync_enabled_states()
+
+  # Optionnel mais recommandé: si tu as un event sur le radio group BE
+  def rg_be_display_change(self, **event_args):
     self._sync_enabled_states()
 
   # -----------------------
