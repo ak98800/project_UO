@@ -1,0 +1,185 @@
+components:
+- layout_properties: {grid_position: 'BWQOJO,NTZGAY'}
+  name: heading_1
+  properties: {align: left, bold: true, text: Actionnariat}
+  type: form:dep_gqlhr7sei7ys7:_Components.Heading
+- components:
+  - components:
+    - layout_properties: {slot: default}
+      name: text_1
+      properties: {align: left, bold: true, text: Périmètre}
+      type: form:dep_gqlhr7sei7ys7:_Components.Text
+    - layout_properties: {}
+      name: direct_indirect
+      properties: {text: Direct seulement}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {slot: default}
+      name: direct
+      properties: {text: Direct + indirect jusqu’aux sommets}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    layout_properties: {full_width_row: false, grid_position: 'KFWEYR,DXTOCW'}
+    name: rg_action_scope
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.RadioGroupPanel
+  - layout_properties: {grid_position: 'DBKJBC,HPIXKS'}
+    name: text_2
+    properties: {align: left, bold: true, text: Mode d’affichage}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - components:
+    - layout_properties: {}
+      name: act_org
+      properties: {align: left, selected: false, text: Organigramme}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {}
+      name: act_org_table
+      properties: {selected: false, text: Organigramme + Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {}
+      name: act_table
+      properties: {selected: false, text: Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    layout_properties: {grid_position: 'DQHKCE,IBFPHK'}
+    name: rg_action_display
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.RadioGroupPanel
+  layout_properties: {grid_position: 'VHURBC,DCZVAH'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'BCKQSM,FXKTJA'}
+  name: heading_2
+  properties: {align: left, bold: true, text: Vue descendante}
+  type: form:dep_gqlhr7sei7ys7:_Components.Heading
+- components:
+  - layout_properties: {grid_position: 'MQXAJX,DHOKUQ'}
+    name: cb_desc
+    properties: {align: left, text: Inclure la vue descendante}
+    type: form:dep_gqlhr7sei7ys7:_Components.Checkbox
+  - layout_properties: {grid_position: 'IATISY,IEPPSR'}
+    name: text_3
+    properties: {align: left, bold: true, text: Mode d’affichage}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - components:
+    - layout_properties: {}
+      name: desc_org
+      properties: {text: Organigramme}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - event_bindings: {}
+      layout_properties: {}
+      name: desc_org_table
+      properties: {text: Organigramme + Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {}
+      name: desc_table
+      properties: {text: Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    layout_properties: {grid_position: 'FANDIB,OLZZGH'}
+    name: rg_desc_display
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.RadioGroupPanel
+  layout_properties: {grid_position: 'JXSUDH,GFJRTO'}
+  name: column_panel_2
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'RBFFNS,DABEPJ'}
+  name: heading_2_copy
+  properties: {align: left, bold: true, text: Vue montante}
+  type: form:dep_gqlhr7sei7ys7:_Components.Heading
+- components:
+  - layout_properties: {grid_position: 'MQXAJX,DHOKUQ'}
+    name: cb_mont
+    properties: {align: left, text: Inclure la vue montante}
+    type: form:dep_gqlhr7sei7ys7:_Components.Checkbox
+  - layout_properties: {grid_position: 'IATISY,IEPPSR'}
+    name: text_3_copy
+    properties: {align: left, bold: true, text: Mode d’affichage}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - components:
+    - layout_properties: {}
+      name: mont_org
+      properties: {text: Organigramme}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {}
+      name: mont_org_table
+      properties: {text: Organigramme + Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {}
+      name: mont_table
+      properties: {text: Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    layout_properties: {grid_position: 'FANDIB,OLZZGH'}
+    name: rg_mont_display
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.RadioGroupPanel
+  layout_properties: {grid_position: 'GSWEFN,JERGGV'}
+  name: column_panel_2_copy
+  properties: {}
+  type: ColumnPanel
+- layout_properties: {grid_position: 'DHNPWF,MHVCSU'}
+  name: heading_2_copy_copy
+  properties: {align: left, bold: true, text: Bénéficiaires effectifs}
+  type: form:dep_gqlhr7sei7ys7:_Components.Heading
+- layout_properties: {grid_position: 'YNGYUN,AKHROZ'}
+  name: text_1_copy
+  properties: {align: left, bold: true, text: Périmètre}
+  type: form:dep_gqlhr7sei7ys7:_Components.Text
+- components:
+  - layout_properties: {grid_position: 'MQXAJX,DHOKUQ'}
+    name: cb_be
+    properties: {align: left, text: Inclure les Bénéficiaires effectifs}
+    type: form:dep_gqlhr7sei7ys7:_Components.Checkbox
+  - layout_properties: {grid_position: 'WZXYRL,RTWMHY'}
+    name: cb_be_25
+    properties: {text: Inclure que les BE > 25%}
+    type: form:dep_gqlhr7sei7ys7:_Components.Checkbox
+  - layout_properties: {grid_position: 'CHJXBT,KKPMTA'}
+    name: cb_be_paths
+    properties: {text: Annexes detail}
+    type: form:dep_gqlhr7sei7ys7:_Components.Checkbox
+  - layout_properties: {grid_position: 'BGWOES,TSKITI'}
+    name: cb_be_calc_table
+    properties: {text: Inclure le detail du chemin de calcul}
+    type: form:dep_gqlhr7sei7ys7:_Components.Checkbox
+  - layout_properties: {grid_position: 'IATISY,IEPPSR'}
+    name: text_3_copy_copy
+    properties: {align: left, bold: true, text: Mode d’affichage}
+    type: form:dep_gqlhr7sei7ys7:_Components.Text
+  - components:
+    - layout_properties: {}
+      name: be_org
+      properties: {text: Organigramme}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {}
+      name: be_org_table
+      properties: {text: Organigramme + Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    - layout_properties: {}
+      name: be_table
+      properties: {text: Tableau}
+      type: form:dep_gqlhr7sei7ys7:_Components.RadioButton
+    layout_properties: {grid_position: 'FANDIB,OLZZGH'}
+    name: rg_be_display
+    properties: {}
+    type: form:dep_gqlhr7sei7ys7:_Components.RadioGroupPanel
+  layout_properties: {grid_position: 'BNAXAC,COTMDX'}
+  name: column_panel_2_copy_copy
+  properties: {}
+  type: ColumnPanel
+- event_bindings: {}
+  layout_properties: {grid_position: 'NDHUDU,MRKOLJ'}
+  name: btn_download_html
+  properties: {align: center}
+  type: form:dep_gqlhr7sei7ys7:_Components.Button
+- components:
+  - layout_properties: {grid_position: 'CSSTZR,FCRCEG'}
+    name: richtext_preview
+    properties: {}
+    type: RichText
+  layout_properties: {grid_position: 'ZMWBXZ,FXBCBR'}
+  name: column_panel_3
+  properties: {}
+  type: ColumnPanel
+container:
+  properties: {visible: true}
+  type: ColumnPanel
+is_package: true

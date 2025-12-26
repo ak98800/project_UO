@@ -61,7 +61,7 @@ components:
           name: btn_beneficiaires
           properties: {align: center, appearance: elevated, text: Bénéficiaires effectifs}
           type: form:dep_gqlhr7sei7ys7:_Components.Button
-        - event_bindings: {click: btn_export_html_click}
+        - event_bindings: {}
           layout_properties: {width: 241.414}
           name: btn_rapport
           properties: {align: center, text: 📥  Rapport global}

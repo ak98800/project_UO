@@ -6,7 +6,8 @@ import anvil.users
 from ..VueDescendateView import VueDescendateView
 from ..VueMontanteView import VueMontanteView
 from ..BeneficiairesEffectifsView import BeneficiairesEffectifsView
-from ..RapportView import RapportView
+from ..RapportSocietePage import RapportSocietePage
+
 
 
 class AnalyseSocietePage(AnalyseSocietePageTemplate):
@@ -113,5 +114,29 @@ class AnalyseSocietePage(AnalyseSocietePageTemplate):
   def btn_beneficiaires_click(self, **event_args):
     self._charger_vue_beneficiaires()
 
+
+  def _charger_vue_rapport(self, **event_args):
+    societe_nom = self._get_societe_nom_ui()
+    if not societe_nom:
+      alert("Aucune société sélectionnée.")
+      return
+
+    self.content_panel.clear()
+    self.content_panel.add_component(
+      RapportSocietePage(
+        dossier=self.dossier,
+        societe=societe_nom
+      )
+    )
+    
+  @handle("btn_rapport", "click")
   def btn_rapport_click(self, **event_args):
     self._charger_vue_rapport()
+
+
+
+
+
+
+
+
