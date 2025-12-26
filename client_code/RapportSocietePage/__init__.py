@@ -1,7 +1,5 @@
 # client_code/RapportSocietePage/__init__.py
 
-# client_code/RapportSocietePage/__init__.py
-
 from ._anvil_designer import RapportSocietePageTemplate
 from anvil import *
 import anvil.server
@@ -16,6 +14,11 @@ class RapportSocietePage(RapportSocietePageTemplate):
   - Construit options depuis la UI
   - Appelle server: generate_societe_report_html(dossier_name, societe, options)
   - Au clic sur btn_download_html : ouvre l'aperçu dans un nouvel onglet + télécharge le HTML
+
+  Correctif:
+  - Vérifie STRICTEMENT que les composants existent (sinon exception claire)
+  - Applique les valeurs par défaut en affectation directe (pas "safe")
+  - Puis applique la logique d'activation/désactivation
   """
 
   def __init__(self, dossier=None, societe=None, **properties):
@@ -25,84 +28,70 @@ class RapportSocietePage(RapportSocietePageTemplate):
     self.societe = societe
     self._current_html = None
 
-    # --- Contexte ---
+    # ---------- Correctif: vérifier les noms EXACTS ----------
+    self._require_components()
+
+    # ---------- Contexte ----------
     if hasattr(self, "label_dossier"):
       self.label_dossier.text = dossier["name"] if dossier else ""
     if hasattr(self, "label_societe"):
       self.label_societe.text = societe or ""
 
-    # --- Defaults (MVP "pro") ---
+    # ---------- Defaults (MVP "pro") ----------
     # Actionnariat: direct + indirect jusqu'aux sommets, org+table
-    self._set_selected_value_safe("rg_action_scope", "direct_indirect")
-    self._set_selected_value_safe("rg_action_display", "act_org_table")
+    self.rg_action_scope.selected_value = "direct_indirect"
+    self.rg_action_display.selected_value = "act_org_table"
 
-    # Descendante: OFF par défaut
-    self._set_checked_safe("cb_desc", False)
-    self._set_selected_value_safe("rg_desc_display", "desc_org")
+    # Descendante: OFF par défaut, affichage org par défaut
+    self.cb_desc.checked = False
+    self.rg_desc_display.selected_value = "desc_org"
 
-    # Montante: ON par défaut
-    self._set_checked_safe("cb_mont", True)
-    self._set_selected_value_safe("rg_mont_display", "mont_org")
+    # Montante: ON par défaut, affichage org
+    self.cb_mont.checked = True
+    self.rg_mont_display.selected_value = "mont_org"
 
-    # BE: ON par défaut
-    self._set_checked_safe("cb_be", True)
-    self._set_selected_value_safe("rg_be_display", "be_org_table")
+    # BE: ON par défaut, affichage org+table
+    self.cb_be.checked = True
+    self.rg_be_display.selected_value = "be_org_table"
 
-    # BE options : au départ tout BE, pas d'annexe, pas de table calcul
-    self._set_checked_safe("cb_be_25", False)            # totalité
-    self._set_checked_safe("cb_be_paths", False)         # annexe chemins OFF
-    self._set_checked_safe("cb_be_calc_table", False)    # table chemin de calcul OFF
+    # BE options: au départ tout BE, pas d'annexe, pas de table chemin
+    self.cb_be_25.checked = False
+    self.cb_be_paths.checked = False
+    self.cb_be_calc_table.checked = False
 
     # 1 seul bouton (download + preview nouvel onglet)
-    if hasattr(self, "btn_download_html"):
-      self.btn_download_html.enabled = bool(self.dossier and self.societe)
+    self.btn_download_html.enabled = bool(self.dossier and self.societe)
 
+    # Appliquer cohérence enabled/disabled
     self._sync_enabled_states()
 
   # -----------------------
-  # Helpers safe UI
+  # Correctif: require components
   # -----------------------
-  def _set_selected_value_safe(self, component_name, value):
-    c = getattr(self, component_name, None)
-    if c is not None:
-      try:
-        c.selected_value = value
-      except Exception:
-        pass
-
-  def _set_checked_safe(self, component_name, checked):
-    c = getattr(self, component_name, None)
-    if c is not None:
-      try:
-        c.checked = checked
-      except Exception:
-        pass
-
-  def _get_selected_value_safe(self, component_name, default=None):
-    c = getattr(self, component_name, None)
+  def _require(self, name: str):
+    c = getattr(self, name, None)
     if c is None:
-      return default
-    try:
-      return c.selected_value
-    except Exception:
-      return default
+      raise Exception(f"Composant manquant ou mauvais nom dans le Designer : {name}")
+    return c
 
-  def _get_checked_safe(self, component_name, default=False):
-    c = getattr(self, component_name, None)
-    if c is None:
-      return default
-    try:
-      return bool(c.checked)
-    except Exception:
-      return default
+  def _require_components(self):
+    # Checkboxes
+    self._require("cb_desc")
+    self._require("cb_mont")
+    self._require("cb_be")
+    self._require("cb_be_25")
+    self._require("cb_be_paths")
+    self._require("cb_be_calc_table")
 
-  def _enable_safe(self, component_name, enabled: bool):
-    c = getattr(self, component_name, None)
-    if c is not None:
-      try:
-        c.enabled = enabled
-      except Exception:
-        pass
+    # RadioGroupPanels
+    self._require("rg_action_scope")
+    self._require("rg_action_display")
+    self._require("rg_desc_display")
+    self._require("rg_mont_display")
+    self._require("rg_be_display")
+
+    # Button
+    self._require("btn_download_html")
 
   # -----------------------
   # Normalisation display
@@ -123,34 +112,34 @@ class RapportSocietePage(RapportSocietePageTemplate):
   # UX minimal: enable/disable + cohérence
   # -----------------------
   def _sync_enabled_states(self):
-    desc_on = self._get_checked_safe("cb_desc", False)
-    mont_on = self._get_checked_safe("cb_mont", False)
-    be_on = self._get_checked_safe("cb_be", False)
+    desc_on = bool(self.cb_desc.checked)
+    mont_on = bool(self.cb_mont.checked)
+    be_on = bool(self.cb_be.checked)
 
     # Radios display enabled only if section enabled
-    self._enable_safe("rg_desc_display", desc_on)
-    self._enable_safe("rg_mont_display", mont_on)
-    self._enable_safe("rg_be_display", be_on)
+    self.rg_desc_display.enabled = desc_on
+    self.rg_mont_display.enabled = mont_on
+    self.rg_be_display.enabled = be_on
 
     # BE sub-options
-    self._enable_safe("cb_be_25", be_on)
-    self._enable_safe("cb_be_paths", be_on)
-    self._enable_safe("cb_be_calc_table", be_on)
+    self.cb_be_25.enabled = be_on
+    self.cb_be_paths.enabled = be_on
 
     # If BE disabled => force OFF sub-options
     if not be_on:
-      self._set_checked_safe("cb_be_25", False)
-      self._set_checked_safe("cb_be_paths", False)
-      self._set_checked_safe("cb_be_calc_table", False)
+      self.cb_be_25.checked = False
+      self.cb_be_paths.checked = False
+      self.cb_be_calc_table.checked = False
 
-    # ✅ Ajout : "table chemin de calcul" seulement utile si BE affiche un tableau (table ou org+table)
+    # ✅ table chemin de calcul utile seulement si BE affiche un tableau (table ou org+table)
     if be_on:
-      be_display_raw = self._get_selected_value_safe("rg_be_display", "be_org")
-      be_display = self._normalize_display(be_display_raw)
+      be_display = self._normalize_display(self.rg_be_display.selected_value)
       allow_calc_table = be_display in ("table", "org_table")
-      self._enable_safe("cb_be_calc_table", allow_calc_table)
+      self.cb_be_calc_table.enabled = allow_calc_table
       if not allow_calc_table:
-        self._set_checked_safe("cb_be_calc_table", False)
+        self.cb_be_calc_table.checked = False
+    else:
+      self.cb_be_calc_table.enabled = False
 
   # -----------------------
   # Events (connecte-les dans le designer)
@@ -164,7 +153,6 @@ class RapportSocietePage(RapportSocietePageTemplate):
   def cb_be_change(self, **event_args):
     self._sync_enabled_states()
 
-  # Optionnel mais recommandé: si tu as un event sur le radio group BE
   def rg_be_display_change(self, **event_args):
     self._sync_enabled_states()
 
@@ -172,17 +160,16 @@ class RapportSocietePage(RapportSocietePageTemplate):
   # Build options dict
   # -----------------------
   def _build_options(self):
-    action_scope = self._get_selected_value_safe("rg_action_scope", "direct_indirect")
-    action_display_raw = self._get_selected_value_safe("rg_action_display", "act_org")
-    action_display = self._normalize_display(action_display_raw)
+    action_scope = self.rg_action_scope.selected_value
+    action_display = self._normalize_display(self.rg_action_display.selected_value)
 
-    desc_enabled = self._get_checked_safe("cb_desc", False)
-    mont_enabled = self._get_checked_safe("cb_mont", False)
-    be_enabled = self._get_checked_safe("cb_be", False)
+    desc_enabled = bool(self.cb_desc.checked)
+    mont_enabled = bool(self.cb_mont.checked)
+    be_enabled = bool(self.cb_be.checked)
 
-    desc_display = self._normalize_display(self._get_selected_value_safe("rg_desc_display", "desc_org"))
-    mont_display = self._normalize_display(self._get_selected_value_safe("rg_mont_display", "mont_org"))
-    be_display = self._normalize_display(self._get_selected_value_safe("rg_be_display", "be_org"))
+    desc_display = self._normalize_display(self.rg_desc_display.selected_value)
+    mont_display = self._normalize_display(self.rg_mont_display.selected_value)
+    be_display = self._normalize_display(self.rg_be_display.selected_value)
 
     return {
       "actionnariat": {"scope": action_scope, "display": action_display},
@@ -190,9 +177,9 @@ class RapportSocietePage(RapportSocietePageTemplate):
       "montante": {"enabled": mont_enabled, "display": mont_display},
       "be": {
         "enabled": be_enabled,
-        "threshold_25": self._get_checked_safe("cb_be_25", False),
-        "include_paths": self._get_checked_safe("cb_be_paths", False),
-        "include_calc_table": self._get_checked_safe("cb_be_calc_table", False),
+        "threshold_25": bool(self.cb_be_25.checked),
+        "include_paths": bool(self.cb_be_paths.checked),
+        "include_calc_table": bool(self.cb_be_calc_table.checked),
         "display": be_display
       }
     }
