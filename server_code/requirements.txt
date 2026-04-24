@@ -1,3 +1,5 @@
 stripe
 openpyxl
 panda
+pygments==2.20.0
+pytest==9.0.3
