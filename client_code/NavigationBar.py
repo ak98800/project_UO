@@ -31,3 +31,7 @@ class NavigationBar(NavigationBarTemplate):
     from PageAnalyserDossier import PageAnalyserDossier
     open_form(PageAnalyserDossier())
 
+  def navigation_link_import_click(self, **event_args):
+    from ImportTempDevPage import ImportTempDevPage
+    open_form(ImportTempDevPage())
+
